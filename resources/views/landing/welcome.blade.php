@@ -173,15 +173,16 @@
     </div>
   </div>
 </section>
-  
+
 
 <!-- Dukungan -->
 <section class="py-12 bg-blue-50">
   <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-6 px-4">
     <!-- Logo Utama -->
-    <div class="flex-shrink-0">
-      <img src="{{ asset('images/logo-disperkim.png') }}" alt="Logo Disperkim" class="w-20 h-20 md:w-24 md:h-24 object-contain">
+    <div class="flex-shrink-0 rounded-full bg-blue-600 p-3 md:p-4 inline-flex items-center justify-center">
+      <img src="{{ asset('images/Perumahan.png') }}" alt="Logo Disperkim" class="w-20 h-20 md:w-24 md:h-24 object-contain">
     </div>
+
 
     <!-- Teks Dukungan -->
     <div class="text-gray-700 text-center md:text-left">
@@ -189,7 +190,7 @@
         Program <strong>Si-Hunlay</strong> didukung penuh oleh <strong>Dinas Perumahan dan Permukiman Kota Kendari</strong> sebagai bagian dari program peningkatan kualitas hunian masyarakat.
       </p>
       <div class="flex items-center justify-center md:justify-start mt-2 gap-2">
-        <img src="{{ asset('images/logo-disperkim.png') }}" alt="Logo Disperkim Kecil" class="w-6 h-6 object-contain">
+        <img src="{{ asset('images/logoHomeBlack.png') }}" alt="Logo Disperkim Kecil" class="w-6 h-6 object-contain">
         <span class="font-semibold text-gray-800">Dinas Perumahan dan Permukiman Kota Kendari</span>
       </div>
     </div>
@@ -204,19 +205,36 @@
   <a href="#" class="bg-white text-blue-600 font-semibold px-6 py-2 rounded hover:bg-gray-100">Daftar Sekarang</a>
 </section>
 
-<!-- Footer -->
 <footer class="bg-gray-900 text-white py-10">
   <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8 text-sm">
+
+    <!-- Logo + Deskripsi -->
     <div>
-      <h4 class="font-semibold mb-2">Si-Hunlay</h4>
+      <div class="flex items-center gap-3 mb-2">
+        <img src="{{ asset('images/logoHomeWhite.png') }}" alt="Logo Si-Hunlay" class="w-8 h-8">
+        <h4 class="font-semibold text-base">Si-Hunlay</h4>
+      </div>
       <p>Sistem informasi hunian layak untuk masyarakat Kota Kendari. Mengelola bantuan RTLH secara transparan dan efisien.</p>
     </div>
+
+    <!-- Kontak -->
     <div>
       <h4 class="font-semibold mb-2">Kontak</h4>
-      <p>Jl. HEA. Mokodompit, Kendari</p>
-      <p>Email: info@hunlay.kendari.go.id</p>
-      <p>Telp: 0401-123456</p>
+      <p class="flex items-center space-x-2">
+        <img src="{{ asset('images/location.png') }}" alt="Icon Lokasi" class="w-4 h-4">
+        <span>Jl. HEA. Mokodompit, Kendari</span>
+      </p>
+      <p class="flex items-center space-x-2">
+        <img src="{{ asset('images/email.png') }}" alt="Icon Email" class="w-4 h-4">
+        <span>Email: info@hunlay.kendari.go.id</span>
+      </p>
+      <p class="flex items-center space-x-2">
+        <img src="{{ asset('images/phone.png') }}" alt="Icon Telepon" class="w-4 h-4">
+        <span>Telp: 0401-123456</span>
+      </p>
     </div>
+
+    <!-- Tautan -->
     <div>
       <h4 class="font-semibold mb-2">Tautan</h4>
       <p><a href="#" class="hover:underline">Beranda</a></p>
@@ -224,8 +242,12 @@
       <p><a href="#" class="hover:underline">FAQ</a></p>
     </div>
   </div>
-  <div class="text-center text-xs text-gray-400 mt-8">&copy; 2025 Si-Hunlay Kota Kendari. Hak Cipta Dilindungi.</div>
+
+  <div class="text-center text-xs text-gray-400 mt-8">
+    &copy; 2025 Si-Hunlay Kota Kendari. Hak Cipta Dilindungi.
+  </div>
 </footer>
+
 
 </body>
 </html>
