@@ -87,52 +87,104 @@
 <section class="py-16 bg-white">
   <div class="max-w-6xl mx-auto px-4 text-center">
     <h2 class="text-2xl font-bold mb-4">Apa itu Si-Hunlay?</h2>
-    <p class="text-gray-600 mb-10 max-w-3xl mx-auto">Si-Hunlay adalah sistem digital Kota Kendari untuk pendataan dan pengajuan bantuan rumah tidak layak huni. Kami membantu memastikan masyarakat Kota Kendari mendapatkan hunian yang layak.</p>
+    <p class="text-gray-600 mb-10 max-w-3xl mx-auto">
+      Si-Hunlay adalah sistem digital Kota Kendari untuk pendataan dan pengajuan bantuan rumah tidak layak huni. Kami membantu memastikan masyarakat Kota Kendari mendapatkan hunian yang layak.
+    </p>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="p-6 border rounded-lg shadow-sm">
+      
+      <!-- Box 1 -->
+      <div class="p-6 border rounded-lg shadow-md flex flex-col items-center">
+        <div class="mb-4">
+          <img src="{{ asset('images/icon-data.png') }}" alt="Pendataan Icon" class="w-12 h-12">
+        </div>
         <h3 class="font-semibold text-lg mb-2">Pendataan Digital</h3>
-        <p class="text-gray-600 text-sm">Semua data dikelola secara digital untuk transparansi dan efisiensi.</p>
+        <p class="text-gray-600 text-sm text-center">Semua data dikelola secara digital untuk transparansi dan efisiensi.</p>
       </div>
-      <div class="p-6 border rounded-lg shadow-sm">
+      
+      <!-- Box 2 -->
+      <div class="p-6 border rounded-lg shadow-md flex flex-col items-center">
+        <div class="mb-4">
+          <img src="{{ asset('images/icon-bantuan.png') }}" alt="Bantuan Icon" class="w-12 h-12">
+        </div>
         <h3 class="font-semibold text-lg mb-2">Bantuan Hunian</h3>
-        <p class="text-gray-600 text-sm">Ajukan bantuan secara mudah dan pantau statusnya secara online.</p>
+        <p class="text-gray-600 text-sm text-center">Ajukan bantuan secara mudah dan pantau statusnya secara online.</p>
       </div>
-      <div class="p-6 border rounded-lg shadow-sm">
+      
+      <!-- Box 3 -->
+      <div class="p-6 border rounded-lg shadow-md flex flex-col items-center">
+        <div class="mb-4">
+          <img src="{{ asset('images/icon-warga.png') }}" alt="Warga Icon" class="w-12 h-12">
+        </div>
         <h3 class="font-semibold text-lg mb-2">Untuk Masyarakat</h3>
-        <p class="text-gray-600 text-sm">Siapapun warga Kota Kendari yang memenuhi syarat bisa mendaftar.</p>
+        <p class="text-gray-600 text-sm text-center">Siapapun warga Kota Kendari yang memenuhi syarat bisa mendaftar.</p>
       </div>
+    
     </div>
   </div>
 </section>
+
 
 <!-- Cara Mengajukan -->
 <section class="bg-blue-50 py-16">
   <div class="max-w-6xl mx-auto px-4 text-center">
     <h2 class="text-2xl font-bold mb-10">Bagaimana Cara Mengajukan Bantuan?</h2>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-      <div class="bg-white p-6 rounded-lg shadow text-center">
-        <div class="text-blue-600 text-2xl font-bold mb-2">1</div>
-        <h4 class="font-semibold mb-1">Daftar Akun</h4>
-        <p class="text-sm text-gray-600">Buat akun secara gratis dengan email atau nomor HP Anda.</p>
+      
+      <!-- Box 1 -->
+      <div class="relative bg-white p-6 rounded-lg shadow flex flex-col items-center min-h-[300px]">
+        <!-- Nomor -->
+        <div class="absolute top-4 left-4 w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold">
+          1
+        </div>
+        <!-- Konten -->
+        <h4 class="font-semibold mt-6 mb-1">Daftar Akun</h4>
+        <p class="text-sm text-gray-600 text-center">Buat akun secara gratis dengan email atau nomor HP Anda.</p>
+        <!-- Logo -->
+        <div class="mt-auto pt-6">
+          <img src="{{ asset('images/icon-daftar.png') }}" alt="Icon Daftar" class="w-10 h-10 mx-auto">
+        </div>
       </div>
-      <div class="bg-white p-6 rounded-lg shadow text-center">
-        <div class="text-blue-600 text-2xl font-bold mb-2">2</div>
-        <h4 class="font-semibold mb-1">Isi Data Hunian</h4>
-        <p class="text-sm text-gray-600">Isi informasi rumah dan kondisi hunian saat ini.</p>
+
+      <!-- Box 2 -->
+      <div class="relative bg-white p-6 rounded-lg shadow flex flex-col items-center min-h-[300px]">
+        <div class="absolute top-4 left-4 w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold">
+          2
+        </div>
+        <h4 class="font-semibold mt-6 mb-1">Isi Data Hunian</h4>
+        <p class="text-sm text-gray-600 text-center">Isi informasi rumah dan kondisi hunian saat ini.</p>
+        <div class="mt-auto pt-6">
+          <img src="{{ asset('images/icon-data.png') }}" alt="Icon Data" class="w-10 h-10 mx-auto">
+        </div>
       </div>
-      <div class="bg-white p-6 rounded-lg shadow text-center">
-        <div class="text-blue-600 text-2xl font-bold mb-2">3</div>
-        <h4 class="font-semibold mb-1">Unggah Dokumen</h4>
-        <p class="text-sm text-gray-600">Unggah dokumen pendukung seperti foto rumah dan surat kepemilikan.</p>
+
+      <!-- Box 3 -->
+      <div class="relative bg-white p-6 rounded-lg shadow flex flex-col items-center min-h-[300px]">
+        <div class="absolute top-4 left-4 w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold">
+          3
+        </div>
+        <h4 class="font-semibold mt-6 mb-1">Unggah Dokumen</h4>
+        <p class="text-sm text-gray-600 text-center">Unggah dokumen pendukung seperti foto rumah dan surat kepemilikan.</p>
+        <div class="mt-auto pt-6">
+          <img src="{{ asset('images/icon-upload.png') }}" alt="Icon Upload" class="w-10 h-10 mx-auto">
+        </div>
       </div>
-      <div class="bg-white p-6 rounded-lg shadow text-center">
-        <div class="text-blue-600 text-2xl font-bold mb-2">4</div>
-        <h4 class="font-semibold mb-1">Proses Verifikasi</h4>
-        <p class="text-sm text-gray-600">Tim kami akan memverifikasi dan memberi kabar secepatnya.</p>
+
+      <!-- Box 4 -->
+      <div class="relative bg-white p-6 rounded-lg shadow flex flex-col items-center min-h-[300px]">
+        <div class="absolute top-4 left-4 w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold">
+          4
+        </div>
+        <h4 class="font-semibold mt-6 mb-1">Proses Verifikasi</h4>
+        <p class="text-sm text-gray-600 text-center">Tim kami akan memverifikasi dan memberi kabar secepatnya.</p>
+        <div class="mt-auto pt-6">
+          <img src="{{ asset('images/icon-verifikasi.png') }}" alt="Icon Verifikasi" class="w-10 h-10 mx-auto">
+        </div>
       </div>
+
     </div>
   </div>
 </section>
+
 
 <!-- Dukungan -->
 <section class="py-12 bg-white text-center">
