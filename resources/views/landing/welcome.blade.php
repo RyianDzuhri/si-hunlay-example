@@ -53,35 +53,34 @@
   </div>
 </header>
 
-<section class="bg-blue-50 py-20">
-  <div class="max-w-7xl mx-auto px-6 flex flex-col-reverse md:flex-row items-center justify-between gap-x-16">
-      
-      <!-- Konten Kiri -->
-      <div class="w-full md:w-1/2 px-6 flex flex-col justify-center">
-          <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight mb-4">
-              Selamat Datang di SI-Hunlay Kota Kendari
-          </h1>
-          <p class="text-gray-700 mb-6">
-              Sistem Informasi Hunian Layak untuk mendukung masyarakat<br />
-              Mendapatkan bantuan RTLH
-          </p>
-          <div class="flex flex-col md:flex-row gap-4 justify-start">
-              <a href="#" class="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700">
-                  Ajukan Bantuan Sekarang
-              </a>
-              <a href="#" class="border border-blue-600 text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-blue-100">
-                  Pelajari Lebih Lanjut
-              </a>
-          </div>
-      </div>
+  <section class="bg-blue-50 py-20">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-x-16">
+        <!-- Konten Kiri -->
+        <div class="w-full md:w-1/2 px-6 flex flex-col justify-center items-start">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">
+                Selamat Datang di <span class="block md:inline">SI-Hunlay Kota Kendari</span>
+            </h1>
+            <p class="text-gray-700 text-base md:text-lg mb-6">
+                Sistem Informasi Hunian Layak untuk mendukung masyarakat mendapatkan bantuan RTLH
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-start">
+                <a href="#" class="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700">
+                    Ajukan Bantuan Sekarang
+                </a>
+                <a href="#" class="border border-blue-600 text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-blue-100">
+                    Pelajari Lebih Lanjut
+                </a>
+            </div>
+        </div>
 
-      <!-- Gambar Kanan -->
-      <div class="w-full md:w-1/2 px-6 flex justify-center items-center">
-          <img src="{{ asset('images/logoRumah.png') }}" alt="Ilustrasi Rumah" class="w-full max-w-md" />
-      </div>
+        <!-- Gambar Kanan -->
+        <div class="w-full md:w-1/2 px-6 flex justify-center items-center">
+            <img src="{{ asset('images/logoRumah.png') }}" alt="Ilustrasi Rumah" class="w-full max-w-md" />
+        </div>
+    </div>
+  </section>
 
-  </div>
-</section>
+
 
 <!-- Apa itu SI-Hunlay -->
 <section class="py-16 bg-white">
