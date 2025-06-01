@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Si-Hunlay Kota Kendari</title>
+  <title>SI-Hunlay Kota Kendari</title>
   
   <!-- Import Google Fonts Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -59,7 +59,7 @@
       <!-- Konten Kiri -->
       <div class="w-full md:w-1/2 px-6 flex flex-col justify-center">
           <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight mb-4">
-              Selamat Datang di Si-Hunlay Kota Kendari
+              Selamat Datang di SI-Hunlay Kota Kendari
           </h1>
           <p class="text-gray-700 mb-6">
               Sistem Informasi Hunian Layak untuk mendukung masyarakat<br />
@@ -83,12 +83,12 @@
   </div>
 </section>
 
-<!-- Apa itu Si-Hunlay -->
+<!-- Apa itu SI-Hunlay -->
 <section class="py-16 bg-white">
   <div class="max-w-6xl mx-auto px-4 text-center">
-    <h2 class="text-2xl font-bold mb-4">Apa itu Si-Hunlay?</h2>
+    <h2 class="text-2xl font-bold mb-4">Apa itu SI-Hunlay?</h2>
     <p class="text-gray-600 mb-10 max-w-3xl mx-auto">
-      Si-Hunlay adalah sistem digital Kota Kendari untuk pendataan dan pengajuan bantuan rumah tidak layak huni. Kami membantu memastikan masyarakat Kota Kendari mendapatkan hunian yang layak.
+      SI-Hunlay adalah sistem digital Kota Kendari untuk pendataan dan pengajuan bantuan rumah tidak layak huni. Kami membantu memastikan masyarakat Kota Kendari mendapatkan hunian yang layak.
     </p>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       
@@ -183,15 +183,15 @@
       <img src="{{ asset('images/Perumahan.png') }}" alt="Logo Disperkim" class="w-20 h-20 md:w-24 md:h-24 object-contain">
     </div>
 
-
     <!-- Teks Dukungan -->
     <div class="text-gray-700 text-center md:text-left">
       <p class="mb-2">
-        Program <strong>Si-Hunlay</strong> didukung penuh oleh <strong>Dinas Perumahan dan Permukiman Kota Kendari</strong> sebagai bagian dari program peningkatan kualitas hunian masyarakat.
+        <strong class="text-black text-2xl block">Program didukung oleh</strong>
+        Program <strong>SI-Hunlay</strong> didukung penuh oleh <strong>Dinas Perumahan dan Permukiman Kota Kendari</strong> sebagai bagian dari program peningkatan kualitas hunian masyarakat.
       </p>
       <div class="flex items-center justify-center md:justify-start mt-2 gap-2">
         <img src="{{ asset('images/logoHomeBlack.png') }}" alt="Logo Disperkim Kecil" class="w-6 h-6 object-contain">
-        <span class="font-semibold text-gray-800">Dinas Perumahan dan Permukiman Kota Kendari</span>
+        <span class="font-semibold text-gray-800 leading-none self-center">Dinas Perumahan dan Permukiman Kota Kendari</span>
       </div>
     </div>
   </div>
@@ -201,7 +201,7 @@
 <!-- CTA -->
 <section class="bg-blue-600 text-white py-12 text-center">
   <h2 class="text-2xl font-bold mb-4">Siap Mengajukan Bantuan?</h2>
-  <p class="mb-6">Daftarkan diri Anda sekarang dan mulai proses pengajuan bantuan rumah tidak layak huni melalui Si-Hunlay.</p>
+  <p class="mb-6">Daftarkan diri Anda sekarang dan mulai proses pengajuan bantuan rumah tidak layak huni melalui SI-Hunlay.</p>
   <a href="#" class="bg-white text-blue-600 font-semibold px-6 py-2 rounded hover:bg-gray-100">Daftar Sekarang</a>
 </section>
 
@@ -211,8 +211,8 @@
     <!-- Logo + Deskripsi -->
     <div>
       <div class="flex items-center gap-3 mb-2">
-        <img src="{{ asset('images/logoHomeWhite.png') }}" alt="Logo Si-Hunlay" class="w-8 h-8">
-        <h4 class="font-semibold text-base">Si-Hunlay</h4>
+        <img src="{{ asset('images/logoHomeWhite.png') }}" alt="Logo SI-Hunlay" class="w-8 h-8">
+        <h4 class="font-semibold text-base">SI-Hunlay</h4>
       </div>
       <p>Sistem informasi hunian layak untuk masyarakat Kota Kendari. Mengelola bantuan RTLH secara transparan dan efisien.</p>
     </div>
@@ -244,7 +244,7 @@
   </div>
 
   <div class="text-center text-xs text-gray-400 mt-8">
-    &copy; 2025 Si-Hunlay Kota Kendari. Hak Cipta Dilindungi.
+    &copy; 2025 SI-Hunlay Kota Kendari. Hak Cipta Dilindungi.
   </div>
 </footer>
 
