@@ -129,54 +129,43 @@
   <div class="max-w-6xl mx-auto px-4 text-center">
     <h2 class="text-2xl font-bold mb-10">Bagaimana Cara Mengajukan Bantuan?</h2>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-      
+
       <!-- Box 1 -->
-      <div class="relative bg-white p-6 rounded-lg shadow flex flex-col items-center min-h-[300px]">
-        <!-- Nomor -->
-        <div class="absolute top-4 left-4 w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold">
-          1
-        </div>
-        <!-- Konten -->
-        <h4 class="font-semibold mt-6 mb-1">Daftar Akun</h4>
-        <p class="text-sm text-gray-600 text-center">Buat akun secara gratis dengan email atau nomor HP Anda.</p>
-        <!-- Logo -->
-        <div class="mt-auto pt-6">
+      <div class="relative bg-white p-4 rounded-lg shadow flex flex-col items-center">
+        <div class="absolute top-3 left-3 w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold text-sm">1</div>
+        <h4 class="font-semibold mt-6 mb-1 text-sm">Daftar Akun</h4>
+        <p class="text-xs text-gray-600 text-center mb-3">Buat akun secara gratis dengan email atau nomor HP Anda.</p>
+        <div class="pt-4">
           <img src="{{ asset('images/icon-daftar.png') }}" alt="Icon Daftar" class="w-10 h-10 mx-auto">
         </div>
       </div>
 
       <!-- Box 2 -->
-      <div class="relative bg-white p-6 rounded-lg shadow flex flex-col items-center min-h-[300px]">
-        <div class="absolute top-4 left-4 w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold">
-          2
-        </div>
-        <h4 class="font-semibold mt-6 mb-1">Isi Data Hunian</h4>
-        <p class="text-sm text-gray-600 text-center">Isi informasi rumah dan kondisi hunian saat ini.</p>
-        <div class="mt-auto pt-6">
+      <div class="relative bg-white p-4 rounded-lg shadow flex flex-col items-center">
+        <div class="absolute top-3 left-3 w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold text-sm">2</div>
+        <h4 class="font-semibold mt-6 mb-1 text-sm">Isi Data Hunian</h4>
+        <p class="text-xs text-gray-600 text-center mb-3">Isi informasi rumah dan kondisi hunian saat ini.</p>
+        <div class="pt-4">
           <img src="{{ asset('images/icon-data.png') }}" alt="Icon Data" class="w-10 h-10 mx-auto">
         </div>
       </div>
 
       <!-- Box 3 -->
-      <div class="relative bg-white p-6 rounded-lg shadow flex flex-col items-center min-h-[300px]">
-        <div class="absolute top-4 left-4 w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold">
-          3
-        </div>
-        <h4 class="font-semibold mt-6 mb-1">Unggah Dokumen</h4>
-        <p class="text-sm text-gray-600 text-center">Unggah dokumen pendukung seperti foto rumah dan surat kepemilikan.</p>
-        <div class="mt-auto pt-6">
+      <div class="relative bg-white p-4 rounded-lg shadow flex flex-col items-center">
+        <div class="absolute top-3 left-3 w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold text-sm">3</div>
+        <h4 class="font-semibold mt-6 mb-1 text-sm">Unggah Dokumen</h4>
+        <p class="text-xs text-gray-600 text-center mb-3">Unggah dokumen pendukung seperti foto rumah dan surat kepemilikan.</p>
+        <div class="pt-4">
           <img src="{{ asset('images/icon-upload.png') }}" alt="Icon Upload" class="w-10 h-10 mx-auto">
         </div>
       </div>
 
       <!-- Box 4 -->
-      <div class="relative bg-white p-6 rounded-lg shadow flex flex-col items-center min-h-[300px]">
-        <div class="absolute top-4 left-4 w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold">
-          4
-        </div>
-        <h4 class="font-semibold mt-6 mb-1">Proses Verifikasi</h4>
-        <p class="text-sm text-gray-600 text-center">Tim kami akan memverifikasi dan memberi kabar secepatnya.</p>
-        <div class="mt-auto pt-6">
+      <div class="relative bg-white p-4 rounded-lg shadow flex flex-col items-center">
+        <div class="absolute top-3 left-3 w-8 h-8 flex items-center justify-center rounded-full bg-blue-600 text-white font-bold text-sm">4</div>
+        <h4 class="font-semibold mt-6 mb-1 text-sm">Proses Verifikasi</h4>
+        <p class="text-xs text-gray-600 text-center mb-3">Tim kami akan memverifikasi dan memberi kabar secepatnya.</p>
+        <div class="pt-4">
           <img src="{{ asset('images/icon-verifikasi.png') }}" alt="Icon Verifikasi" class="w-10 h-10 mx-auto">
         </div>
       </div>
@@ -184,13 +173,29 @@
     </div>
   </div>
 </section>
-
+  
 
 <!-- Dukungan -->
-<section class="py-12 bg-white text-center">
-  <p class="text-gray-600 max-w-xl mx-auto mb-4">Program Si-Hunlay didukung penuh oleh Dinas Perumahan dan Permukiman Kota Kendari sebagai bagian dari program peningkatan kualitas hunian masyarakat.</p>
-  <p class="font-semibold">Dinas Perumahan dan Permukiman Kota Kendari</p>
+<section class="py-12 bg-blue-50">
+  <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-6 px-4">
+    <!-- Logo Utama -->
+    <div class="flex-shrink-0">
+      <img src="{{ asset('images/logo-disperkim.png') }}" alt="Logo Disperkim" class="w-20 h-20 md:w-24 md:h-24 object-contain">
+    </div>
+
+    <!-- Teks Dukungan -->
+    <div class="text-gray-700 text-center md:text-left">
+      <p class="mb-2">
+        Program <strong>Si-Hunlay</strong> didukung penuh oleh <strong>Dinas Perumahan dan Permukiman Kota Kendari</strong> sebagai bagian dari program peningkatan kualitas hunian masyarakat.
+      </p>
+      <div class="flex items-center justify-center md:justify-start mt-2 gap-2">
+        <img src="{{ asset('images/logo-disperkim.png') }}" alt="Logo Disperkim Kecil" class="w-6 h-6 object-contain">
+        <span class="font-semibold text-gray-800">Dinas Perumahan dan Permukiman Kota Kendari</span>
+      </div>
+    </div>
+  </div>
 </section>
+
 
 <!-- CTA -->
 <section class="bg-blue-600 text-white py-12 text-center">
