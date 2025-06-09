@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Masyarakat\DashboardController;
+use App\Http\Controllers\Masyarakat\ProgresController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,7 +18,8 @@ Route::prefix('auth')->group(function () {
 
 //Masyarakat
 Route::prefix('masyarakat')->group(function () {
-   
+   Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('masyarakat.dashboard');
+   Route::get('/progres', [ProgresController::class, 'showProgres'])->name('masyarakat.progres');
 });
 
 // Admin

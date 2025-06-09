@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class DashboardController extends Controller
+class ProgresController extends Controller
 {
-    public function showDashboard(): View
+    public function showProgres(): View
     {
-        return view('masyarakat.dashboard');
+        return view('masyarakat.progres');
     }
 }
