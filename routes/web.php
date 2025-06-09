@@ -15,7 +15,7 @@ Route::get('/register', [RegisterController::class,'showRegisterForm'])->name('a
 =======
 // Admin
 Route::prefix('admin')->group(function () {
-    Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
 });
 >>>>>>> 55d2fec45b36bc20dfd11d43dcfe2b8b509488ce
