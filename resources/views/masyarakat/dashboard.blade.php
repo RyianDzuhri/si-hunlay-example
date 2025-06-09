@@ -37,28 +37,28 @@
 
     <!-- Progress Pengajuan -->
     <div class="bg-white p-6 rounded-xl shadow">
-    <h4 class="text-lg font-semibold mb-4">Progress Pengajuan</h4>
-    <div class="flex items-center justify-between text-center text-sm relative">
-        @for ($i = 1; $i <= 5; $i++)
-        <div class="flex-1 relative z-10">
-            <div class="w-8 h-8 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center font-bold mx-auto">
-            {{ $i }}
+        <h4 class="text-lg font-semibold mb-4">Progress Pengajuan</h4>
+        <div class="flex items-center justify-between text-center text-sm relative">
+            @for ($i = 1; $i <= 5; $i++)
+            <div class="flex-1 relative z-10">
+                <div class="w-8 h-8 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center font-bold mx-auto">
+                {{ $i }}
+                </div>
+                <div class="mt-2 text-xs font-medium text-gray-700">
+                @if ($i == 1) Pengajuan Diterima
+                @elseif ($i == 2) Verifikasi Dokumen
+                @elseif ($i == 3) Jadwal Survei
+                @elseif ($i == 4) Survei Lapangan
+                @else Keputusan Bantuan
+                @endif
+                </div>
             </div>
-            <div class="mt-2 text-xs font-medium text-gray-700">
-            @if ($i == 1) Pengajuan Diterima
-            @elseif ($i == 2) Verifikasi Dokumen
-            @elseif ($i == 3) Jadwal Survei
-            @elseif ($i == 4) Survei Lapangan
-            @else Keputusan Bantuan
+            @if ($i < 5)
+                <!-- Garis penghubung antar step -->
+                <div class="flex-1 h-1 bg-gray-300 -mx-4 z-0"></div>
             @endif
-            </div>
+            @endfor
         </div>
-        @if ($i < 5)
-            <!-- Garis penghubung antar step -->
-            <div class="flex-1 h-1 bg-gray-300 -mx-4 z-0"></div>
-        @endif
-        @endfor
-    </div>
     </div>
 </div>
 
