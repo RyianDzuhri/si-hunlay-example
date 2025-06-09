@@ -18,6 +18,8 @@ Route::prefix('auth')->group(function () {
 Route::prefix('masyarakat')->group(function () {
    
 });
+Route::get('/login', [LoginController::class,'showLoginForm'])->name('auth.login');
+Route::get('/register', [RegisterController::class,'showRegisterForm'])->name('auth.register');
 
 // Admin
 Route::prefix('admin')->group(function () {
