@@ -1,5 +1,5 @@
 @extends('masyarakat.layout')
-@section('title', 'Progres Pengajuan')
+@section('title', 'Profile')
 @section('content')
 tes
 @endsection

@@ -1,4 +1,5 @@
 @extends('masyarakat.layout')
+@section('title', 'Dashboard')
 @section('content')
 <div class="space-y-8">
   <!-- Greeting -->
