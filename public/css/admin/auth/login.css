@@ -1,0 +1,176 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Typography CSS */
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #e9f2fd 0%, #d0e1f9 100%); /* Gradien minimalis */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Container CSS */
+  .container {
+    display: flex;
+    width: 900px;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Tingkatkan shadow untuk kontras */
+    position: relative;
+    z-index: 1;
+  }
+  
+  .container__left {
+    width: 50%;
+    background-color: #1E60E1;
+    color: #fff;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .container__left h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  
+  .container__left p {
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .container__left ul {
+    list-style: none;
+  }
+  
+  .container__left ul li {
+    margin-bottom: 10px;
+    padding-left: 24px;
+    position: relative;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .container__left ul li::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    color: #fff;
+    margin-right: 10px;
+  }
+  
+  .container__right {
+    width: 50%;
+    padding: 40px;
+    background-color: #f9f9f9;
+    border-radius: 0 12px 12px 0;
+  }
+  
+  .container__right h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #1E60E1;
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  .container__right h2 span {
+    font-size: 16px;
+    color: #666;
+    font-weight: 400;
+  }
+  
+  /* Form CSS */
+  .form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .form__label {
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .form__input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .form__options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .form__options label {
+    display: flex;
+    align-items: center;
+    color: #333;
+  }
+  
+  .form__options input[type="checkbox"] {
+    margin-right: 6px;
+  }
+  
+  .form__options a {
+    font-size: 14px;
+    color: #1E60E1;
+    text-decoration: none;
+  }
+  
+  .form__register {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  
+  .form__register a {
+    color: #1E60E1;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  
+  /* Button CSS */
+  .button {
+    background-color: #1E60E1;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+  }
+  
+  /* Login-Specific CSS */
+  .admin-icon {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
