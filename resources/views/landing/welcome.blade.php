@@ -39,10 +39,10 @@
         <a href="#" class="text-gray-600 hover:text-blue-600">Tentang</a>
         <a href="#" class="text-gray-600 hover:text-blue-600">Cara Kerja</a>
         <a href="#" class="text-gray-600 hover:text-blue-600">Bantuan</a>
-        <a href="#" class="text-blue-600 no-underline hover:text-blue-700">Masuk</a>
+        <a href="{{ route('auth.login') }}" class="text-blue-600 no-underline hover:text-blue-700">Masuk</a>
       </nav>
       <!-- Tombol Daftar -->
-      <a href="#" class="hidden md:inline-block bg-blue-600 text-white px-4 py-2 ml-6 rounded-md text-sm font-semibold hover:bg-blue-700">
+      <a href="{{ route('auth.register') }}" class="hidden md:inline-block bg-blue-600 text-white px-4 py-2 ml-6 rounded-md text-sm font-semibold hover:bg-blue-700">
         Daftar Sekarang
       </a>
     </div>
@@ -58,7 +58,7 @@
                   Sistem Informasi Hunian Layak untuk mendukung masyarakat mendapatkan bantuan RTLH
               </p>
               <div class="flex flex-col md:flex-row gap-4 justify-start">
-                  <a href="#" class="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700">
+                  <a href="{{ route('auth.login') }}" class="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700">
                       Ajukan Bantuan Sekarang
                   </a>
                   <a href="#" class="border border-blue-600 text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-blue-100">
@@ -175,7 +175,7 @@
   <section class="bg-blue-600 text-white py-12 text-center">
     <h2 class="text-2xl font-bold mb-4">Siap Mengajukan Bantuan?</h2>
     <p class="mb-6">Daftarkan diri Anda sekarang dan mulai proses pengajuan bantuan rumah tidak layak huni melalui SI-Hunlay.</p>
-    <a href="#" class="bg-white text-blue-600 font-semibold px-6 py-2 rounded hover:bg-gray-100">Daftar Sekarang</a>
+    <a href="{{ route('auth.register') }}" class="bg-white text-blue-600 font-semibold px-6 py-2 rounded hover:bg-gray-100">Daftar Sekarang</a>
   </section>
   <footer class="bg-gray-900 text-white py-10">
     <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8 text-sm">
