@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     public function up()
-    {
+{
+    if (!Schema::hasTable('admin_dinas')) {
         Schema::create('admin_dinas', function (Blueprint $table) {
             $table->bigInteger('nip')->primary();
             $table->unsignedInteger('id_user')->unique();
@@ -15,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+}
 
     public function down()
     {
