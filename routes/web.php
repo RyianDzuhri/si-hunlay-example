@@ -10,8 +10,8 @@ Route::get('/', function () {
 
 //Auth
 Route::prefix('auth')->group(function () {
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('auth.login');
-    Route::get('register', [RegisterController::class, 'showRegisterForm'])->name('auth.register');
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('auth.login');
+    Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('auth.register');
 });
 
 //Masyarakat
