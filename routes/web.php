@@ -8,14 +8,19 @@ Route::get('/', function () {
     return view('landing.welcome');
 });
 
-<<<<<<< HEAD
-Route::get('/login', [LoginController::class,'showLoginForm'])->name('auth.login');
-Route::get('/register', [RegisterController::class,'showRegisterForm'])->name('auth.register');
+//Auth
+Route::prefix('auth')->group(function () {
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('auth.login');
+    Route::get('register', [RegisterController::class, 'showRegisterForm'])->name('auth.register');
+});
 
-=======
+//Masyarakat
+Route::prefix('masyarakat')->group(function () {
+   
+});
+
 // Admin
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
 });
->>>>>>> 55d2fec45b36bc20dfd11d43dcfe2b8b509488ce
