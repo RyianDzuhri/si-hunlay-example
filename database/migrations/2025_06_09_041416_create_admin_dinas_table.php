@@ -11,7 +11,7 @@ return new class extends Migration
     if (!Schema::hasTable('admin_dinas')) {
         Schema::create('admin_dinas', function (Blueprint $table) {
             $table->bigInteger('nip')->primary();
-            $table->unsignedInteger('id_user')->unique();
+            $table->unsignedBigInteger('id_user')->unique(); // UBAH dari unsignedInteger menjadi unsignedBigInteger
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
