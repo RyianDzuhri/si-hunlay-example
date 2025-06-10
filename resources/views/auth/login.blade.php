@@ -118,14 +118,15 @@
     </div>
     <div class="right-panel">
       <h1>Selamat Datang Di<br>Si-Hunlay</h1>
-      <form>
+      <form action="{{ route('auth.verify') }}" method="POST">
+        @csrf
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" placeholder="Masukkan email Anda">
+          <input type="email" name="email" id="email" placeholder="Masukkan email Anda" required>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Masukkan password Anda">
+          <input type="password" name="password" id="password" placeholder="Masukkan password Anda" required>
         </div>
         <div class="options">
           <label><input type="checkbox"> Ingat saya</label>

@@ -3,37 +3,55 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\Admin;  // pastikan ini nama model admin yang benar
+use App\Models\Admin;
+use App\Models\Petugas;
+use App\Models\Warga;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // Seed user biasa dengan factory (password sudah otomatis hash)
-        User::factory()->create([
-            'nama' => 'Test User',
-            'email' => 'test@example.com',
-            'noTelpon' => '08123456789',
-        ]);
-
-        // Seed user admin secara manual (pastikan semua field wajib terisi)
+        // User Admin
         $userAdmin = User::create([
-            'nama' => 'Admin SI-Hunlay',
-            'email' => 'admin@si-hunlay.com',
-            'password' => bcrypt('password123'),  // hash password manual
-            'noTelpon' => '08123456789',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('password123'),
+            'nama' => 'Admin Dinas',
+            'role' => 'admin_dinas',
+        ]);
+        Admin::create([
+            'nip' => 1234567890,
+            'id_user' => $userAdmin->id,
         ]);
 
-        // Seed admin terkait user admin di tabel admin_dinas
-        Admin::create([
-            'nip' => 1234567890123456,
-            'id_user' => $userAdmin->id,
-           // 'name' => 'Admin SI-Hunlay',   // kalau di tabel admin_dinas ada kolom name, isi juga
-           // 'email' => 'admin@si-hunlay.com', // sesuaikan kalau perlu
+        // User Petugas
+        $userPetugas = User::create([
+            'email' => 'petugas@example.com',
+            'password' => Hash::make('password123'),
+            'nama' => 'Petugas Lapangan',
+            'role' => 'petugas',
+        ]);
+        Petugas::create([
+            'nip' => 9876543210,
+            'wilayahTugas' => 'Kecamatan A',
+            'id_user' => $userPetugas->id,
+        ]);
+
+        // User Warga
+        $userWarga = User::create([
+            'email' => 'warga@example.com',
+            'password' => Hash::make('password123'),
+            'nama' => 'Warga Biasa',
+            'role' => 'warga',
+        ]);
+        Warga::create([
+            'nik' => 1234567890123456,
+            'tanggalLahir' => '1990-05-15',
+            'jenisKelamin' => 'Laki-laki',
+            'pekerjaan' => 'Petani',
+            'penghasilan' => 3000000,
+            'id_user' => $userWarga->id,
         ]);
     }
 }

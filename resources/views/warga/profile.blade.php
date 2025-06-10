@@ -1,4 +1,4 @@
-@extends('masyarakat.layout')
+@extends('warga.layout')
 @section('title', 'Profile')
 @section('content')
 tes

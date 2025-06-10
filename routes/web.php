@@ -3,31 +3,35 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Masyarakat\DashboardController;
-use App\Http\Controllers\Masyarakat\ProgresController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
-
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Warga\DashboardController as WargaDashboardController;
+use App\Http\Controllers\Warga\ProgresController;
 
 Route::get('/', function () {
     return view('landing.welcome');
 });
 
 //Auth
-Route::prefix('auth')->group(function () {
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('auth.login');
-    Route::get('register', [RegisterController::class, 'showRegisterForm'])->name('auth.register');
-});
+Route::get('/login', [AuthController::class, 'showLoginForm'])
+    ->name('login')
+    ->middleware('guest');
+Route::post('/login', [AuthController::class, 'verify'])->name('auth.verify');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
 
 //Masyarakat
-Route::prefix('masyarakat')->group(function () {
-   Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('masyarakat.dashboard');
-   Route::get('/progres', [ProgresController::class, 'showProgres'])->name('masyarakat.progres');
+Route::prefix('warga')->middleware(['auth:warga'])->group(function () {
+   Route::get('/dashboard', [WargaDashboardController::class, 'showDashboard'])->name('warga.dashboard');
+   Route::get('/progres', [ProgresController::class, 'showProgres'])->name('warga.progres');
 });
-Route::get('/login', [LoginController::class,'showLoginForm'])->name('auth.login');
-Route::get('/register', [RegisterController::class,'showRegisterForm'])->name('auth.register');
+
+
 
 //Admin
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     // Tampilkan halaman login admin
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 
@@ -52,5 +56,3 @@ Route::prefix('admin')->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('admin.user.index');
 
 });
-
-

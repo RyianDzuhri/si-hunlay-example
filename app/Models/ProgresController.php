@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Masyarakat;
+namespace App\Http\Controllers\Warga;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,6 +10,6 @@ class ProgresController extends Controller
 {
     public function showProgres(): View
     {
-        return view('masyarakat.progres');
+        return view('warga.progres');
     }
 }

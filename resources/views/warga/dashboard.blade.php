@@ -1,4 +1,4 @@
-@extends('masyarakat.layout')
+@extends('warga.layout')
 @section('title', 'Dashboard')
 @section('content')
 <div class="space-y-8">

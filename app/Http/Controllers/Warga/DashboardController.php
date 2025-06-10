@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Masyarakat;
+namespace App\Http\Controllers\Warga;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,6 +10,6 @@ class DashboardController extends Controller
 {
     public function showDashboard(): View
     {
-        return view('masyarakat.dashboard');
+        return view('warga.dashboard');
     }
 }
