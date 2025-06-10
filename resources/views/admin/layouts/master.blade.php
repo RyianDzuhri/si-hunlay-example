@@ -93,7 +93,7 @@
                 <li class="{{ request()->routeIs('admin.bantuan') ? 'active' : '' }}"><a href="#">Bantuan</a></li>
                 <li class="{{ request()->routeIs('admin.profile') ? 'active' : '' }}"><a href="#">Profil</a></li>
                 <li>
-                    <form action="{{ route('logout') }}" method="POST" style="margin:0;">
+                    <form action="{{ route('logout') }}" method="GET" style="margin:0;">
                         @csrf
                         <button type="submit" style="background:none;border:none;color:#d00;cursor:pointer;padding:0;">Keluar</button>
                     </form>

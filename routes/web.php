@@ -20,7 +20,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])
     ->name('login')
     ->middleware('guest');
 Route::post('/login', [AuthController::class, 'verify'])->name('auth.verify');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
