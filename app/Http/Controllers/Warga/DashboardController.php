@@ -10,6 +10,7 @@ class DashboardController extends Controller
 {
     public function showDashboard(): View
     {
-        return view('warga.dashboard');
+        $status = 1;
+        return view('warga.dashboard', compact('status'));
     }
 }
