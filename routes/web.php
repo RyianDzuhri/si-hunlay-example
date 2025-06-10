@@ -43,22 +43,31 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     // Tampilkan halaman dashboard admin
     Route::get('/dashboard', [AdminDashboardController::class, 'showDashboard'])->name('admin.dashboard');
 
-    // // Route pengajuan
-    // Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('admin.pengajuan');
+    Route::get('/dashboard', [AdminDashboardController::class, 'showDashboard'])->name('admin.dashboard');
 
-    // // Route penugasan
-    // Route::get('/penugasan', [PenugasanController::class, 'index'])->name('admin.penugasan');
+    // Route pengajuan
+    Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('admin.pengajuan');
 
-    // // Route verifikasi
-    // Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi');
+    // Route penugasan
+    Route::get('/penugasan', [PenugasanController::class, 'index'])->name('admin.penugasan');
 
-    // // Route manajemen user
-    // Route::get('/user', [UserController::class, 'index'])->name('admin.user.index');
+    // Route verifikasi
+    Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi');
+
+    // Route verifikasi
+    Route::get('/bantuan', [VerifikasiController::class, 'index'])->name('admin.bantuan');
+
+    // Route verifikasi
+    Route::get('/profile', [VerifikasiController::class, 'index'])->name('admin.profile');
+
+    // Route manajemen user
+    Route::get('/akun/pengguna', [UserController::class, 'index'])->name('admin.akun.pengguna');
+
+    // Route manajemen user
+    Route::get('/akun/petugas', [UserController::class, 'index'])->name('admin.akun.petugas');
      
 
 });
-
-
 
 //Petugas
 Route::prefix('petugas')->middleware(['auth:petugas'])->group(function () {

@@ -1,8 +1,6 @@
-@extends('admin.layouts.master')
+@extends('admin.layouts.layout')
 
 @section('title', 'Dashboard Admin - SI-Hunlay')
-
-@section('header-title', 'Selamat Datang, Admin')
 
 @section('content')
     <p class="subtitle">Ringkasan data dan aktivitas SI-Hunlay Kota Kendari</p>
