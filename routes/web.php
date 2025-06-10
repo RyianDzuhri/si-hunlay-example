@@ -5,7 +5,9 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Masyarakat\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Petugas\DashboardController as PetugasDashboardController;
 use App\Http\Controllers\Warga\DashboardController as WargaDashboardController;
 use App\Http\Controllers\Warga\ProgresController;
 
@@ -18,7 +20,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])
     ->name('login')
     ->middleware('guest');
 Route::post('/login', [AuthController::class, 'verify'])->name('auth.verify');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
@@ -39,20 +41,26 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
 
     // Tampilkan halaman dashboard admin
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/dashboard', [AdminDashboardController::class, 'showDashboard'])->name('admin.dashboard');
 
-    // Route pengajuan
-    Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('admin.pengajuan');
+    // // Route pengajuan
+    // Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('admin.pengajuan');
 
-    // Route penugasan
-    Route::get('/penugasan', [PenugasanController::class, 'index'])->name('admin.penugasan');
+    // // Route penugasan
+    // Route::get('/penugasan', [PenugasanController::class, 'index'])->name('admin.penugasan');
 
-    // Route verifikasi
-    Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi');
+    // // Route verifikasi
+    // Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi');
 
-    // Route manajemen user
-    Route::get('/user', [UserController::class, 'index'])->name('admin.user.index');
+    // // Route manajemen user
+    // Route::get('/user', [UserController::class, 'index'])->name('admin.user.index');
+     
 
+});
+
+
+
+//Petugas
+Route::prefix('petugas')->middleware(['auth:petugas'])->group(function () {
+   Route::get('/dashboard', [PetugasDashboardController::class, 'showDashboard'])->name('petugas.dashboard');
 });

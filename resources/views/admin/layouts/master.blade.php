@@ -84,14 +84,14 @@
         <aside class="sidebar">
             <h2>🏠 <span style="color: #1E60E1;">SI-Hunlay</span></h2>
             <ul>
-                <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="{{ request()->routeIs('admin.pengajuan') ? 'active' : '' }}"><a href="{{ route('admin.pengajuan') }}">Pengajuan Bantuan</a></li>
-                <li class="{{ request()->routeIs('admin.penugasan') ? 'active' : '' }}"><a href="{{ route('admin.penugasan') }}">Penugasan</a></li>
-                <li class="{{ request()->routeIs('admin.verifikasi') ? 'active' : '' }}"><a href="{{ route('admin.verifikasi') }}">Hasil Verifikasi</a></li>
-                <li class="{{ request()->routeIs('admin.user.*') ? 'active' : '' }}"><a href="{{ route('admin.user.index') }}">Akun Pengguna</a></li>
-                <li class="{{ request()->routeIs('admin.petugas.*') ? 'active' : '' }}"><a href="{{ route('admin.petugas.index') }}">Akun Petugas</a></li>
-                <li class="{{ request()->routeIs('admin.bantuan') ? 'active' : '' }}"><a href="{{ route('admin.bantuan') }}">Bantuan</a></li>
-                <li class="{{ request()->routeIs('admin.profile') ? 'active' : '' }}"><a href="{{ route('admin.profile') }}">Profil</a></li>
+                <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"><a href="#">Dashboard</a></li>
+                <li class="{{ request()->routeIs('admin.pengajuan') ? 'active' : '' }}"><a href="#">Pengajuan Bantuan</a></li>
+                <li class="{{ request()->routeIs('admin.penugasan') ? 'active' : '' }}"><a href="#">Penugasan</a></li>
+                <li class="{{ request()->routeIs('admin.verifikasi') ? 'active' : '' }}"><a href="#">Hasil Verifikasi</a></li>
+                <li class="{{ request()->routeIs('admin.user.*') ? 'active' : '' }}"><a href="#">Akun Pengguna</a></li>
+                <li class="{{ request()->routeIs('admin.petugas.*') ? 'active' : '' }}"><a href="#">Akun Petugas</a></li>
+                <li class="{{ request()->routeIs('admin.bantuan') ? 'active' : '' }}"><a href="#">Bantuan</a></li>
+                <li class="{{ request()->routeIs('admin.profile') ? 'active' : '' }}"><a href="#">Profil</a></li>
                 <li>
                     <form action="{{ route('logout') }}" method="POST" style="margin:0;">
                         @csrf
