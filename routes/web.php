@@ -26,11 +26,31 @@ Route::prefix('masyarakat')->group(function () {
 Route::get('/login', [LoginController::class,'showLoginForm'])->name('auth.login');
 Route::get('/register', [RegisterController::class,'showRegisterForm'])->name('auth.register');
 
+//Admin
 Route::prefix('admin')->group(function () {
+    // Tampilkan halaman login admin
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+
+    // Proses form login admin
     Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
-    Route::get('/password/reset', [AdminLoginController::class, 'showResetForm'])->name('password.request');
+
+    // Tampilkan halaman dashboard admin
     Route::get('/dashboard', function () {
-        return view('admin.dashboard'); // Arahkan ke view dashboard
-    })->name('admin.dashboard')->middleware('auth:admin'); // Tambahkan middleware autentikasi
+        return view('admin.dashboard.dashboard');
+    })->name('admin.dashboard');
+
+    // Route pengajuan
+    Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('admin.pengajuan');
+
+    // Route penugasan
+    Route::get('/penugasan', [PenugasanController::class, 'index'])->name('admin.penugasan');
+
+    // Route verifikasi
+    Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi');
+
+    // Route manajemen user
+    Route::get('/user', [UserController::class, 'index'])->name('admin.user.index');
+
 });
+
+

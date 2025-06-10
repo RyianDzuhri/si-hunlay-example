@@ -36,10 +36,10 @@
                     <span class="error">{{ $message }}</span>
                 @enderror
 
-                <div class="form__options">
+                {{-- <div class="form__options">
                     <label><input type="checkbox" name="remember"> Ingat saya</label>
                     <!-- <a href="{{ route('password.request') }}">Lupa Password?</a> -->
-                </div>
+                </div> --}}
 
                 <button class="button" type="submit">Login</button>
 

@@ -14,21 +14,17 @@ class LoginController extends Controller
     }
 
     public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+{
+    // Validasi input (opsional)
+    $request->validate([
+        'email' => ['required', 'email'],
+        'password' => ['required'],
+    ]);
 
-        if (Auth::guard('admin')->attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/admin/dashboard'); // Arahkan ke dashboard
-        }
+    // Langsung redirect ke dashboard
+    return redirect()->route('admin.dashboard');
+}
 
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->withInput();
-    }
 
     public function showResetForm()
     {
