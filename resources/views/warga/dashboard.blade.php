@@ -1,5 +1,5 @@
 @extends('warga.layout')
-@section('title', 'Dashboard')
+@section('title', 'Dashboard - Warga')
 @section('content')
 <div class="space-y-8">
   <!-- Greeting -->
