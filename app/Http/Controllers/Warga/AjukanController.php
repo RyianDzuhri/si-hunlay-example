@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class PengajuanController extends Controller
+class AjukanController extends Controller
 {
-    public function showPengajuan (): View
+    public function formPengajuan(): View
     {
-        return view('warga.pengajuan-saya.index');
+        return view('warga.ajukan.index');
     }
 }

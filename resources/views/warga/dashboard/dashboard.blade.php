@@ -16,7 +16,7 @@
         <h3 class="text-lg font-semibold">Ajukan Bantuan</h3>
       </div>
       <p class="text-sm text-gray-600 mb-4">Buat Pengajuan bantuan rumah tidak layak huni baru</p>
-      <a href="{{ route('warga.pengajuan') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">Ajukan Sekarang</a>
+      <a href="{{ route('warga.ajukan') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">Ajukan Sekarang</a>
     </div>
     <div class="bg-white p-6 rounded-xl shadow">
       <div class="flex items-center gap-3 mb-4">
