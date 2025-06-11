@@ -12,8 +12,7 @@ class CreateWargaTable extends Migration
             $table->unsignedBigInteger('nik')->primary();
             $table->date('tanggalLahir')->nullable();
             $table->enum('jenisKelamin', ['Laki-laki', 'Perempuan'])->nullable();
-            $table->string('pekerjaan'); 
-            $table->double('penghasilan')->nullable();
+            $table->string('no_hp'); 
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

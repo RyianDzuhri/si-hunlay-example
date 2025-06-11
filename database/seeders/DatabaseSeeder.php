@@ -49,8 +49,7 @@ class DatabaseSeeder extends Seeder
             'nik' => 1234567890123456,
             'tanggalLahir' => '1990-05-15',
             'jenisKelamin' => 'Laki-laki',
-            'pekerjaan' => 'Petani',
-            'penghasilan' => 3000000,
+            'no_hp' => '08123456789',
             'id_user' => $userWarga->id,
         ]);
     }
