@@ -65,9 +65,9 @@
               </a>
               </li>
               <li>
-              <a href="{{ route('warga.profile') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg">
-                  <img src="{{ asset('images/Group.png') }}" alt="Profile Icon" class="w-5 h-5">
-                  Profile
+              <a href="{{ route('warga.profil') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg">
+                  <img src="{{ asset('images/Group.png') }}" alt="Profil Icon" class="w-5 h-5">
+                  Profil
               </a>
               </li>
               <li>
@@ -92,7 +92,7 @@
           <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-semibold">
             KR
           </div>
-          <span class="text-gray-700 font-semibold">Ryian Dzuhri</span>
+          <span class="text-gray-700 font-semibold">{{ $user->nama }}</span>
         </div>
       </header>
 

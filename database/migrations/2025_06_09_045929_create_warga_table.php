@@ -9,7 +9,8 @@ class CreateWargaTable extends Migration
     public function up(): void
     {
         Schema::create('warga', function (Blueprint $table) {
-            $table->unsignedBigInteger('nik')->primary();
+            $table->unsignedBigInteger('no_kk')->primary();
+            $table->unsignedBigInteger('nik')->unique();
             $table->date('tanggalLahir')->nullable();
             $table->enum('jenisKelamin', ['Laki-laki', 'Perempuan'])->nullable();
             $table->string('no_hp'); 

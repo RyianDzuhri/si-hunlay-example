@@ -4,7 +4,7 @@
 <div class="space-y-8">
     {{-- Greeting --}}
     <div>
-        <h2 class="text-2xl font-bold text-black">Halo, {{ $user->nama_lengkap }}</h2>
+        <h2 class="text-2xl font-bold text-black">Halo, {{ $user->nama }}</h2>
         <p class="text-gray-600">Selamat datang di dashboard Si-Hunlay</p>
     </div>
 

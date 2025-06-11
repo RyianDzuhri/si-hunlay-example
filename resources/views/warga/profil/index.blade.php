@@ -18,7 +18,6 @@
 </style>
 @endpush
 
-
 @section('content')
 <div class="container-fluid py-4 px-4">
 
@@ -47,7 +46,7 @@
                         {{-- Ikon profil default menggunakan Font Awesome --}}
                         <i class="fas fa-user-circle fa-6x text-secondary"></i>
                     </div>
-                    <h5 class="card-title mb-0">Ryian Dzuhri</h5>
+                    <h5 class="card-title mb-0">{{ $user->nama }}</h5>
                 </div>
             </div>
         </div>
@@ -58,22 +57,27 @@
 
                     <div class="info-item mb-3">
                         <small>Nama Lengkap</small>
-                        <p>Ryian Dzuhri</p>
+                        <p>{{ $user->nama }}</p>
+                    </div>
+                    <hr>
+                    <div class="info-item mb-3">
+                        <small>No. KK</small>
+                        <p>{{ $warga?->no_kk ?? 'Data No. KK tidak ditemukan' }}</p>
                     </div>
                     <hr>
                     <div class="info-item mb-3">
                         <small>NIK</small>
-                        <p>1234567837381928</p>
+                        <p>{{ $warga?->nik ?? 'Data NIK tidak ditemukan' }}</p>
                     </div>
                     <hr>
                     <div class="info-item mb-3">
                         <small>Email</small>
-                        <p>ryiandzuhri@gmail.com</p>
+                        <p>{{ $user ->email }}</p>
                     </div>
                     <hr>
                     <div class="info-item">
                         <small>No. HP</small>
-                        <p>085213131100</p>
+                        <p>{{ $warga?->no_hp ?? 'Data No. HP tidak ditemukan' }}</p>
                     </div>
 
                 </div>

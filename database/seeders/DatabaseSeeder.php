@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'warga',
         ]);
         Warga::create([
+            'no_kk' => 1236416246,
             'nik' => 1234567890123456,
             'tanggalLahir' => '1990-05-15',
             'jenisKelamin' => 'Laki-laki',
