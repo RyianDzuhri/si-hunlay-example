@@ -10,6 +10,7 @@ class ProgressController extends Controller
 {
     public function showProgress (): View
     {
-        return view('warga.progress');
+        $status = 1;
+        return view('warga.progress.index', compact('status'));
     }
 }

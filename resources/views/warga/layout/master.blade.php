@@ -41,7 +41,7 @@
               </a>
             </li>
             <li>
-              <a href="#" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('pengajuan-saya') ? 'bg-blue-100 font-semibold' : '' }}">
+              <a href="{{ route('warga.pengajuan') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('pengajuan-saya') ? 'bg-blue-100 font-semibold' : '' }}">
                 <img src="{{ asset('images/Detail.png') }}" alt="Pengajuan Saya Icon" class="w-5 h-5">
                 Pengajuan Saya
               </a>

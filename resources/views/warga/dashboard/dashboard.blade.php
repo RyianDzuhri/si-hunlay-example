@@ -1,5 +1,5 @@
-@extends('warga.layout')
-@section('title', 'Dashboard - Warga')
+@extends('warga.layout.master')
+@section('title', 'Warga - Dashboard')
 @section('content')
 <div class="space-y-8">
   <!-- Greeting -->
@@ -16,7 +16,7 @@
         <h3 class="text-lg font-semibold">Ajukan Bantuan</h3>
       </div>
       <p class="text-sm text-gray-600 mb-4">Buat Pengajuan bantuan rumah tidak layak huni baru</p>
-      <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">Ajukan Sekarang</a>
+      <a href="{{ route('warga.pengajuan') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm">Ajukan Sekarang</a>
     </div>
     <div class="bg-white p-6 rounded-xl shadow">
       <div class="flex items-center gap-3 mb-4">
@@ -80,11 +80,11 @@
                           @elseif ($i == 3) 
                               Jadwal<br>Survei
                           @elseif ($i == 4) 
-                              Survei<br>Lapangan
+                              Hasil<br>Survei
                           @elseif ($i == 5) 
                               Keputusan<br>Bantuan
                           @else 
-                              Selesai
+                              Pelaksanaan<br>Bantuan
                           @endif
                       </div>
                   </div>
