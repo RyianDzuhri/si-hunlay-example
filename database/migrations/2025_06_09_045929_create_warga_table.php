@@ -15,8 +15,8 @@ class CreateWargaTable extends Migration
             $table->string('pekerjaan'); 
             $table->double('penghasilan')->nullable();
             $table->unsignedBigInteger('id_user');
-
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

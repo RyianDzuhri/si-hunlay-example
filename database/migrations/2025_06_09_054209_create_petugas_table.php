@@ -13,7 +13,7 @@ class CreatePetugasTable extends Migration
             $table->string('wilayahTugas', 100);
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-            // Jika ingin timestamps bisa ditambahkan, tapi dari skema kamu tidak ada
+            $table->timestamps();
         });
     }
 
