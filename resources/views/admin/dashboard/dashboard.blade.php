@@ -2,8 +2,20 @@
 
 @section('title', 'Dashboard Admin - SI-Hunlay')
 
+
+
+
 @section('content')
-    <p class="subtitle">Ringkasan data dan aktivitas SI-Hunlay Kota Kendari</p>
+<div style="margin-bottom: 20px;">
+    <h1 style="font-size: 32px; font-weight: bold; color: #000000;">
+        Selamat Datang Admin
+    </h1>
+    <p style="font-size: 16px; color: #555;">
+        Ringkasan data dan aktivitas SI-Hunlay Kota Kendari
+    </p>
+</div>
+
+    
 
     <section class="stats" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:20px; margin-bottom:20px;">
         @php
