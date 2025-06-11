@@ -2,23 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Petugas extends Model
 {
+    use HasFactory;
+    
     protected $table = 'petugas';
-
     protected $primaryKey = 'nip';
     public $incrementing = false;
-    protected $keyType = 'int';
+    protected $keyType = 'integer';
 
-    protected $fillable = ['nip', 'wilayahTugas', 'id_user'];
+    protected $fillable = ['nip', 'id_user', 'wilayahTugas'];
 
-    public $timestamps = false;
-
-    public function user(): BelongsTo
+    // Relasi "dimiliki oleh" ke User
+    public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'id_user', 'id');
     }
 }

@@ -3,40 +3,45 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    protected $table = 'users'; // Jika nama tabel kamu bukan 'users'
+    use Notifiable;
 
     protected $fillable = [
+        'nama_lengkap',
         'email',
         'password',
-        'nama',
         'role',
     ];
 
-    public $timestamps = true;
-
-    // Relasi ke AdminDinas
-    public function adminDinas(): HasOne
-    {
-        return $this->hasOne(Admin::class, 'id_user');
-    }
-
-    // Relasi ke PetugasLapangan
-    public function petugasLapangan(): HasOne
-    {
-        return $this->hasOne(Petugas::class, 'id_user');
-    }
-
-    // Relasi ke Warga
-    public function warga(): HasOne
-    {
-        return $this->hasOne(Warga::class, 'id_user');
-    }
-
     protected $hidden = [
-        'password'
+        'password',
     ];
+
+    // Relasi One-to-One ke profil admin
+    public function adminDinas()
+    {
+        return $this->hasOne(AdminDinas::class, 'user_id', 'id');
+    }
+
+    // Relasi One-to-One ke profil petugas
+    public function petugas()
+    {
+        // 'id_user' adalah foreign key di tabel petugas, 'id' adalah local key di tabel users
+        return $this->hasOne(Petugas::class, 'id_user', 'id');
+    }
+
+    // Relasi One-to-One ke profil warga
+    public function warga()
+    {
+        return $this->hasOne(Warga::class, 'id_user', 'id');
+    }
+
+    // Relasi One-to-Many ke histori (seorang staf bisa punya banyak histori)
+    public function historiPengajuan()
+    {
+        return $this->hasMany(HistoriPengajuan::class, 'user_id', 'id');
+    }
 }

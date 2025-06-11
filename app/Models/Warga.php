@@ -2,30 +2,31 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Warga extends Model
 {
-    protected $table = 'warga';
+    use HasFactory;
 
+    protected $table = 'warga';
     protected $primaryKey = 'nik';
     public $incrementing = false;
-    protected $keyType = 'int';
+    protected $keyType = 'integer';
 
     protected $fillable = [
-        'nik',
-        'tanggalLahir',
-        'jenisKelamin',
-        'pekerjaan',
-        'penghasilan',
-        'id_user'
+        'nik', 'id_user', 'no_kk', 'tanggalLahir', 'jenisKelamin', 'no_hp'
     ];
-
-    public $timestamps = false;
-
-    public function user(): BelongsTo
+    
+    // Relasi "dimiliki oleh" ke User
+    public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'id_user', 'id');
+    }
+
+    // Relasi One-to-One ke Pengajuan
+    public function pengajuan()
+    {
+        return $this->hasOne(Pengajuan::class, 'warga_nik', 'nik');
     }
 }

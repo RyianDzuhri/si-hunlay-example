@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\Admin;
+use App\Models\AdminDinas;
 use App\Models\Petugas;
 use App\Models\Warga;
 
@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Admin Dinas',
             'role' => 'admin_dinas',
         ]);
-        Admin::create([
+        AdminDinas::create([
             'nip' => 1234567890,
             'id_user' => $userAdmin->id,
         ]);
