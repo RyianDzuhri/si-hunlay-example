@@ -9,7 +9,7 @@
 </head>
 <body class="bg-gray-100 text-gray-900">
     <div class="max-w-5xl mx-auto px-4 py-6">
-        <div class="mb-4 text-sm text-gray-500">Dashboard > Pengajuan RTLH</div>
+        <div class="mb-4 text-sm text-gray-500"><a href="{{ route('warga.dashboard') }}">Dashboard</a> > Pengajuan RTLH</div>
         <h1 class="text-2xl font-bold mb-1">Formulir Pengajuan Bantuan RTLH</h1>
         <p class="text-gray-600 mb-6">Silahkan lengkapi formulir di bawah ini dengan data yang benar</p>
 

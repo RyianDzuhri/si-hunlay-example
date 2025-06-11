@@ -11,6 +11,7 @@ use App\Http\Controllers\Petugas\DashboardController as PetugasDashboardControll
 use App\Http\Controllers\Warga\AjukanController;
 use App\Http\Controllers\Warga\DashboardController as WargaDashboardController;
 use App\Http\Controllers\Warga\PengajuanController;
+use App\Http\Controllers\Warga\ProfileController;
 use App\Http\Controllers\Warga\ProgressController;
 
 Route::get('/', function () {
@@ -28,12 +29,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
-//Masyarakat
+//Warga
 Route::prefix('warga')->middleware(['auth:warga'])->group(function () {
    Route::get('/dashboard', [WargaDashboardController::class, 'showDashboard'])->name('warga.dashboard');
    Route::get('/progress', [ProgressController::class, 'showProgress'])->name('warga.progress');
    Route::get('/ajukan', [AjukanController::class, 'formPengajuan'])->name('warga.ajukan');
    Route::get('/pengajuan-saya', [PengajuanController::class, 'showPengajuan'])->name('warga.pengajuan');
+   Route::get('/profile', [ProfileController::class, 'showProfile'])->name('warga.profile');
 });
 
 
