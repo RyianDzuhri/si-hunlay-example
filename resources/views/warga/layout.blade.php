@@ -69,7 +69,7 @@
               </a>
               </li>
               <li>
-              <form method="GET" action="{{ route('logout') }}">
+              <form method="POST" action="{{ route('logout') }}">
                   @csrf
                   <button type="submit" class="flex items-center gap-2 w-full text-left text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg">
                   <img src="{{ asset('images/Out.png') }}" alt="Keluar Icon" class="w-5 h-5">

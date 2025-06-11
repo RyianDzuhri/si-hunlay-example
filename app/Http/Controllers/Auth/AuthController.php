@@ -36,15 +36,20 @@ class AuthController extends Controller
         // dd($request->validated());
     }
 
-    public function logout(): RedirectResponse
-    {
-        if (Auth::guard('admin_dinas')->check()) {
-            Auth::guard('admin_dinas')->logout();
-        } else if (Auth::guard('warga')->check()) {
-            Auth::guard('warga')->logout();
-        } else if (Auth::guard('petugas')->check()) {
-            Auth::guard('petugas')->logout();
-        }
-        return redirect(route('login'));
+    public function logout(Request $request): RedirectResponse
+{
+    if (Auth::guard('admin_dinas')->check()) {
+        Auth::guard('admin_dinas')->logout();
+    } else if (Auth::guard('warga')->check()) {
+        Auth::guard('warga')->logout();
+    } else if (Auth::guard('petugas')->check()) {
+        Auth::guard('petugas')->logout();
     }
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect(route('login'));
+}
+
 }
