@@ -134,7 +134,7 @@
         </div>
         <button type="submit" class="btn">Login</button>
         <div class="register">
-          Belum memiliki akun? <a href="#">Daftar</a>
+          Belum memiliki akun? <a href="{{ route('register') }}">Daftar</a>
         </div>
       </form>
     </div>

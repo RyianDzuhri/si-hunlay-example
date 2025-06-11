@@ -148,7 +148,7 @@
       <button type="submit" class="btn">Daftar</button>
     </form>
     <div class="login-link">
-      Sudah punya akun? <a href="#">Login</a>
+      Sudah punya akun? <a href="{{ route('login') }}">Login</a>
     </div>
   </div>
 </body>
