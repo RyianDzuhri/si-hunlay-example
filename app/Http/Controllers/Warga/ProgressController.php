@@ -6,16 +6,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class ProgressController extends Controller // Sesuaikan nama controller
+class ProgressController extends Controller
 {
     public function showProgress()
     {
+        $user = Auth::user(); // ✅ ambil user
+
         // Ambil data pengajuan milik warga yang login
-        $pengajuan = Auth::user()->warga?->pengajuan;
-        
+        $pengajuan = $user->warga?->pengajuan;
+
         // Jika tidak ada pengajuan, kirim status 0
         if (!$pengajuan) {
-            return view('warga.progress.index', ['currentStep' => 0, 'pengajuan' => null]);
+            return view('warga.progress.index', [
+                'user' => $user, // ✅ dikirim juga saat kosong
+                'currentStep' => 0,
+                'pengajuan' => null,
+                'statusMapping' => [],
+            ]);
         }
 
         $statusMapping = [
@@ -47,14 +54,10 @@ class ProgressController extends Controller // Sesuaikan nama controller
         ];
 
         $currentStatusName = $pengajuan->status;
-        $currentStep = 0;
-        
-        // Menentukan langkah saat ini berdasarkan status
-        if (isset($statusMapping[$currentStatusName])) {
-            $currentStep = $statusMapping[$currentStatusName]['step'];
-        }
+        $currentStep = $statusMapping[$currentStatusName]['step'] ?? 0;
 
         return view('warga.progress.index', [
+            'user' => $user, // ✅ variabel ini penting
             'pengajuan' => $pengajuan,
             'statusMapping' => $statusMapping,
             'currentStep' => $currentStep,
