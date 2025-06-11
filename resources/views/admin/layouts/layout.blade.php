@@ -19,16 +19,17 @@
     </script>
 </head>
 <body class="bg-gray-100 font-poppins">
-    <div class="min-h-screen flex">
+    <!-- Container -->
+    <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-md">
+        <aside class="w-64 bg-white shadow-md fixed inset-y-0 left-0 z-10">
             <div class="p-4 border-b border-gray-200">
                 <div class="flex items-center gap-2">
                     <img src="{{ asset('images/logoHome.png') }}" alt="Logo SI-Hunlay" class="w-8 h-8">
                     <h1 class="text-xl font-bold text-blue-700">SI-Hunlay</h1>
                 </div>
             </div>
-            <nav class="p-4">
+            <nav class="p-4 overflow-y-auto h-[calc(100vh-64px)]">
                 <p class="text-xs text-gray-400 uppercase font-semibold mb-2">Menu Utama</p>
                 <ul class="space-y-2">
                     <li>
@@ -45,7 +46,7 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.penugasan') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('penugasan') ? 'bg-blue-100 font-semibold' : '' }}">
-                            <img src="{{ asset('images/Detail.png') }}" alt="Penugasan Icon" class="w-5 h-5">
+                            <img src="{{ asset('images/penugasan.png') }}" alt="Penugasan Icon" class="w-4 h-4">
                             Penugasan
                         </a>
                     </li>
@@ -57,13 +58,13 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.akun.pengguna') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('akun-pengguna') ? 'bg-blue-100 font-semibold' : '' }}">
-                            <img src="{{ asset('images/Group.png') }}" alt="Akun Pengguna Icon" class="w-4 h-4">
+                            <img src="{{ asset('images/group2.png') }}" alt="Akun Pengguna Icon" class="w-4 h-4">
                             Akun Pengguna
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('admin.akun.petugas') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('akun-petugas') ? 'bg-blue-100 font-semibold' : '' }}">
-                            <img src="{{ asset('images/Group.png') }}" alt="Akun Petugas Icon" class="w-4 h-4">
+                            <img src="{{ asset('images/group3.png') }}" alt="Akun Petugas Icon" class="w-4 h-4">
                             Akun Petugas
                         </a>
                     </li>
@@ -97,22 +98,30 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col">
+        <div class="flex-1 ml-64 flex flex-col h-screen">
             <!-- Header -->
-            <header class="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
+            <header class="bg-white shadow-sm px-6 py-4 flex justify-between items-center sticky top-0 z-10">
                 <h1 class="text-2xl font-semibold text-gray-800">@yield('header-title', 'SI-Hunlay - Admin Panel')</h1>
                 <div class="flex items-center gap-4">
                     <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-semibold">
                         KR
                     </div>
-                    <span class="text-gray-700 font-semibold">{{ Auth::user()->name ?? 'Krisnaaaaa' }}</span>
+                    <span class="text-gray-700 font-semibold flex items-center gap-1">
+                        {{ Auth::user()->name ?? 'Krisnaaaaa' }}
+                        <img src="{{ asset('images/arrow-ios-back.png') }}" alt="Chevron Down" class="w-4 h-4">
+                    </span>
                 </div>
             </header>
 
             <!-- Page Content -->
-            <main class="p-6">
+            <main class="p-6 overflow-y-auto flex-1">
                 @yield('content')
             </main>
+
+            <!-- Footer -->
+            <footer class="bg-white shadow-sm px-6 py-4 text-center text-sm text-gray-500">
+                &copy; {{ date('Y') }} SI-Hunlay. Seluruh hak cipta dilindungi.
+            </footer>
         </div>
     </div>
 </body>
