@@ -1,5 +1,3 @@
-{{-- Pastikan ini di dalam file Blade Anda, misalnya resources/views/warga/ajukan/index.blade.php --}}
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -45,7 +43,8 @@
         <h1 class="text-2xl font-bold mb-1">Formulir Pengajuan Bantuan RTLH</h1>
         <p class="text-gray-600 mb-6">Silahkan lengkapi formulir di bawah ini dengan data yang benar</p>
 
-        <form action="#" method="POST">
+        {{-- Penting: Tambahkan enctype="multipart/form-data" untuk upload file --}}
+        <form action="#" method="POST" enctype="multipart/form-data">
             @csrf
 
             <!-- Data Lokasi -->
@@ -190,6 +189,135 @@
                 </div>
             </div>
 
+            <!-- Dokumen Pendukung - Bagian Baru -->
+            <div class="bg-white shadow rounded-lg p-6 mb-6">
+                <h2 class="text-lg font-semibold mb-4 border-l-4 border-blue-500 pl-2">Dokumen Pendukung</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Fotokopi KTP -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Fotokopi KTP</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="file_ktp" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
+                                    <p class="text-xs text-gray-500">PDF, JPG, PNG (MAX. 5MB)</p>
+                                </div>
+                                <input id="file_ktp" type="file" name="file_ktp" class="hidden" accept=".pdf, .jpg, .jpeg, .png" onchange="displayFileName(this, 'file_ktp_name')" />
+                            </label>
+                        </div>
+                        <span id="file_ktp_name" class="block text-sm text-gray-600 mt-2"></span>
+                    </div>
+
+                    <!-- Fotokopi Kartu Keluarga (KK) -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Fotokopi Kartu Keluarga (KK)</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="file_kk" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
+                                    <p class="text-xs text-gray-500">PDF, JPG, PNG (MAX. 5MB)</p>
+                                </div>
+                                <input id="file_kk" type="file" name="file_kk" class="hidden" accept=".pdf, .jpg, .jpeg, .png" onchange="displayFileName(this, 'file_kk_name')" />
+                            </label>
+                        </div>
+                        <span id="file_kk_name" class="block text-sm text-gray-600 mt-2"></span>
+                    </div>
+
+                    <!-- Surat Keterangan Tidak Mampu (SKTM) -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Surat Keterangan Tidak Mampu (SKTM)</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="file_sktm" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
+                                    <p class="text-xs text-gray-500">PDF, JPG, PNG (MAX. 5MB)</p>
+                                </div>
+                                <input id="file_sktm" type="file" name="file_sktm" class="hidden" accept=".pdf, .jpg, .jpeg, .png" onchange="displayFileName(this, 'file_sktm_name')" />
+                            </label>
+                        </div>
+                        <span id="file_sktm_name" class="block text-sm text-gray-600 mt-2"></span>
+                    </div>
+
+                    <!-- Bukti Kepemilikan Rumah -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Bukti Kepemilikan Rumah (Sertifikat/SPPT/Surat Keterangan)</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="file_kepemilikan_rumah" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
+                                    <p class="text-xs text-gray-500">PDF, JPG, PNG (MAX. 5MB)</p>
+                                </div>
+                                <input id="file_kepemilikan_rumah" type="file" name="file_kepemilikan_rumah" class="hidden" accept=".pdf, .jpg, .jpeg, .png" onchange="displayFileName(this, 'file_kepemilikan_rumah_name')" />
+                            </label>
+                        </div>
+                        <span id="file_kepemilikan_rumah_name" class="block text-sm text-gray-600 mt-2"></span>
+                    </div>
+
+                    <!-- Foto Rumah Tampak Depan -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Foto Rumah Tampak Depan</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="file_foto_depan" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
+                                    <p class="text-xs text-gray-500">JPG, PNG (MAX. 5MB)</p>
+                                </div>
+                                <input id="file_foto_depan" type="file" name="file_foto_depan" class="hidden" accept=".jpg, .jpeg, .png" onchange="displayFileName(this, 'file_foto_depan_name')" />
+                            </label>
+                        </div>
+                        <span id="file_foto_depan_name" class="block text-sm text-gray-600 mt-2"></span>
+                    </div>
+
+                    <!-- Foto Rumah Tampak Belakang -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Foto Rumah Tampak Belakang</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="file_foto_belakang" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
+                                    <p class="text-xs text-gray-500">JPG, PNG (MAX. 5MB)</p>
+                                </div>
+                                <input id="file_foto_belakang" type="file" name="file_foto_belakang" class="hidden" accept=".jpg, .jpeg, .png" onchange="displayFileName(this, 'file_foto_belakang_name')" />
+                            </label>
+                        </div>
+                        <span id="file_foto_belakang_name" class="block text-sm text-gray-600 mt-2"></span>
+                    </div>
+
+                    <!-- Foto Bagian Rumah yang Rusak -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Foto Bagian Rumah yang Rusak</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="file_foto_rusak" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
+                                    <p class="text-xs text-gray-500">JPG, PNG (MAX. 5MB)</p>
+                                </div>
+                                {{-- Perubahan: Menambahkan 'multiple' dan mengubah nama input menjadi array 'file_foto_rusak[]' --}}
+                                <input id="file_foto_rusak" type="file" name="file_foto_rusak[]" class="hidden" accept=".jpg, .jpeg, .png" multiple onchange="displayFileName(this, 'file_foto_rusak_name')" />
+                            </label>
+                        </div>
+                        <span id="file_foto_rusak_name" class="block text-sm text-gray-600 mt-2"></span>
+                    </div>
+
+                </div> {{-- End of grid for Dokumen Pendukung --}}
+            </div> {{-- End of Dokumen Pendukung section --}}
+
+
             <!-- Tombol Submit -->
             <div class="text-right">
                 <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
@@ -250,6 +378,19 @@
                 }
             });
         });
+
+        // Fungsi JavaScript untuk menampilkan nama file yang dipilih
+        // Diperbarui untuk menangani multiple files
+        function displayFileName(input, targetId) {
+            const fileNameSpan = document.getElementById(targetId);
+            if (input.files.length > 1) {
+                fileNameSpan.textContent = `${input.files.length} file terpilih`;
+            } else if (input.files.length === 1) {
+                fileNameSpan.textContent = `File terpilih: ${input.files[0].name}`;
+            } else {
+                fileNameSpan.textContent = '';
+            }
+        }
     </script>
 </body>
 </html>
