@@ -9,6 +9,7 @@ use App\Http\Controllers\Warga\DashboardController as WargaDashboardController;
 use App\Http\Controllers\Warga\PengajuanController;
 use App\Http\Controllers\Warga\ProfilController;
 use App\Http\Controllers\Warga\ProgressController;
+use App\Http\Controllers\Admin\PengajuanController as AdminPengajuanController;
 
 Route::get('/', function () {
     return view('landing.welcome');
@@ -45,7 +46,7 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'showDashboard'])->name('admin.dashboard');
 
     // Route pengajuan
-    Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('admin.pengajuan');
+    Route::get('/pengajuan', [AdminPengajuanController::class, 'index'])->name('admin.pengajuan');
 
     // Route penugasan
     Route::get('/penugasan', [PenugasanController::class, 'index'])->name('admin.penugasan');
