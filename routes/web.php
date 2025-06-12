@@ -48,6 +48,12 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     // Route pengajuan
     Route::get('/pengajuan', [AdminPengajuanController::class, 'index'])->name('admin.pengajuan');
 
+    // Halaman pengajuan dengan filter
+    Route::get('/pengajuan', [AdminPengajuanController::class, 'index'])->name('admin.pengajuan');
+
+    // Export data pengajuan
+    Route::get('/pengajuan/export', [AdminPengajuanController::class, 'export'])->name('pengajuan.export');
+
     // Route penugasan
     Route::get('/penugasan', [PenugasanController::class, 'index'])->name('admin.penugasan');
 
