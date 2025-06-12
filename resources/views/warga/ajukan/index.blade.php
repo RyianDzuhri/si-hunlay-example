@@ -8,9 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Contoh font Inter, jika Anda ingin menggunakannya -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tambahkan link Google Fonts untuk Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            /* Mengubah font-family menjadi Poppins */
+            font-family: 'Poppins', sans-serif;
             background-color: #f3f4f6;
             display: flex;
             justify-content: center;
@@ -192,7 +195,8 @@
             <!-- Dokumen Pendukung - Bagian Baru -->
             <div class="bg-white shadow rounded-lg p-6 mb-6">
                 <h2 class="text-lg font-semibold mb-4 border-l-4 border-blue-500 pl-2">Dokumen Pendukung</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {{-- Perubahan: Mengubah layout menjadi satu kolom saja --}}
+                <div class="grid grid-cols-1 gap-6">
 
                     <!-- Fotokopi KTP -->
                     <div>
@@ -201,7 +205,7 @@
                             <label for="file_ktp" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
-                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
                                     <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
                                     <p class="text-xs text-gray-500">PDF, JPG, PNG (MAX. 5MB)</p>
                                 </div>
@@ -218,7 +222,7 @@
                             <label for="file_kk" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
-                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
                                     <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
                                     <p class="text-xs text-gray-500">PDF, JPG, PNG (MAX. 5MB)</p>
                                 </div>
@@ -235,7 +239,7 @@
                             <label for="file_sktm" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
-                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
                                     <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
                                     <p class="text-xs text-gray-500">PDF, JPG, PNG (MAX. 5MB)</p>
                                 </div>
@@ -252,7 +256,7 @@
                             <label for="file_kepemilikan_rumah" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
-                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
                                     <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
                                     <p class="text-xs text-gray-500">PDF, JPG, PNG (MAX. 5MB)</p>
                                 </div>
@@ -269,7 +273,7 @@
                             <label for="file_foto_depan" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
-                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
                                     <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
                                     <p class="text-xs text-gray-500">JPG, PNG (MAX. 5MB)</p>
                                 </div>
@@ -286,7 +290,7 @@
                             <label for="file_foto_belakang" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
-                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
                                     <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
                                     <p class="text-xs text-gray-500">JPG, PNG (MAX. 5MB)</p>
                                 </div>
@@ -303,7 +307,7 @@
                             <label for="file_foto_rusak" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     {{-- Mengganti ikon SVG dengan tag <img> untuk ikon lokal --}}
-                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
+                                    <img src="{{ asset('images/img-icon.png') }}" alt="Upload Icon" alt="Upload Icon" class="w-8 h-8 mb-4 text-gray-500">
                                     <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> atau seret dan lepas</p>
                                     <p class="text-xs text-gray-500">JPG, PNG (MAX. 5MB)</p>
                                 </div>
