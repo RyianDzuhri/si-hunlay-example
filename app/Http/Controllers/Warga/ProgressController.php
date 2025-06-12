@@ -10,15 +10,13 @@ class ProgressController extends Controller
 {
     public function showProgress()
     {
-        $user = Auth::user(); // ✅ ambil user
+        $user = Auth::user();
 
-        // Ambil data pengajuan milik warga yang login
         $pengajuan = $user->warga?->pengajuan;
 
-        // Jika tidak ada pengajuan, kirim status 0
         if (!$pengajuan) {
             return view('warga.progress.index', [
-                'user' => $user, // ✅ dikirim juga saat kosong
+                'user' => $user,
                 'currentStep' => 0,
                 'pengajuan' => null,
                 'statusMapping' => [],
@@ -57,7 +55,7 @@ class ProgressController extends Controller
         $currentStep = $statusMapping[$currentStatusName]['step'] ?? 0;
 
         return view('warga.progress.index', [
-            'user' => $user, // ✅ variabel ini penting
+            'user' => $user,
             'pengajuan' => $pengajuan,
             'statusMapping' => $statusMapping,
             'currentStep' => $currentStep,
