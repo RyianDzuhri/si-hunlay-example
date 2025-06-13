@@ -9,13 +9,12 @@ class CreateWargaTable extends Migration
     public function up(): void
     {
         Schema::create('warga', function (Blueprint $table) {
-            $table->unsignedBigInteger('no_kk')->primary();
-            $table->unsignedBigInteger('nik')->unique();
+            $table->unsignedBigInteger('nik')->primary();
+            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+            $table->string('no_kk', 20)->unique();
             $table->date('tanggalLahir')->nullable();
             $table->enum('jenisKelamin', ['Laki-laki', 'Perempuan'])->nullable();
-            $table->string('no_hp'); 
-            $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->string('no_hp', 20)->nullable();
             $table->timestamps();
         });
     }

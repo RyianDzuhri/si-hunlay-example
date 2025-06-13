@@ -14,14 +14,31 @@ class Pengajuan extends Model
     protected $fillable = [
         'warga_nik',
         'petugas_nip',
+        'kelurahan_id', 
+        'alamat_lengkap',
         'tgl_pengajuan',
         'status',
-        'kecamatan_id',
-        'kelurahan_id',
-        'alamat_lengkap',
         'jumlah_penghuni',
         'pekerjaan',
         'penghasilan',
+        'kondisi_atap',
+        'kondisi_dinding',
+        'kondisi_lantai',
+        'ventilasi_pencahayaan',
+        'sanitasi_airbersih',
+        'luas_rumah',
+    ];
+
+    protected $casts = [
+        'tgl_pengajuan'         => 'date',
+        'penghasilan'           => 'double',
+        'luas_rumah'            => 'decimal:2',
+        'jumlah_penghuni'       => 'integer',
+        'kondisi_atap'          => 'array',
+        'kondisi_dinding'       => 'array',
+        'kondisi_lantai'        => 'array',
+        'ventilasi_pencahayaan' => 'array',
+        'sanitasi_airbersih'    => 'array',
     ];
 
     public function warga()
@@ -34,14 +51,9 @@ class Pengajuan extends Model
         return $this->belongsTo(Petugas::class, 'petugas_nip', 'nip');
     }
 
-    public function kecamatan()
-    {
-        return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
-    }
-
     public function kelurahan()
     {
-        return $this->belongsTo(Kelurahan::class, 'kelurahan_id');
+        return $this->belongsTo(Kelurahan::class, 'kelurahan_id', 'id');
     }
     
     public function dokumen()
@@ -49,12 +61,12 @@ class Pengajuan extends Model
         return $this->hasMany(Dokumen::class, 'pengajuan_id', 'id');
     }
 
-    public function hasilSurvey()
+    public function hasil_survey()
     {
         return $this->hasOne(HasilSurvey::class, 'pengajuan_id', 'id');
     }
 
-    public function histori()
+    public function histori_pengajuan()
     {
         return $this->hasMany(HistoriPengajuan::class, 'pengajuan_id', 'id');
     }

@@ -32,7 +32,8 @@ Route::prefix('warga')->middleware(['auth:warga'])->group(function () {
    Route::get('/dashboard', [WargaDashboardController::class, 'showDashboard'])->name('warga.dashboard');
    Route::get('/progress', [ProgressController::class, 'showProgress'])->name('warga.progress');
    Route::get('/ajukan', [AjukanController::class, 'formPengajuan'])->name('warga.ajukan');
-   Route::get('/get-kelurahan-by-kecamatan/{kecamatanId}', [AjukanController::class, 'getKelurahanByKecamatan'])->name('get-kelurahan-by-kecamatan');;
+   Route::post('/ajukan', [AjukanController::class, 'store'])->name('warga.pengajuan.store');
+   Route::get('/get-kelurahan-by-kecamatan/{kecamatan_id}', [AjukanController::class, 'getKelurahan'])->name('get.kelurahan');
    Route::get('/pengajuan-saya', [PengajuanController::class, 'showPengajuan'])->name('warga.pengajuan');
    Route::get('/profil', [ProfilController::class, 'showProfile'])->name('warga.profil');
 });

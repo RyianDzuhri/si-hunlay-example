@@ -57,7 +57,7 @@ class KecamatanKelurahanSeeder extends Seeder
         foreach ($kendariData as $kecamatanNama => $kelurahan) {
             // Insert Kecamatan data
             $kecamatanId = DB::table('kecamatan')->insertGetId([
-                'nama' => $kecamatanNama,
+                'nama_kecamatan' => $kecamatanNama,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
@@ -66,7 +66,7 @@ class KecamatanKelurahanSeeder extends Seeder
             foreach ($kelurahan as $kelurahanNama) {
                 DB::table('kelurahan')->insert([
                     'kecamatan_id' => $kecamatanId,
-                    'nama' => $kelurahanNama,
+                    'nama_kelurahan' => $kelurahanNama,
                     'created_at' => $now,
                     'updated_at' => $now,
                 ]);
