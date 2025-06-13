@@ -28,7 +28,7 @@
     </script>
     @stack('styles') {{-- Untuk style tambahan dari child views --}}
 </head>
-<body class="bg-gray-100 font-poppins"> {{-- Font Poppins diterapkan di sini --}}
+<body class="bg-gray-100 font-poppins">
 
     <div class="min-h-screen flex">
         <!-- Sidebar -->
@@ -50,15 +50,15 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('daftar-tugas') ? 'bg-blue-100 font-semibold' : '' }}">
+                        <a href="{{ route('petugas.tugas') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('daftar-tugas') ? 'bg-blue-100 font-semibold' : '' }}">
                             <img src="{{ asset('images/Detail.png') }}" alt="Daftar Tugas Icon" class="w-5 h-5">
                             Daftar Tugas
                         </a>
                     </li>
                     <li>
                         <a href="#" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('verifikasi-lapangan') ? 'bg-blue-100 font-semibold' : '' }}">
-                            <img src="{{ asset('images/petugas.png') }}" alt="Verifikasi Lapangan Icon" class="w-5 h-5">
-                            Verifikasi Lapangan
+                            <img src="{{ asset('images/petugas.png') }}" alt="Ajukan Bantuan" class="w-5 h-5">
+                            Ajukan Bantuan
                         </a>
                     </li>
                 </ul>

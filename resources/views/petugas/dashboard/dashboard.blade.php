@@ -1,7 +1,7 @@
 
-@extends('petugas.layout.master') {{-- Meng-extend layout master Anda --}}
+@extends('petugas.layout.master')
 
-@section('title', 'Dashboard Petugas')
+@section('title', 'Petugas - Dashboard')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 py-6">
