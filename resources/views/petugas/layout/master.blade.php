@@ -10,8 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            /* Font Poppins diterapkan melalui Tailwind config dan class pada body */
-            background-color: #f3f4f6; /* Warna latar belakang umum */
+            background-color: #f3f4f6;
         }
     </style>
     <script>
@@ -26,12 +25,11 @@
             }
         }
     </script>
-    @stack('styles') {{-- Untuk style tambahan dari child views --}}
+    @stack('styles')
 </head>
 <body class="bg-gray-100 font-poppins">
 
     <div class="min-h-screen flex">
-        <!-- Sidebar -->
         <aside class="w-64 bg-white shadow-md">
             <div class="p-6 border-b border-gray-200">
                 <div class="flex items-center gap-2">
