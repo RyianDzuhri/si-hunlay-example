@@ -9,6 +9,7 @@ use App\Models\Kecamatan; // Jangan lupa import model
 use App\Models\Kelurahan; // Jangan lupa import model
 use App\Models\Pengajuan;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,18 +17,26 @@ use Illuminate\View\View;
 
 class AjukanController extends Controller // Sesuaikan nama controller Anda
 {
-    public function formPengajuan(): View
+     public function formPengajuan(): View|RedirectResponse
     {
         $user = Auth::user();
         $warga = $user->warga;
 
-        $kecamatans = Kecamatan::orderBy('nama_kecamatan', 'asc')->get();
+        // Cek apakah warga ini sudah memiliki pengajuan yang aktif
+        // Pengajuan aktif adalah yang statusnya BUKAN 'DITOLAK'
+        $pengajuanAktif = Pengajuan::where('warga_nik', $warga->nik)
+            ->where('status', '!=', 'DITOLAK')
+            ->exists();
 
-        return view('warga.ajukan.index', compact(
-            'user',
-            'warga',
-            'kecamatans'
-        ));
+        // Jika pengajuan aktif ditemukan, alihkan ke dashboard dengan pesan
+        if ($pengajuanAktif) {
+            return redirect()->route('warga.dashboard')
+                ->with('info', 'Anda sudah memiliki pengajuan yang sedang diproses atau telah disetujui. Anda tidak dapat membuat pengajuan baru saat ini.');
+        }
+
+        // Jika tidak ada pengajuan aktif, tampilkan formulir
+        $kecamatans = Kecamatan::orderBy('nama_kecamatan', 'asc')->get();
+        return view('warga.ajukan.index', compact('user', 'warga', 'kecamatans'));
     }
 
     public function getKelurahan(int $kecamatanId): JsonResponse
