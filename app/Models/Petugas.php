@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Petugas extends Model
 {
@@ -20,5 +21,11 @@ class Petugas extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user', 'id');
+    }
+
+     public function hasilSurvey(): HasMany
+    {
+        // Parameter: Model tujuan, foreign key di tabel tujuan, local key di tabel ini
+        return $this->hasMany(HasilSurvey::class, 'petugas_nip', 'nip');
     }
 }

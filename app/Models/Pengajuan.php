@@ -90,7 +90,7 @@ class Pengajuan extends Model
         return $this->hasMany(Dokumen::class, 'pengajuan_id', 'id');
     }
 
-    public function hasil_survey()
+    public function hasilSurvey()
     {
         return $this->hasOne(HasilSurvey::class, 'pengajuan_id', 'id');
     }
