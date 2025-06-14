@@ -53,12 +53,6 @@
                             Daftar Tugas
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('verifikasi-lapangan') ? 'bg-blue-100 font-semibold' : '' }}">
-                            <img src="{{ asset('images/petugas.png') }}" alt="Ajukan Bantuan" class="w-5 h-5">
-                            Ajukan Bantuan
-                        </a>
-                    </li>
                 </ul>
 
                 <p class="text-xs text-gray-400 uppercase font-semibold mt-6 mb-2">Lainnya</p>

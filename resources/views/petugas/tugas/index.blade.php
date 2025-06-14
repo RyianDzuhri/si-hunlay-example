@@ -128,7 +128,7 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="#" class="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md">Lihat Detail</a>
+                                    <a href="{{ route('petugas.verifikasi') }}" class="text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md">Verifikasi</a>
                                 </td>
                             </tr>
                         @empty

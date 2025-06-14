@@ -11,6 +11,7 @@ use App\Http\Controllers\Warga\ProfilController;
 use App\Http\Controllers\Warga\ProgressController;
 use App\Http\Controllers\Admin\PengajuanController as AdminPengajuanController;
 use App\Http\Controllers\Petugas\TugasController;
+use App\Http\Controllers\Petugas\VerifikasiTugasController;
 
 Route::get('/', function () {
     return view('landing.welcome');
@@ -82,4 +83,5 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
 Route::prefix('petugas')->middleware(['auth:petugas'])->group(function () {
    Route::get('/dashboard', [PetugasDashboardController::class, 'showDashboard'])->name('petugas.dashboard');
    Route::get('/daftar-tugas', [TugasController::class, 'showTugas'])->name('petugas.tugas');
+   Route::get('/verifikasi-tugas', [VerifikasiTugasController::class, 'showVerifikasiTugasform'])->name('petugas.verifikasi');
 });
