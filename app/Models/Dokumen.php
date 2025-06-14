@@ -12,9 +12,9 @@ class Dokumen extends Model
     protected $table = 'dokumen';
     protected $fillable = ['pengajuan_id', 'jenis_dokumen', 'path_file'];
 
-    public function pengajuan() 
+    public function pengajuan()
     {
-        return $this->belongsTo(Pengajuan::class);
+        return $this->belongsTo(Pengajuan::class, 'pengajuan_id', 'id');
     }
 
     /**
@@ -30,12 +30,6 @@ class Dokumen extends Model
         );
     }
 
-    /**
-     * Membuat atribut virtual 'nama' dari kolom 'jenis_dokumen'.
-     * Ini yang akan dipanggil oleh {{ $doc->nama }}
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
-     */
     protected function nama(): Attribute
     {
         return Attribute::make(

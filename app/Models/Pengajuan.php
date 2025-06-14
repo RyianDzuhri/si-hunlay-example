@@ -60,8 +60,6 @@ class Pengajuan extends Model
                 
                 // Looping untuk setiap kondisi di dalam kategori ini
                 foreach ($this->{$kolom} as $kondisi) {
-                    // Format teksnya: "Kategori: Kondisi"
-                    // contoh: "Atap: Rangka lapuk"
                     $teksKondisi = Str::ucfirst(str_replace('_', ' ', $kondisi));
                     $kerusakanFormatted[] = $namaKategori . ': ' . $teksKondisi;
                 }
