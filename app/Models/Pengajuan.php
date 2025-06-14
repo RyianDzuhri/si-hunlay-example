@@ -42,6 +42,8 @@ class Pengajuan extends Model
         'sanitasi_airbersih'    => 'array',
     ];
 
+    // Tambahan agar 'kode_pengajuan' ikut dalam array/model toArray()
+    protected $appends = ['kode_pengajuan'];
 
     public function getJenisKerusakanAttribute()
     {
@@ -69,6 +71,11 @@ class Pengajuan extends Model
         return $kerusakanFormatted;
     }
 
+    // ✅ Tambahan baru
+    public function getKodePengajuanAttribute()
+    {
+        return 'PGJ-' . str_pad($this->id, 5, '0', STR_PAD_LEFT);
+    }
 
     public function warga()
     {
