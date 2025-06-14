@@ -42,20 +42,27 @@
         />
     
         <div class="flex items-center gap-4">
-            {{-- Dropdown status --}}
-            <select name="status" onchange="this.form.submit()" class="p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200">
-                <option value="">Semua Status</option>
-                <option value="Menunggu" {{ request('status') == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
-                <option value="Diverifikasi" {{ request('status') == 'Diverifikasi' ? 'selected' : '' }}>Diverifikasi</option>
-                <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
-            </select>
-    
-            {{-- Tombol Export --}}
-            {{-- <a href="{{ route('pengajuan.index', array_merge(request()->query(), ['export' => 1])) }}" class="btn btn-success">
+            <div class="relative">
+                <select name="status" onchange="this.form.submit()" class="appearance-none w-40 p-2 border-2 border-blue-600 rounded-lg bg-white text-black focus:outline-none focus:ring focus:ring-blue-200 pr-8">
+                    <option value="">Semua Status</option>
+                    <option value="Menunggu" {{ request('status') == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
+                    <option value="Diverifikasi" {{ request('status') == 'Diverifikasi' ? 'selected' : '' }}>Diverifikasi</option>
+                    <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-black">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+        
+            <!-- Tombol Export -->
+            <a href="{{ route('pengajuan.export', request()->query()) }}" class="inline-flex items-center px-4 py-2 border-2 border-blue-600 rounded-lg text-blue-600 bg-white hover:bg-blue-50">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
                 Export
-            </a>  --}}
-            <a href="{{ route('pengajuan.export', request()->query()) }}" class="btn btn-success">Export</a>
-           
+            </a>
         </div>
     </form>
     
