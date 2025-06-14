@@ -59,12 +59,6 @@
           <p class="text-xs text-gray-400 uppercase font-semibold mt-6 mb-2">Lainnya</p>
           <ul class="space-y-2">
               <li>
-              <a href="#" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg">
-                  <img src="{{ asset('images/Bantuan.png') }}" alt="Bantuan Icon" class="w-5 h-5">
-                  Bantuan
-              </a>
-              </li>
-              <li>
               <a href="{{ route('warga.profil') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg">
                   <img src="{{ asset('images/Group.png') }}" alt="Profil Icon" class="w-5 h-5">
                   Profil

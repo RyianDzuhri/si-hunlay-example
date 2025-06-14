@@ -126,6 +126,10 @@
         <input type="email" id="email" placeholder="contoh@gmail.com">
       </div>
       <div class="form-group">
+        <label for="nik">No. KK</label>
+        <input type="text" id="nik" placeholder="16 digit No. KK" maxlength="16">
+      </div>
+      <div class="form-group">
         <label for="nik">NIK</label>
         <input type="text" id="nik" placeholder="16 digit NIK" maxlength="16">
       </div>

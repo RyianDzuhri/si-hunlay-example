@@ -32,9 +32,9 @@
             </div>
             <p class="text-sm text-gray-600 mb-4">Lihat status dan riwayat pengajuan bantuan anda.</p>
             @if ($pengajuan)
-                <a href="#" class="inline-block border border-blue-600 text-blue-600 px-4 py-2 rounded-lg text-sm hover:bg-blue-50">Lihat Riwayat</a>
+                <a href="{{ route('warga.pengajuan') }}" class="inline-block border border-blue-600 text-blue-600 px-4 py-2 rounded-lg text-sm hover:bg-blue-50">Lihat Riwayat</a>
             @else
-                <a href="#" onclick="alert('Anda harus mengajukan bantuan terlebih dahulu untuk dapat melihat riwayat.'); return false;" class="inline-block border border-gray-300 text-gray-400 px-4 py-2 rounded-lg text-sm cursor-not-allowed">Lihat Riwayat</a>
+                <a href="{{ route('warga.dashboard') }}" onclick="alert('Anda harus mengajukan bantuan terlebih dahulu untuk dapat melihat riwayat.'); return false;" class="inline-block border border-gray-300 text-gray-400 px-4 py-2 rounded-lg text-sm cursor-not-allowed">Lihat Riwayat</a>
             @endif
         </div>
 
