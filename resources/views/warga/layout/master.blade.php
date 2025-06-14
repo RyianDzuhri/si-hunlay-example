@@ -84,7 +84,7 @@
       <header class="bg-white shadow-sm px-6 py-4 flex justify-end items-center">
         <div class="flex items-center gap-4">
           <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-semibold">
-            KR
+              {{ strtoupper(Str::substr($user->nama, 0, 1)) }}
           </div>
           <span class="text-gray-700 font-semibold">{{ $user->nama }}</span>
         </div>
