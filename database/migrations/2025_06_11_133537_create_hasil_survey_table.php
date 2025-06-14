@@ -9,21 +9,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('hasil_survey', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('pengajuan_id')->constrained('pengajuan')->onDelete('cascade');
-            $table->bigInteger('petugas_nip');
+             $table->id();
+            $table->foreignId('pengajuan_id')->unique()->constrained('pengajuan')->onDelete('cascade');
+            $table->foreignId('petugas_nip')->constrained('petugas', 'nip');
             $table->date('tgl_survey');
-            $table->string('kondisi_atap_aktual');
-            $table->string('kondisi_dinding_aktual');
-            $table->string('kondisi_lantai_aktual');
-            $table->string('ventilasi_aktual');
-            $table->string('sanitasi_airbersih_aktual');
-            $table->string('kondisi_listrik_aktual');
-            $table->boolean('verifikasi_ktp_kk')->default(false);
-            $table->boolean('verifikasi_sktm')->default(false);
-            $table->boolean('verifikasi_kepemilikan')->default(false);
-            $table->boolean('verifikasi_foto_awal')->default(false);
-            $table->enum('rekomendasi_petugas', ['Layak', 'Tidak Layak']);
+            $table->enum('status_kepemilikan', ['Milik Sendiri', 'Sewa', 'Menumpang', 'Tidak Jelas']);
+            $table->enum('verifikasi_ekonomi', ['Sesuai', 'Tidak Sesuai']);
+            $table->text('detail_verifikasi_dokumen')->nullable();
+            $table->text('catatan_survei')->nullable();
+            $table->text('bukti_survei')->nullable();
+            $table->enum('status_rekomendasi', ['Layak', 'Tidak Layak']);
+            $table->string('alasan_penolakan')->nullable();
             $table->timestamps();
 
             $table->foreign('petugas_nip')->references('nip')->on('petugas')->onDelete('cascade');

@@ -23,6 +23,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])
 Route::post('/login', [AuthController::class, 'verify'])->name('auth.verify');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [AuthController::class, 'createAccount'])->name('register.akun');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 

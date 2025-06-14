@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserAuthVerifyRequest;
+use App\Models\User;
+use App\Models\Warga;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class AuthController extends Controller
@@ -55,6 +59,51 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect(route('login'));
+    }
+
+    public function createAccount(Request $request)
+    {
+        // 1. Validasi input dari pengguna
+        $request->validate([
+            'nik' => 'required|numeric|digits:16|unique:warga,nik',
+            'no_kk' => 'required|numeric|digits:16|unique:warga,no_kk',
+            'nama' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'no_hp' => 'required|string|max:15',
+            'password' => 'required|string|min:8|confirmed',
+            'syarat' => 'accepted',
+        ]);
+
+        // 2. Menggunakan DB Transaction untuk memastikan data konsisten
+        // Jika salah satu gagal, semua akan dibatalkan.
+        DB::beginTransaction();
+        try {
+            $user = User::create([
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'nama' => $request->nama,
+                'role' => 'warga', // Otomatis set role sebagai WARGA
+            ]);
+
+            $warga = Warga::create([
+                'nik' => $request->nik,
+                'no_kk' => $request->no_kk,
+                'no_hp' => $request->no_hp,
+                'id_user' => $user->id,
+            ]);
+
+            DB::commit();
+
+            // 6. Login-kan pengguna secara otomatis setelah registrasi
+            Auth::guard('warga')->login($user);
+
+            // 7. Alihkan ke halaman dashboard warga
+            return redirect()->route('warga.dashboard')->with('success', 'Registrasi berhasil! Selamat datang.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage()); // untuk debugging
+        }
     }
 
 }

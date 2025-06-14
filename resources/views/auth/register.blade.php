@@ -114,43 +114,63 @@
 </head>
 <body>
   <div class="register-container">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+        </div>
+    @endif
+
     <h2>Daftar Akun</h2>
     <p>Lengkapi informasi berikut ini untuk mendaftar dan mengajukan bantuan RTLH</p>
-    <form>
+    <form action="{{ route('register.akun') }}" method="POST">
+      @csrf
       <div class="form-group">
         <label for="nama">Nama Lengkap</label>
-        <input type="text" id="nama" placeholder="Masukkan nama lengkap">
+        <input type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap">
       </div>
+      
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" placeholder="contoh@gmail.com">
+        <input type="email" id="email" name="email" placeholder="contoh@gmail.com">
       </div>
+
       <div class="form-group">
-        <label for="nik">No. KK</label>
-        <input type="text" id="nik" placeholder="16 digit No. KK" maxlength="16">
+        <label for="kk">No. KK</label>
+        <input type="text" id="kk" name="no_kk" placeholder="16 digit No. KK" maxlength="16">
       </div>
+
       <div class="form-group">
         <label for="nik">NIK</label>
-        <input type="text" id="nik" placeholder="16 digit NIK" maxlength="16">
+        <input type="text" id="nik" name="nik" placeholder="16 digit NIK" maxlength="16">
       </div>
+
       <div class="form-group">
         <label for="nohp">No HP</label>
-        <input type="text" id="nohp" placeholder="16 digit NIK">
+        <input type="text" id="nohp" name="no_hp" placeholder="08xxxxxxxxxx">
       </div>
+
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Minimal 8 karakter">
+        <input type="password" id="password" name="password" placeholder="Minimal 8 karakter">
       </div>
+
       <div class="form-group">
-        <label for="konfirmasi-password">Konfirmasi Password</label>
-        <input type="password" id="konfirmasi-password" placeholder="Ulangi Password">
+        <label for="konfirmasi_password">Konfirmasi Password</label>
+        <input type="password" id="konfirmasi_password" name="password_confirmation" placeholder="Ulangi Password">
       </div>
+
       <div class="checkbox-group">
-        <input type="checkbox" id="syarat">
+        <input type="checkbox" id="syarat" name="syarat">
         <label for="syarat">Saya menyetujui <a href="#">syarat dan ketentuan</a></label>
       </div>
+
       <button type="submit" class="btn">Daftar</button>
     </form>
+
     <div class="login-link">
       Sudah punya akun? <a href="{{ route('login') }}">Login</a>
     </div>

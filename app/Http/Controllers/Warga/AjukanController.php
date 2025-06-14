@@ -41,12 +41,10 @@ class AjukanController extends Controller // Sesuaikan nama controller Anda
 
     public function getKelurahan(int $kecamatanId): JsonResponse
     {
-        // Cari semua kelurahan berdasarkan kecamatan_id, diurutkan berdasarkan nama
         $kelurahanData = Kelurahan::where('kecamatan_id', $kecamatanId)
                                   ->orderBy('nama_kelurahan', 'asc')
                                   ->get(['id', 'nama_kelurahan']); // Ambil kolom yang benar
 
-        // Kembalikan sebagai JSON
         return response()->json($kelurahanData); 
     }
 
