@@ -75,6 +75,7 @@ class AjukanController extends Controller // Sesuaikan nama controller Anda
 
             // 3. SIMPAN DATA UTAMA KE TABEL PENGAJUAN
             // PERBAIKAN PENTING: Menggunakan json_encode() untuk data array dari checkbox
+            // VERSI BENAR (YANG BARU)
             $pengajuan = Pengajuan::create([
                 'warga_nik'             => Auth::user()->warga->nik,
                 'tgl_pengajuan'         => now(),
@@ -85,12 +86,11 @@ class AjukanController extends Controller // Sesuaikan nama controller Anda
                 'pekerjaan'             => $validatedData['pekerjaan'],
                 'penghasilan'           => $validatedData['penghasilan'],
                 'luas_rumah'            => $validatedData['luas_rumah'],
-                'kondisi_atap'          => json_encode($validatedData['kondisi_atap']),
-                'kondisi_dinding'       => json_encode($validatedData['kondisi_dinding']),
-                'kondisi_lantai'        => json_encode($validatedData['kondisi_lantai']),
-                'ventilasi_pencahayaan' => json_encode($validatedData['ventilasi_pencahayaan']),
-                'sanitasi_airbersih'    => json_encode($validatedData['sanitasi_airbersih']),
-                // Perbaikan: Kolom kecamatan_id tidak perlu disimpan sesuai kesepakatan Normalisasi
+                'kondisi_atap'          => $validatedData['kondisi_atap'], // <-- Hapus json_encode
+                'kondisi_dinding'       => $validatedData['kondisi_dinding'], // <-- Hapus json_encode
+                'kondisi_lantai'        => $validatedData['kondisi_lantai'], // <-- Hapus json_encode
+                'ventilasi_pencahayaan' => $validatedData['ventilasi_pencahayaan'], // <-- Hapus json_encode
+                'sanitasi_airbersih'    => $validatedData['sanitasi_airbersih'], // <-- Hapus json_encode
             ]);
 
             // 4. PROSES SEMUA FILE UPLOAD (Dilengkapi)

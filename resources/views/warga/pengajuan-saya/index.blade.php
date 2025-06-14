@@ -13,26 +13,37 @@
 
     @if($pengajuan)
         <!-- Data Pribadi Pemohon -->
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
             <h2 class="text-lg font-semibold mb-4 text-gray-800 flex items-center">
-                {{-- Ikon orang (user) --}}
                 <svg class="w-6 h-6 mr-2 text-gray-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                 </svg>
                 Data Pribadi Pemohon
             </h2>
-            {{-- Mengurangi gap-y, mengubah font-medium pada label menjadi font-normal, menyesuaikan teks --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-1 text-base leading-relaxed">
+                {{-- Kolom Kiri --}}
                 <div>
                     <p><span class="text-gray-600">Nama</span><br>{{ $user->nama ?? 'N/A' }}</p>
                     <p class="mt-2"><span class="text-gray-600">No. HP</span><br>{{ $warga->no_hp ?? 'N/A' }}</p>
+                    
+                    {{-- INI TAMBAHANNYA --}}
+                    <p class="mt-2"><span class="text-gray-600">Pekerjaan</span><br>{{ Str::ucfirst(str_replace('_', ' ', $pengajuan->pekerjaan ?? '')) }}</p>
+
                 </div>
+                
+                {{-- Kolom Kanan --}}
                 <div>
-                    <p><span class="text-gray-600">NIK</span><br>{{ $user->warga->nik ?? 'N/A' }}</p>
+                    <p><span class="text-gray-600">NIK</span><br>{{ $warga->nik ?? 'N/A' }}</p>
                     <p class="mt-2"><span class="text-gray-600">Email</span><br>{{ $user->email ?? 'N/A' }}</p>
+                    
+                    {{-- INI TAMBAHANNYA --}}
+                    <p class="mt-2"><span class="text-gray-600">Penghasilan Per Bulan</span><br>Rp {{ number_format($pengajuan->penghasilan ?? 0, 0, ',', '.') }}</p>
+
                 </div>
+                
+                {{-- Kolom Alamat --}}
                 <div class="md:col-span-2 mt-2">
-                    <p><span class="text-gray-600">Alamat</span><br>{{ $user->alamat ?? 'N/A' }}</p>
+                    <p><span class="text-gray-600">Alamat Rumah yang Diajukan</span><br>{{ $pengajuan->alamat_lengkap ?? 'N/A' }}</p>
                 </div>
             </div>
         </div>
@@ -51,7 +62,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 text-base leading-normal">
                 <div>
                     <p class="text-gray-600">Tanggal Pengajuan</p>
-                    <p class="text-gray-900">{{ $pengajuan->tanggal_pengajuan }}</p>
+                    <p class="text-gray-900">{{ $pengajuan->tgl_pengajuan->format('d F Y') }}</p>
                 </div>
                 <div>
                     <p class="text-gray-600">Luas Rumah</p>
@@ -63,9 +74,10 @@
                 </div>
                 <div>
                     <p class="text-gray-600">Jenis Kerusakan</p>
-                    <ul class="list-disc list-inside text-gray-900 mt-1">
+                    <ul class="list-disc list-inside text-gray-900 mt-1 font-medium">
+                        {{-- Kita terapkan format yang sama di dalam loop --}}
                         @foreach($pengajuan->jenis_kerusakan as $kerusakan)
-                            <li>{{ $kerusakan }}</li>
+                            <li>{{ Str::ucfirst(str_replace('_', ' ', $kerusakan)) }}</li>
                         @endforeach
                     </ul>
                 </div>

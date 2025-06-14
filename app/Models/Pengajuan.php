@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str; 
 
 class Pengajuan extends Model
 {
@@ -40,6 +41,36 @@ class Pengajuan extends Model
         'ventilasi_pencahayaan' => 'array',
         'sanitasi_airbersih'    => 'array',
     ];
+
+
+    public function getJenisKerusakanAttribute()
+    {
+        $kerusakanFormatted = [];
+
+        // Kita buat peta antara nama kolom di database dan nama kategori yang ingin ditampilkan
+        $kategoriMap = [
+            'kondisi_atap'    => 'Atap',
+            'kondisi_dinding' => 'Dinding',
+            'kondisi_lantai'  => 'Lantai',
+        ];
+
+        foreach ($kategoriMap as $kolom => $namaKategori) {
+            // Cek apakah data untuk kategori ini ada dan merupakan array
+            if (!empty($this->{$kolom}) && is_array($this->{$kolom})) {
+                
+                // Looping untuk setiap kondisi di dalam kategori ini
+                foreach ($this->{$kolom} as $kondisi) {
+                    // Format teksnya: "Kategori: Kondisi"
+                    // contoh: "Atap: Rangka lapuk"
+                    $teksKondisi = Str::ucfirst(str_replace('_', ' ', $kondisi));
+                    $kerusakanFormatted[] = $namaKategori . ': ' . $teksKondisi;
+                }
+            }
+        }
+
+        return $kerusakanFormatted;
+    }
+
 
     public function warga()
     {
