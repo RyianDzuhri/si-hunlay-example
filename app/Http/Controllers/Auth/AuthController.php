@@ -82,7 +82,7 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'nama' => $request->nama,
-                'role' => 'warga', // Otomatis set role sebagai WARGA
+                'role' => 'warga',
             ]);
 
             $warga = Warga::create([

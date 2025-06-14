@@ -19,8 +19,9 @@ class PengajuanController extends Controller
         $warga = $user->warga;
 
         $pengajuan = Pengajuan::where('warga_nik', $warga->nik)
-                              ->with('dokumen')
-                              ->firstOrFail();
+                      ->with('dokumen')
+                      ->first();
+
         //  dd($pengajuan->toArray()); 
         return view('warga.pengajuan-saya.index', compact('user', 'warga', 'pengajuan'));
     }
