@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         ]);
         Petugas::create([
             'nip' => 9876543210,
-            'wilayahTugas' => 'Kecamatan A',
+            'kecamatan_id' => '4',
             'id_user' => $userPetugas->id,
         ]);
 
