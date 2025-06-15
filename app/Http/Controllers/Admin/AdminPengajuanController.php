@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pengajuan;
 use App\Exports\PengajuanExport;
+use App\Models\HistoriPengajuan;
+
 
 class AdminPengajuanController extends Controller
 {
@@ -87,19 +89,39 @@ public function verifikasi($id)
 public function setujui($id)
 {
     $pengajuan = Pengajuan::findOrFail($id);
+    $statusSebelum = $pengajuan->status;
     $pengajuan->status = 'DOKUMEN_LENGKAP';
     $pengajuan->save();
+
+    HistoriPengajuan::create([
+        'pengajuan_id' => $pengajuan->id,
+        'user_id' => auth()->id(), // User admin yang melakukan perubahan
+        'status_sebelum' => $statusSebelum,
+        'status_sesudah' => $pengajuan->status,
+        'catatan' => 'Pengajuan telah disetujui oleh admin.',
+    ]);
 
     return redirect()->route('admin.pengajuan.index')->with('success', 'Pengajuan telah disetujui.');
 }
 
+
 public function tolak($id)
 {
     $pengajuan = Pengajuan::findOrFail($id);
+    $statusSebelum = $pengajuan->status;
     $pengajuan->status = 'DITOLAK';
     $pengajuan->save();
 
+    HistoriPengajuan::create([
+        'pengajuan_id' => $pengajuan->id,
+        'user_id' => auth()->id(),
+        'status_sebelum' => $statusSebelum,
+        'status_sesudah' => $pengajuan->status,
+        'catatan' => 'Pengajuan ditolak oleh admin.',
+    ]);
+
     return redirect()->route('admin.pengajuan.index')->with('success', 'Pengajuan ditolak.');
 }
+
 
 }

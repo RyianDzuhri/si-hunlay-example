@@ -59,11 +59,14 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
 
 
 
-    // Penugasan
+    //Penugasan
     Route::get('/penugasan', [PenugasanController::class, 'index'])->name('admin.penugasan.index');
     Route::put('/penugasan/{id}/tugaskan', [PenugasanController::class, 'tugaskan'])->name('admin.penugasan.tugaskan');
+    Route::post('/penugasan/{pengajuan}/tugaskan', [\App\Http\Controllers\Admin\PenugasanController::class, 'tugaskan'])->name('penugasan.tugaskan');
+    Route::post('/admin/penugasan/{pengajuan}/tugaskan', [PenugasanController::class, 'tugaskan'])->name('penugasan.tugaskan');
 
-
+   
+   
 
     // Hasil Verifikasi
     Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi');
