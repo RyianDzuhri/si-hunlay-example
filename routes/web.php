@@ -15,6 +15,8 @@ use App\Http\Controllers\Petugas\VerifikasiTugasController;
 use App\Http\Controllers\Admin\PenugasanController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PetugasController;
+use App\Http\Controllers\Admin\VerifikasiController;
+
 
 
 Route::get('/', function () {
@@ -65,7 +67,8 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     Route::post('/admin/penugasan/{pengajuan}/tugaskan', [PenugasanController::class, 'tugaskan'])->name('penugasan.tugaskan');
 
     // Hasil Verifikasi
-    Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi');
+    Route::get('/admin/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi.index');
+
 
     // Bantuan
     Route::get('/bantuan', [VerifikasiController::class, 'index'])->name('admin.bantuan');
@@ -83,9 +86,6 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     Route::post('/akun/petugas', [PetugasController::class, 'store'])->name('admin.akun.petugas.store');
     Route::delete('/akun/petugas/{id}', [PetugasController::class, 'destroy'])->name('admin.akun.petugas.destroy');
 });
-
-
-
 
 //Petugas
 Route::prefix('petugas')->middleware(['auth:petugas'])->group(function () {
