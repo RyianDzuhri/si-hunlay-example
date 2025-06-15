@@ -90,12 +90,13 @@
                 </div>
             @else
                 {{-- Tampilan khusus jika status DITOLAK --}}
-                @php $lastHistory = $pengajuan->histori()->latest('waktu_perubahan')->first(); @endphp
+                @php $lastHistory = $pengajuan->histori_pengajuan()->latest('waktu_perubahan')->first(); @endphp
                 <div class="p-4 bg-red-50 border border-red-300 text-red-800 rounded-lg text-center">
                     <h3 class="font-bold text-lg">PENGAJUAN ANDA DITOLAK</h3>
                     @if ($lastHistory && $lastHistory->catatan)
                         <p class="mt-2 text-sm"><strong>Alasan:</strong> {{ $lastHistory->catatan }}</p>
                     @endif
+                    <p class="text-xs mt-4">Dimohon untuk mohon untuk hubungi dinas terkait untuk informasi lebih lanjut.</p>
                 </div>
             @endif
         @else

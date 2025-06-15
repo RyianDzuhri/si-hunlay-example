@@ -17,14 +17,14 @@
         {{-- Tampilkan pesan khusus jika pengajuan DITOLAK --}}
         @if ($pengajuan->status == 'DITOLAK')
             @php
-                $lastHistory = $pengajuan->histori()->latest('waktu_perubahan')->first();
+                $lastHistory = $pengajuan->histori_pengajuan()->latest('waktu_perubahan')->first();
             @endphp
             <div class="bg-red-50 border-l-4 border-red-500 text-red-800 p-6 rounded-lg shadow-md">
                 <h3 class="font-bold text-xl">Pengajuan Anda Ditolak</h3>
                 @if ($lastHistory && $lastHistory->catatan)
                     <p class="mt-2"><strong>Alasan:</strong> {{ $lastHistory->catatan }}</p>
                 @endif
-                 <p class="text-xs mt-4">Silakan hubungi dinas terkait untuk informasi lebih lanjut.</p>
+                 <p class="text-xs mt-4">Dimohon untuk mohon untuk hubungi dinas terkait untuk informasi lebih lanjut.</p>
             </div>
         @else
             {{-- Tampilkan timeline progres jika statusnya normal --}}
