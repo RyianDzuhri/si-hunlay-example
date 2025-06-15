@@ -106,4 +106,12 @@ class Pengajuan extends Model
     {
         return $this->hasMany(HistoriPengajuan::class, 'pengajuan_id', 'id');
     }
+    
+    public function getFormattedArray($field)
+{
+    if (!is_array($this->{$field})) return null;
+    
+    return implode(', ', array_map(fn($v) => ucwords(str_replace('_', ' ', $v)), $this->{$field}));
+}
+
 }

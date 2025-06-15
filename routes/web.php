@@ -48,7 +48,9 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
 
     // Pengajuan Bantuan
     Route::get('/pengajuan', [AdminPengajuanController::class, 'index'])->name('admin.pengajuan');
-    Route::get('/pengajuan/export', [AdminPengajuanController::class, 'export'])->name('pengajuan.export');
+    Route::get('/pengajuan/export', [AdminPengajuanController::class, 'export'])->name('admin.export');
+    Route::get('/admin/pengajuan/{id}/verifikasi', [AdminPengajuanController::class, 'verifikasi'])->name('admin.pengajuan.verifikasi');
+    Route::get('/admin/pengajuan', [AdminPengajuanController::class, 'index'])->name('admin.pengajuan.index');
 
     // Penugasan
     Route::get('/penugasan', [PenugasanController::class, 'index'])->name('admin.penugasan');
