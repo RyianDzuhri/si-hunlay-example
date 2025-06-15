@@ -10,7 +10,7 @@
     </div>
 
     {{-- Search & Filter --}}
-    <form action="{{ route('admin.pengajuan') }}" method="GET" class="bg-white p-4 rounded shadow-sm mb-4 flex flex-col md:flex-row gap-4 justify-between items-center">
+    <form action="{{ route('admin.pengajuan.index') }}" method="GET" class="bg-white p-4 rounded shadow-sm mb-4 flex flex-col md:flex-row gap-4 justify-between items-center">
         {{-- Input Search --}}
         <input
             type="text"
@@ -41,7 +41,7 @@
             </div>
 
             {{-- Export --}}
-            <a href="{{ route('pengajuan.export', request()->query()) }}" class="inline-flex items-center px-4 py-2 border-2 border-blue-600 rounded-lg text-blue-600 bg-white hover:bg-blue-50">
+            <a href="{{ route('admin.pengajuan.export', request()->query()) }}" class="inline-flex items-center px-4 py-2 border-2 border-blue-600 rounded-lg text-blue-600 bg-white hover:bg-blue-50">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                 </svg>
@@ -94,11 +94,11 @@
                             @endphp
                             <span class="text-xs px-3 py-1 rounded-full font-medium {{ $badge['color'] }}">{{ $badge['text'] }}</span>
                         </td>
-                        {{-- <td class="px-4 py-2">
+                        <td class="px-4 py-2">
                             <a href="{{ route('admin.pengajuan.verifikasi', $item['id']) }}" class="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600">
                                 Detail
                             </a>
-                        </td> --}}
+                        </td>
                     </tr>
                 @empty
                     <tr>

@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pengajuan;
+use App\Exports\PengajuanExport;
 
 class AdminPengajuanController extends Controller
 {
@@ -29,6 +30,7 @@ class AdminPengajuanController extends Controller
         $pengajuanQuery->getCollection()->transform(function ($item) {
             return [
                 // 'nama' => $item->warga->nama ?? '-',
+                'id' => $item->id,
                 'nama' => $item->warga->user->nama ?? '-',
                 'nik' => $item->warga->nik ?? '-',
                 'alamat' => $item->alamat_lengkap,
@@ -36,15 +38,68 @@ class AdminPengajuanController extends Controller
                 'status' => match($item->status) {
                     'DIAJUKAN' => 'Menunggu',
                     'DOKUMEN_LENGKAP', 'PROSES_SURVEY', 'EVALUASI_AKHIR' => 'Diverifikasi',
-                    'DISETUJUI', 'DITOLAK' => 'Ditolak',
+                    'DISETUJUI' => 'Disetujui',
+                    'DITOLAK' => 'Ditolak',
                     default => 'Menunggu',
                 },
+                
                 'kode_pengajuan' => 'PGJ-' . str_pad($item->id, 5, '0', STR_PAD_LEFT),
             ];
         });
+
 
         return view('admin.pengajuan.index', [
             'pengajuan' => $pengajuanQuery, // Sudah berisi data yang dimodifikasi dan tetap paginatable
         ]);
     }
+    public function export(Request $request)
+{
+    $pengajuan = Pengajuan::with('warga.user')
+        ->when($request->status, function ($query) use ($request) {
+            $query->where('status', $request->status);
+        })
+        ->get()
+        ->map(function ($item) {
+            return [
+                'nama' => $item->warga->user->nama ?? '-',
+                'nik' => $item->warga->nik ?? '-',
+                'alamat' => $item->alamat_lengkap,
+                'tanggal_pengajuan' => $item->tgl_pengajuan,
+                'status' => match($item->status) {
+                    'DIAJUKAN' => 'Menunggu',
+                    'DOKUMEN_LENGKAP', 'PROSES_SURVEY', 'EVALUASI_AKHIR' => 'Diverifikasi',
+                    'DISETUJUI' => 'Disetujui',
+                    'DITOLAK' => 'Ditolak',
+                    default => 'Menunggu',
+                },
+            ];
+        });
+
+    return Excel::download(new PengajuanExport($pengajuan), 'pengajuan.xlsx');
+}
+public function verifikasi($id)
+{
+    $pengajuan = Pengajuan::with(['warga.user', 'dokumen'])->findOrFail($id);
+    return view('admin.pengajuan.verifikasi_pengajuan.detail', compact('pengajuan'));
+}
+
+// ✅ Tambahan method SETUJUI
+public function setujui($id)
+{
+    $pengajuan = Pengajuan::findOrFail($id);
+    $pengajuan->status = 'DISETUJUI';
+    $pengajuan->save();
+
+    return redirect()->route('admin.pengajuan.index')->with('success', 'Pengajuan telah disetujui.');
+}
+
+public function tolak($id)
+{
+    $pengajuan = Pengajuan::findOrFail($id);
+    $pengajuan->status = 'DITOLAK';
+    $pengajuan->save();
+
+    return redirect()->route('admin.pengajuan.index')->with('success', 'Pengajuan ditolak.');
+}
+
 }

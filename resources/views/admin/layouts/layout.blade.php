@@ -39,7 +39,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.pengajuan') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('pengajuan-bantuan') ? 'bg-blue-100 font-semibold' : '' }}">
+                        <a href="{{ route('admin.pengajuan.index') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('pengajuan-bantuan') ? 'bg-blue-100 font-semibold' : '' }}">
                             <img src="{{ asset('images/Detail.png') }}" alt="Pengajuan Bantuan Icon" class="w-5 h-5">
                             Pengajuan Bantuan
                         </a>
