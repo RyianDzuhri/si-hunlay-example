@@ -10,13 +10,15 @@ class AdminPengajuanController extends Controller
 {
     public function index(Request $request)
     {
-        $pengajuanQuery = Pengajuan::with('warga')
-            ->when($request->q, function ($query) use ($request) {
-                $query->whereHas('warga', function ($wargaQuery) use ($request) {
-                    $wargaQuery->where('nama', 'like', '%' . $request->q . '%')
-                               ->orWhere('nik', 'like', '%' . $request->q . '%');
-                });
-            })
+        $pengajuanQuery = Pengajuan::with('warga.user')
+        ->when($request->q, function ($query) use ($request) {
+            $query->whereHas('warga.user', function ($userQuery) use ($request) {
+                $userQuery->where('nama', 'like', '%' . $request->q . '%');
+            })->orWhereHas('warga', function ($wargaQuery) use ($request) {
+                $wargaQuery->where('nik', 'like', '%' . $request->q . '%');
+            });
+        })
+        
             ->when($request->status, function ($query) use ($request) {
                 $query->where('status', $request->status);
             })
@@ -26,7 +28,8 @@ class AdminPengajuanController extends Controller
         // Gunakan through untuk memodifikasi tiap item tanpa menghilangkan pagination
         $pengajuanQuery->getCollection()->transform(function ($item) {
             return [
-                'nama' => $item->warga->nama ?? '-',
+                // 'nama' => $item->warga->nama ?? '-',
+                'nama' => $item->warga->user->nama ?? '-',
                 'nik' => $item->warga->nik ?? '-',
                 'alamat' => $item->alamat_lengkap,
                 'tanggal_pengajuan' => $item->tgl_pengajuan,
