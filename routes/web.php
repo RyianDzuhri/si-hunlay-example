@@ -9,7 +9,7 @@ use App\Http\Controllers\Warga\DashboardController as WargaDashboardController;
 use App\Http\Controllers\Warga\PengajuanController;
 use App\Http\Controllers\Warga\ProfilController;
 use App\Http\Controllers\Warga\ProgressController;
-use App\Http\Controllers\Admin\PengajuanController as AdminPengajuanController;
+use App\Http\Controllers\Admin\AdminPengajuanController as AdminPengajuanController;
 use App\Http\Controllers\Petugas\TugasController;
 use App\Http\Controllers\Petugas\VerifikasiTugasController;
 
@@ -42,41 +42,29 @@ Route::prefix('warga')->middleware(['auth:warga'])->group(function () {
 
 
 
-//Admin
 Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
-    // Tampilkan halaman dashboard admin
+    // Dashboard
     Route::get('/dashboard', [AdminDashboardController::class, 'showDashboard'])->name('admin.dashboard');
 
-    Route::get('/dashboard', [AdminDashboardController::class, 'showDashboard'])->name('admin.dashboard');
-
-    // Route pengajuan
+    // Pengajuan Bantuan
     Route::get('/pengajuan', [AdminPengajuanController::class, 'index'])->name('admin.pengajuan');
-
-    // Halaman pengajuan dengan filter
-    Route::get('/pengajuan', [AdminPengajuanController::class, 'index'])->name('admin.pengajuan');
-
-    // Export data pengajuan
     Route::get('/pengajuan/export', [AdminPengajuanController::class, 'export'])->name('pengajuan.export');
 
-    // Route penugasan
+    // Penugasan
     Route::get('/penugasan', [PenugasanController::class, 'index'])->name('admin.penugasan');
 
-    // Route verifikasi
+    // Hasil Verifikasi
     Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi');
 
-    // Route verifikasi
+    // Bantuan
     Route::get('/bantuan', [VerifikasiController::class, 'index'])->name('admin.bantuan');
 
-    // Route verifikasi
+    // Profile
     Route::get('/profile', [VerifikasiController::class, 'index'])->name('admin.profile');
 
-    // Route manajemen user
+    // Manajemen Akun Pengguna dan Petugas
     Route::get('/akun/pengguna', [UserController::class, 'index'])->name('admin.akun.pengguna');
-
-    // Route manajemen user
     Route::get('/akun/petugas', [UserController::class, 'index'])->name('admin.akun.petugas');
-     
-
 });
 
 //Petugas
