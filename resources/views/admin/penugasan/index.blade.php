@@ -68,8 +68,9 @@
                             {{-- Dropdown Pilih Petugas --}}
                             @php
                             $namaKecamatan = strtolower(optional(optional($pengajuan->kelurahan)->kecamatan)->nama_kecamatan);
-                            $petugasTerkait = $petugas->get($namaKecamatan, collect()); // default collect() kalau tidak ada
+                            $petugasTerkait = $petugas->get($namaKecamatan, collect());
                         @endphp
+                        
                         
 
                             <form action="{{ route('admin.penugasan.tugaskan', $pengajuan->id) }}" method="POST">

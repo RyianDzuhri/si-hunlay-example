@@ -7,42 +7,37 @@ use Illuminate\Http\Request;
 use App\Models\Pengajuan;
 use App\Models\Petugas;
 
-
 class PenugasanController extends Controller
 {
     public function index()
-{
-    $pengajuans = Pengajuan::with(['warga.user', 'kelurahan.kecamatan'])->paginate(10);
-
-    // Petugas dikelompokkan berdasarkan wilayah tugas (nama kecamatan)
-    $petugas = Petugas::with('user')->get()->groupBy(function ($item) {
-        return strtolower(str_replace('Kecamatan ', '', $item->wilayahTugas));
-    });
+    {
+        $pengajuans = Pengajuan::with(['warga.user', 'kelurahan.kecamatan'])->paginate(10);
     
+        // Group berdasarkan nama kecamatan yang sudah dibersihkan dan sesuai format nama_kecamatan dari database
+        // $petugas = Petugas::with('user')->get()->groupBy(function ($item) {
+        //     return strtolower(str_replace('Kecamatan ', '', $item->wilayahTugas));
+        // });
+        $petugas = Petugas::with(['user', 'kecamatan'])->get()->groupBy(function ($item) {
+            return strtolower($item->kecamatan->nama_kecamatan ?? '');
+        });
+        
     
-
-    return view('admin.penugasan.index', compact('pengajuans', 'petugas'));
-}
-    
-
-    
-    
+        return view('admin.penugasan.index', compact('pengajuans', 'petugas'));
+    }
 
     public function pilihPetugas($id)
-{
-    $pengajuan = Pengajuan::with(['warga.user', 'kelurahan.kecamatan'])->findOrFail($id);
+    {
+        // Ambil pengajuan berdasarkan ID, beserta relasi warga->user dan kelurahan->kecamatan
+        $pengajuan = Pengajuan::with(['warga.user', 'kelurahan.kecamatan'])->findOrFail($id);
 
-    // Ambil wilayah kecamatan dari pengajuan
-    $kecamatan = $pengajuan->kelurahan->kecamatan->nama_kecamatan;
+        // Ambil nama kecamatan dari pengajuan
+        $kecamatan = strtolower(trim($pengajuan->kelurahan->kecamatan->nama_kecamatan));
 
-    // Ambil petugas sesuai wilayah kecamatan
-    $petugasList = Petugas::with('user')
-        ->where('wilayahTugas', $kecamatan)
-        ->get();
+        // Ambil petugas yang bertugas di kecamatan tersebut, dengan penyesuaian casing
+        $petugasList = Petugas::with('user')
+            ->whereRaw('LOWER(TRIM(REPLACE(wilayahTugas, "Kecamatan ", ""))) = ?', [$kecamatan])
+            ->get();
 
-    return view('admin.penugasan.pilih_petugas', compact('pengajuan', 'petugasList'));
-}
-
-    
-
+        return view('admin.penugasan.pilih_petugas', compact('pengajuan', 'petugasList'));
+    }
 }
