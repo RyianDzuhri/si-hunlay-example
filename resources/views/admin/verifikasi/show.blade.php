@@ -56,9 +56,9 @@
                             case 'Tidak Layak':
                                 $recommendationColor = 'bg-red-100 text-red-700';
                                 break;
-                            case 'Pending': // Jika ada status pending atau sejenisnya
-                                $recommendationColor = 'bg-yellow-100 text-yellow-700';
-                                break;
+                            // case 'Pending': // Dihapus karena bukan bagian dari ENUM
+                            //     $recommendationColor = 'bg-yellow-100 text-yellow-700';
+                            //     break;
                         }
                     @endphp
                     <span class="text-xs font-medium px-3 py-1 rounded-full {{ $recommendationColor }}">

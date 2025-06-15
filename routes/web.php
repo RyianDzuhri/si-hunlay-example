@@ -69,8 +69,8 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     // Hasil Verifikasi
     Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi.index');
     Route::get('/verifikasi/{id}', [VerifikasiController::class, 'show'])->name('admin.verifikasi.show');
-    Route::post('/verifikasi/{id}/setujui', [VerifikasiController::class, 'setujui'])->name('admin.verifikasi.setujui');
-    Route::post('/verifikasi/{id}/tolak', [VerifikasiController::class, 'tolak'])->name('admin.verifikasi.tolak');
+    Route::put('/verifikasi/{id}/setujui', [VerifikasiController::class, 'setujui'])->name('admin.verifikasi.setujui');
+    Route::put('/verifikasi/{id}/tolak', [VerifikasiController::class, 'tolak'])->name('admin.verifikasi.tolak');
     Route::get('/admin/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi.index');
     Route::get('/admin/verifikasi/{id}', [VerifikasiController::class, 'show'])->name('admin.verifikasi.show');
 

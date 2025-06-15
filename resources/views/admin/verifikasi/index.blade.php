@@ -30,16 +30,10 @@
         <div class="relative w-full md:w-auto">
             <select name="status" onchange="this.form.submit()" class="appearance-none w-full md:w-40 p-2 border border-gray-300 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 pr-8">
                 <option value="">Semua Status</option>
-                {{-- Sesuaikan opsi status dengan nilai aktual dari backend Anda --}}
-                <option value="DIVERIFIKASI" {{ request('status') == 'DIVERIFIKASI' ? 'selected' : '' }}>Di Review</option>
-                <option value="DISETUJUI" {{ request('status') == 'DISETUJUI' ? 'selected' : '' }}>Disetujui</option>
-                <option value="DITOLAK" {{ request('status') == 'DITOLAK' ? 'selected' : '' }}>Ditolak</option>
-                <option value="KOSONG" {{ request('status') == 'KOSONG' ? 'selected' : '' }}>Belum Diverifikasi</option>
-                {{-- @foreach ($statusList as $status)
-                    <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : '' }}>
-                        {{ ucwords(str_replace('_', ' ', $status)) }}
-                    </option>
-                @endforeach --}}
+                {{-- Opsi status ini merujuk pada status_rekomendasi di HasilSurvey --}}
+                <option value="Layak" {{ request('status') == 'Layak' ? 'selected' : '' }}>Layak</option>
+                <option value="Tidak Layak" {{ request('status') == 'Tidak Layak' ? 'selected' : '' }}>Tidak Layak</option>
+                {{-- Status 'Di Review' di UI bisa jadi merupakan nilai default jika status_rekomendasi belum diisi atau kosong --}}
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -99,28 +93,22 @@
                     <td class="px-4 py-3 whitespace-nowrap">
                         @php
                             $badgeColor = 'bg-gray-100 text-gray-700'; // Default
-                            $statusText = 'Tidak Diketahui';
+                            $statusText = 'Belum Diverifikasi'; // Default untuk yang belum diisi
 
-                            // Map status dari database ke tampilan UI
+                            // Map status dari database ke tampilan UI (ini adalah status rekomendasi surveyor)
                             switch ($data->status_rekomendasi) {
-                                case 'DIVERIFIKASI': // Ini mungkin status yang setara dengan "Di Review"
-                                    $badgeColor = 'bg-yellow-100 text-yellow-700';
-                                    $statusText = 'Di Review';
-                                    break;
-                                case 'DISETUJUI':
+                                case 'Layak':
                                     $badgeColor = 'bg-green-100 text-green-700';
-                                    $statusText = 'Disetujui';
+                                    $statusText = 'Layak';
                                     break;
-                                case 'DITOLAK':
+                                case 'Tidak Layak':
                                     $badgeColor = 'bg-red-100 text-red-700';
-                                    $statusText = 'Ditolak';
-                                    break;
-                                case 'KOSONG': // Misalnya untuk data yang belum diverifikasi
-                                    $badgeColor = 'bg-gray-100 text-gray-700';
-                                    $statusText = 'Belum Diverifikasi';
+                                    $statusText = 'Tidak Layak';
                                     break;
                                 default:
-                                    $statusText = $data->status_rekomendasi; // Fallback jika ada status lain
+                                    // Jika status_rekomendasi kosong/null (belum diisi surveyor), anggap 'Di Review'
+                                    $badgeColor = 'bg-yellow-100 text-yellow-700';
+                                    $statusText = 'Di Review';
                                     break;
                             }
                         @endphp
@@ -129,14 +117,22 @@
                         </span>
                     </td>
                     <td class="px-4 py-3 whitespace-nowrap">
-                        <a href="{{ route('admin.verifikasi.show', $data->id) }}"
-                            class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                            </svg>
-                            Lihat Detail
-                        </a>
+                        {{-- ✅ Perubahan di sini: Tampilkan status final pengajuan --}}
+                        @if ($data->pengajuan->status == 'DISETUJUI')
+                            <span class="text-green-600 font-medium text-sm">Telah Disetujui</span>
+                        @elseif ($data->pengajuan->status == 'DITOLAK')
+                            <span class="text-red-600 font-medium text-sm">Telah Ditolak</span>
+                        @else
+                            {{-- Jika status pengajuan belum DISETUJUI atau DITOLAK, tampilkan tombol Lihat Detail --}}
+                            <a href="{{ route('admin.verifikasi.show', $data->id) }}"
+                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                Lihat Detail
+                            </a>
+                        @endif
                     </td>
                 </tr>
                 @empty

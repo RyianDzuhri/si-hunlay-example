@@ -63,11 +63,9 @@
             <div class="relative">
                 <select name="status" id="status" onchange="this.form.submit()" class="appearance-none w-full p-2 border border-gray-300 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 pr-8">
                     <option value="">Semua Status</option>
-                    <option value="DIAJUKAN" {{ request('status') == 'DIAJUKAN' ? 'selected' : '' }}>Menunggu Verifikasi</option>
+                    {{-- Hanya tampilkan opsi status yang relevan untuk halaman ini --}}
                     <option value="DOKUMEN_LENGKAP" {{ request('status') == 'DOKUMEN_LENGKAP' ? 'selected' : '' }}>Dokumen Lengkap</option>
                     <option value="PROSES_SURVEY" {{ request('status') == 'PROSES_SURVEY' ? 'selected' : '' }}>Proses Survey</option>
-                    <option value="DISETUJUI" {{ request('status') == 'DISETUJUI' ? 'selected' : '' }}>Disetujui</option>
-                    <option value="DITOLAK" {{ request('status') == 'DITOLAK' ? 'selected' : '' }}>Ditolak</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -76,7 +74,6 @@
                 </div>
             </div>
         </div>
-        {{-- Hapus tombol "Terapkan Filter" karena onchange="this.form.submit()" sudah aktif --}}
     </form>
 
     {{-- Table --}}
@@ -109,27 +106,15 @@
                                 $badgeText = '';
 
                                 switch ($pengajuan->status) {
-                                    case 'DIAJUKAN':
-                                        $badgeColor = 'bg-yellow-100 text-yellow-700';
+                                    case 'DOKUMEN_LENGKAP':
+                                        $badgeColor = 'bg-yellow-100 text-yellow-700'; // Menunggu Penugasan
                                         $badgeText = 'Menunggu';
                                         break;
-                                    case 'DOKUMEN_LENGKAP':
-                                        $badgeColor = 'bg-blue-100 text-blue-700';
-                                        $badgeText = 'Diverifikasi'; // Atau Dokumen Lengkap
-                                        break;
                                     case 'PROSES_SURVEY':
-                                        $badgeColor = 'bg-blue-100 text-blue-700'; // Sesuai gambar, biru
-                                        $badgeText = 'Menunggu'; // Teks juga Menunggu di gambar
+                                        $badgeColor = 'bg-blue-100 text-blue-700'; // Sudah Ditugaskan
+                                        $badgeText = 'Ditugaskan';
                                         break;
-                                    case 'DISETUJUI':
-                                        $badgeColor = 'bg-green-100 text-green-700';
-                                        $badgeText = 'Disetujui';
-                                        break;
-                                    case 'DITOLAK':
-                                        $badgeColor = 'bg-red-100 text-red-700';
-                                        $badgeText = 'Ditolak';
-                                        break;
-                                    default:
+                                    default: // Seharusnya tidak ada status lain yang muncul karena filter di controller
                                         $badgeColor = 'bg-gray-100 text-gray-700';
                                         $badgeText = $pengajuan->status;
                                         break;
@@ -138,14 +123,14 @@
                             <span class="text-xs font-medium px-3 py-1 rounded-full {{ $badgeColor }}">{{ $badgeText }}</span>
                         </td>
                         <td class="px-4 py-3 whitespace-nowrap">
-                            @if ($pengajuan->status === 'PROSES_SURVEY' && $pengajuan->petugas)
+                            @if ($pengajuan->status === 'PROSES_SURVEY')
                                 <div class="flex items-center text-gray-700">
                                     <svg class="w-4 h-4 mr-1 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2v11a2 2 0 002 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20h2a2 2 0 002-2V7a2 2 0 00-2-2H9a2 2 0 00-2 2v11a2 2 0 002 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 20h2"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20h2"></path>
                                     </svg>
                                     {{ $pengajuan->petugas->user->nama ?? 'Petugas Tidak Ditemukan' }}
                                 </div>
-                            @else
+                            @elseif ($pengajuan->status === 'DOKUMEN_LENGKAP')
                                 @php
                                     $kecamatanId = $pengajuan->kelurahan->kecamatan_id ?? null;
                                     $petugasFiltered = $petugas->filter(function ($p) use ($kecamatanId) {
@@ -172,12 +157,14 @@
                                         </div>
                                     </div>
                                 </form>
+                            @else
+                                <span class="text-gray-500 text-sm">-</span>
                             @endif
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center px-3 py-6 text-gray-500">Belum ada pengajuan yang dapat ditugaskan.</td>
+                        <td colspan="7" class="text-center px-3 py-6 text-gray-500">Tidak ada pengajuan yang dapat ditugaskan.</td>
                     </tr>
                 @endforelse
             </tbody>

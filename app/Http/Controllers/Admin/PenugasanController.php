@@ -19,7 +19,8 @@ class PenugasanController extends Controller
 
         // Query dasar pengajuan dengan relasi
         $pengajuansQuery = Pengajuan::with(['warga.user', 'kelurahan.kecamatan', 'petugas.user'])
-            ->where('status', '!=', 'DITOLAK');
+            // ✅ Perubahan di sini: Hanya tampilkan status DOKUMEN_LENGKAP atau PROSES_SURVEY
+            ->whereIn('status', ['DOKUMEN_LENGKAP', 'PROSES_SURVEY']);
 
         // Filter berdasarkan kecamatan jika ada
         if ($request->filled('kecamatan_id')) {
@@ -28,9 +29,23 @@ class PenugasanController extends Controller
             });
         }
 
-        $pengajuans = $pengajuansQuery->paginate(10);
+        // Filter berdasarkan tanggal pengajuan jika ada
+        if ($request->filled('tanggal_awal')) {
+            $pengajuansQuery->whereDate('tgl_pengajuan', '>=', $request->tanggal_awal);
+        }
+        if ($request->filled('tanggal_akhir')) {
+            $pengajuansQuery->whereDate('tgl_pengajuan', '<=', $request->tanggal_akhir);
+        }
 
-        // Ambil semua petugas dengan user-nya
+        // Filter berdasarkan status verifikasi jika ada (ini untuk filter di halaman, bukan di query utama)
+        if ($request->filled('status')) {
+            $pengajuansQuery->where('status', $request->status);
+        }
+
+        // Urutkan dan paginasi
+        $pengajuans = $pengajuansQuery->latest()->paginate(10);
+
+        // Ambil semua petugas dengan user-nya (untuk dropdown penugasan)
         $petugas = Petugas::with('user')->get();
 
         return view('admin.penugasan.index', compact('pengajuans', 'petugas', 'kecamatans'));
@@ -38,7 +53,10 @@ class PenugasanController extends Controller
 
     public function pilihPetugas($id)
     {
-        // Ambil pengajuan berdasarkan ID, dengan relasi warga->user dan kelurahan->kecamatan
+        // Method ini tidak terpanggil lagi dari index jika kita langsung tugaskan via dropdown select
+        // Ini lebih relevan jika ada halaman detail untuk memilih petugas secara terpisah.
+        // Jika masih digunakan di tempat lain, pastikan relevansi logicnya.
+        
         $pengajuan = Pengajuan::with(['warga.user', 'kelurahan.kecamatan'])->findOrFail($id);
 
         // Ambil nama kecamatan dari pengajuan
@@ -62,7 +80,7 @@ class PenugasanController extends Controller
     
         $pengajuan->update([
             'petugas_nip' => $request->petugas_nip,
-            'status' => 'PROSES_SURVEY',
+            'status' => 'PROSES_SURVEY', // Mengubah status menjadi PROSES_SURVEY saat ditugaskan
         ]);
     
         // Simpan ke histori
@@ -76,5 +94,4 @@ class PenugasanController extends Controller
     
         return redirect()->back()->with('success', 'Petugas berhasil ditugaskan dan status diubah.');
     }
-    
 }
