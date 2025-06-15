@@ -31,7 +31,7 @@ class VerifikasiTugasController extends Controller
     public function store(Request $request, Pengajuan $pengajuan)
     {
         // 🔒 Blok akses jika status pengajuan sudah bukan VERIFIKASI_LAPANGAN
-        if ($pengajuan->status !== 'VERIFIKASI_LAPANGAN') {
+        if ($pengajuan->status !== 'PROSES_SURVEY') {
             return redirect()->route('petugas.tugas')
                 ->with('error', 'Pengajuan ini sudah tidak dapat diverifikasi karena statusnya telah berubah.');
         }
