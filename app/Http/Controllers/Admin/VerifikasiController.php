@@ -3,17 +3,37 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\HasilSurvey;
+use App\Models\Petugas;
 
 class VerifikasiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Data dummy contoh verifikasi
-        $verifikasi = [
-            ['id' => 'V-001', 'nama' => 'Siti Aminah', 'status' => 'Terverifikasi', 'tanggal' => '4 Juni 2025'],
-            ['id' => 'V-002', 'nama' => 'Agus Salim', 'status' => 'Menunggu', 'tanggal' => '5 Juni 2025'],
-        ];
+        $query = HasilSurvey::with(['pengajuan.warga.user', 'petugas.user']);
 
-        return view('admin.verifikasi.index', compact('verifikasi'));
+        // Filter berdasarkan status_rekomendasi
+        if ($request->filled('status')) {
+            $query->where('status_rekomendasi', $request->status);
+        }
+
+        // Filter berdasarkan petugas
+        if ($request->filled('petugas')) {
+            $query->where('petugas_nip', $request->petugas);
+        }
+
+        // Filter berdasarkan nama warga
+        if ($request->filled('search')) {
+            $query->whereHas('pengajuan.warga.user', function ($q) use ($request) {
+                $q->where('nama', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $verifikasiList = $query->latest()->paginate(10);
+        $statusList = ['Di Review', 'Diterima', 'Ditolak'];
+        $petugasList = Petugas::with('user')->get();
+
+        return view('admin.verifikasi.index', compact('verifikasiList', 'statusList', 'petugasList'));
     }
 }
