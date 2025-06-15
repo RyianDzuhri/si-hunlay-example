@@ -77,19 +77,32 @@
     
 
     {{-- Tombol Aksi --}}
-    <div class="flex justify-between">
-        <a href="{{ route('admin.pengajuan.index') }}" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">← Kembali</a>
-        
-        {{-- <div class="space-x-2">
-            <form action="{{ route('admin.pengajuan.tolak', $pengajuan->id) }}" method="POST" class="inline">
-                @csrf
-                <button class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Tolak</button>
-            </form>
-            <form action="{{ route('admin.pengajuan.setujui', $pengajuan->id) }}" method="POST" class="inline">
-                @csrf
-                <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Setujui</button>
-            </form>
-        </div> --}}
+<div class="flex justify-between items-center mt-4">
+    <a href="{{ route('admin.pengajuan.index') }}"
+       class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">
+        ← Kembali
+    </a>
+
+    <div class="space-x-2">
+        <form action="{{ route('admin.pengajuan.tolak', $pengajuan->id) }}" method="POST" class="inline-block">
+            @csrf
+            @method('PUT')
+            <button type="submit"
+                    class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-150 ease-in-out">
+                Tolak
+            </button>
+        </form>
+
+        <form action="{{ route('admin.pengajuan.setujui', $pengajuan->id) }}" method="POST" class="inline-block">
+            @csrf
+            @method('PUT')
+            <button type="submit"
+                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-150 ease-in-out">
+                Setujui
+            </button>
+        </form>
     </div>
+</div>
+
 </div>
 @endsection

@@ -47,10 +47,15 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'showDashboard'])->name('admin.dashboard');
 
     // Pengajuan Bantuan
-    Route::get('/pengajuan', [AdminPengajuanController::class, 'index'])->name('admin.pengajuan');
-    Route::get('/pengajuan/export', [AdminPengajuanController::class, 'export'])->name('admin.export');
-    Route::get('/admin/pengajuan/{id}/verifikasi', [AdminPengajuanController::class, 'verifikasi'])->name('admin.pengajuan.verifikasi');
-    Route::get('/admin/pengajuan', [AdminPengajuanController::class, 'index'])->name('admin.pengajuan.index');
+    Route::get('/pengajuan', [AdminPengajuanController::class, 'index'])->name('admin.pengajuan.index');
+    Route::get('/pengajuan/export', [AdminPengajuanController::class, 'export'])->name('admin.pengajuan.export');
+    Route::get('/pengajuan/{id}/verifikasi', [AdminPengajuanController::class, 'verifikasi'])->name('admin.pengajuan.verifikasi');
+    // Route::post('/pengajuan/{id}/setujui', [AdminPengajuanController::class, 'setujui'])->name('admin.pengajuan.setujui');
+    // Route::post('/pengajuan/{id}/tolak', [AdminPengajuanController::class, 'tolak'])->name('admin.pengajuan.tolak');
+    Route::put('/pengajuan/{id}/setujui', [AdminPengajuanController::class, 'setujui'])->name('admin.pengajuan.setujui');
+    Route::put('/pengajuan/{id}/tolak', [AdminPengajuanController::class, 'tolak'])->name('admin.pengajuan.tolak');
+
+
 
     // Penugasan
     Route::get('/penugasan', [PenugasanController::class, 'index'])->name('admin.penugasan');
@@ -68,6 +73,7 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     Route::get('/akun/pengguna', [UserController::class, 'index'])->name('admin.akun.pengguna');
     Route::get('/akun/petugas', [UserController::class, 'index'])->name('admin.akun.petugas');
 });
+
 
 //Petugas
 Route::prefix('petugas')->middleware(['auth:petugas'])->group(function () {

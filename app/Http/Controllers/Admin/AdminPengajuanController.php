@@ -38,9 +38,11 @@ class AdminPengajuanController extends Controller
                 'status' => match($item->status) {
                     'DIAJUKAN' => 'Menunggu',
                     'DOKUMEN_LENGKAP', 'PROSES_SURVEY', 'EVALUASI_AKHIR' => 'Diverifikasi',
-                    'DISETUJUI', 'DITOLAK' => 'Ditolak',
+                    'DISETUJUI' => 'Disetujui',
+                    'DITOLAK' => 'Ditolak',
                     default => 'Menunggu',
                 },
+                
                 'kode_pengajuan' => 'PGJ-' . str_pad($item->id, 5, '0', STR_PAD_LEFT),
             ];
         });
@@ -80,4 +82,24 @@ public function verifikasi($id)
     $pengajuan = Pengajuan::with(['warga.user', 'dokumen'])->findOrFail($id);
     return view('admin.pengajuan.verifikasi_pengajuan.detail', compact('pengajuan'));
 }
+
+// ✅ Tambahan method SETUJUI
+public function setujui($id)
+{
+    $pengajuan = Pengajuan::findOrFail($id);
+    $pengajuan->status = 'DISETUJUI';
+    $pengajuan->save();
+
+    return redirect()->route('admin.pengajuan.index')->with('success', 'Pengajuan telah disetujui.');
+}
+
+public function tolak($id)
+{
+    $pengajuan = Pengajuan::findOrFail($id);
+    $pengajuan->status = 'DITOLAK';
+    $pengajuan->save();
+
+    return redirect()->route('admin.pengajuan.index')->with('success', 'Pengajuan ditolak.');
+}
+
 }
