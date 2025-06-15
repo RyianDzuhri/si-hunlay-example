@@ -30,17 +30,19 @@ class VerifikasiTugasController extends Controller
 
     public function store(Request $request, Pengajuan $pengajuan)
     {
-        // 🔒 Blok akses jika status pengajuan sudah bukan VERIFIKASI_LAPANGAN
-        if ($pengajuan->status !== 'PROSES_SURVEY') {
-            return redirect()->route('petugas.tugas')
-                ->with('error', 'Pengajuan ini sudah tidak dapat diverifikasi karena statusnya telah berubah.');
-        }
-
-        // ✅ 1. Validasi input
+        // 1. Validasi
         $validatedData = $request->validate([
             'tgl_survey' => 'required|date',
             'status_kepemilikan' => ['required', Rule::in(['Milik Sendiri', 'Sewa', 'Menumpang', 'Tidak Jelas'])],
             'verifikasi_ekonomi' => ['required', Rule::in(['Sesuai', 'Tidak Sesuai'])],
+            
+            // Verifikasi untuk dropdown kondisi (sekarang string, bukan array)
+            'kondisi_atap_aktual' => 'nullable|string',
+            'kondisi_dinding_aktual' => 'nullable|string',
+            'kondisi_lantai_aktual' => 'nullable|string',
+            'ventilasi_pencahayaan_aktual' => 'nullable|string',
+            'sanitasi_airbersih_aktual' => 'nullable|string',
+
             'detail_verifikasi_dokumen' => 'nullable|array',
             'catatan_survei' => 'nullable|string|max:5000',
             'bukti_survei' => 'nullable|array',
@@ -51,7 +53,8 @@ class VerifikasiTugasController extends Controller
 
         DB::beginTransaction();
         try {
-            // ✅ 2. Proses upload file bukti survei
+            
+            // 2. Proses upload file
             $buktiPaths = [];
             if ($request->hasFile('bukti_survei')) {
                 foreach ($request->file('bukti_survei') as $file) {
@@ -60,7 +63,7 @@ class VerifikasiTugasController extends Controller
                 }
             }
 
-            // ✅ 3. Konversi array menjadi string
+            // 3. Konversi data array menjadi string (hanya untuk yang masih array)
             $verifikasiDokumenString = null;
             if (!empty($validatedData['detail_verifikasi_dokumen'])) {
                 $verifikasiDokumenString = collect($validatedData['detail_verifikasi_dokumen'])
@@ -69,26 +72,36 @@ class VerifikasiTugasController extends Controller
             }
             $buktiSurveiString = implode(',', $buktiPaths);
 
-            // ✅ 4. Simpan atau update hasil survey
-            $hasilVerifikasi = HasilSurvey::firstOrNew(['pengajuan_id' => $pengajuan->id]);
-            $hasilVerifikasi->pengajuan_id = $pengajuan->id;
-            $hasilVerifikasi->petugas_nip = Auth::user()->petugas->nip;
-            $hasilVerifikasi->tgl_survey = $validatedData['tgl_survey'];
-            $hasilVerifikasi->status_kepemilikan = $validatedData['status_kepemilikan'];
-            $hasilVerifikasi->verifikasi_ekonomi = $validatedData['verifikasi_ekonomi'];
-            $hasilVerifikasi->detail_verifikasi_dokumen = $verifikasiDokumenString;
-            $hasilVerifikasi->catatan_survei = $validatedData['catatan_survei'];
-            $hasilVerifikasi->bukti_survei = $buktiSurveiString;
-            $hasilVerifikasi->status_rekomendasi = $validatedData['status_rekomendasi'];
-            $hasilVerifikasi->alasan_penolakan = $validatedData['alasan_penolakan'];
-            $hasilVerifikasi->save();
+            // 4. Simpan atau perbarui data ke tabel 'hasil_verifikasi'
+            HasilSurvey::updateOrCreate(
+                ['pengajuan_id' => $pengajuan->id],
+                [
+                    'petugas_nip' => Auth::user()->petugas->nip,
+                    'tgl_survey' => $validatedData['tgl_survey'],
+                    'status_kepemilikan' => $validatedData['status_kepemilikan'],
+                    'verifikasi_ekonomi' => $validatedData['verifikasi_ekonomi'],
+                    
+                    // Simpan langsung nilai string dari dropdown
+                    'kondisi_atap_aktual' => $validatedData['kondisi_atap_aktual'],
+                    'kondisi_dinding_aktual' => $validatedData['kondisi_dinding_aktual'],
+                    'kondisi_lantai_aktual' => $validatedData['kondisi_lantai_aktual'],
+                    'ventilasi_pencahayaan_aktual' => $validatedData['ventilasi_pencahayaan_aktual'],
+                    'sanitasi_airbersih_aktual' => $validatedData['sanitasi_airbersih_aktual'],
 
-            // ✅ 5. Update status pengajuan
+                    'detail_verifikasi_dokumen' => $verifikasiDokumenString,
+                    'catatan_survei' => $validatedData['catatan_survei'],
+                    'bukti_survei' => $buktiSurveiString,
+                    'status_rekomendasi' => $validatedData['status_rekomendasi'],
+                    'alasan_penolakan' => $validatedData['alasan_penolakan'],
+                ]
+            );
+
+            // 5. Update status pengajuan
             $statusSebelumnya = $pengajuan->status;
-            $statusSesudah = 'EVALUASI_AKHIR';
+            $statusSesudah = ($validatedData['status_rekomendasi'] === 'Layak') ? 'EVALUASI_AKHIR' : 'DITOLAK';
             $pengajuan->update(['status' => $statusSesudah]);
 
-            // ✅ 6. Catat histori perubahan
+            // 6. Catat histori
             HistoriPengajuan::create([
                 'pengajuan_id' => $pengajuan->id,
                 'user_id' => Auth::id(),
@@ -96,24 +109,17 @@ class VerifikasiTugasController extends Controller
                 'status_sesudah' => $statusSesudah,
                 'catatan' => 'Verifikasi lapangan telah selesai dilakukan oleh petugas.',
             ]);
-
+            
             DB::commit();
 
-            return redirect()->route('petugas.tugas')
-                ->with('success', 'Hasil verifikasi berhasil disimpan.');
+            return redirect()->route('petugas.dashboard')->with('success', 'Hasil verifikasi berhasil disimpan.');
+
         } catch (\Exception $e) {
             DB::rollBack();
-
-            // Hapus file yang sudah terupload jika gagal simpan
             if (!empty($buktiPaths)) {
-                foreach ($buktiPaths as $path) {
-                    Storage::disk('public')->delete($path);
-                }
+                foreach ($buktiPaths as $path) { Storage::disk('public')->delete($path); }
             }
-
-            return redirect()->back()
-                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage())
-                ->withInput();
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage())->withInput();
         }
     }
 

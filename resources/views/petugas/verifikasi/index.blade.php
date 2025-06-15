@@ -19,6 +19,19 @@
             display: none;
             -webkit-appearance: none;
         }
+        .transition-smooth {
+            transition: all 0.3s ease-in-out;
+        }
+
+        select, input, textarea {
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        select:focus, input:focus, textarea:focus {
+            outline: none;
+            border-color: #6366F1; /* indigo-500 */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); /* indigo-200 */
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -142,157 +155,184 @@
         <!-- KARTU 3: FORMULIR VERIFIKASI PETUGAS (DESAIN BARU) -->
         <div class="bg-white shadow-lg rounded-lg p-6">
             <h2 class="text-lg font-semibold text-gray-800">Verifikasi Lapangan</h2>
-           <form action="{{ route('petugas.verifikasi.store', $pengajuan->id) }}" method="POST" class="mt-6 space-y-6" enctype="multipart/form-data">
+            <form action="{{-- route('petugas.verifikasi.store', $pengajuan->id) --}}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-8">
                 @csrf
 
-                <div>
-                    <label for="tgl_survey" class="block text-sm font-semibold text-gray-700">Tanggal Survei</label>
-                    <div class="relative mt-1">
-                        <input type="date" name="tgl_survey" id="tgl_survey"
-                            value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                            readonly
-                            class="block w-full rounded-md border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:ring-0 focus:border-gray-300 sm:text-sm pl-3 pr-10 py-2 cursor-not-allowed">
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                    clip-rule="evenodd" />
-                            </svg>
+                {{-- Bagian 1 --}}
+                <fieldset>
+                    <legend class="text-xl font-semibold text-gray-800 border-b pb-3 mb-6">1. Detail & Kelengkapan</legend>
+                    <div class="grid gap-6 sm:grid-cols-2">
+                        <div>
+                            <label for="tgl_survey" class="block text-sm font-semibold text-gray-700">Tanggal Survei</label>
+                            <input type="date" name="tgl_survey" id="tgl_survey" required value="{{ date('Y-m-d') }}"
+                                class="mt-1 block w-full bg-gray-50 rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200">
                         </div>
-                    </div>
-                    @error('tgl_survey')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
 
-                <div>
-                    <label for="status_kepemilikan" class="block text-sm font-semibold text-gray-700">Hasil Verifikasi Status Kepemilikan</label>
-                    <select id="status_kepemilikan" name="status_kepemilikan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-                        <option value="" selected disabled hidden>Pilih Status</option>
-                        <option value="Milik Sendiri" {{ old('status_kepemilikan') == 'Milik Sendiri' ? 'selected' : '' }}>Milik Sendiri</option>
-                        <option value="Sewa" {{ old('status_kepemilikan') == 'Sewa' ? 'selected' : '' }}>Sewa</option>
-                        <option value="Menumpang" {{ old('status_kepemilikan') == 'Menumpang' ? 'selected' : '' }}>Menumpang</option>
-                        <option value="Tidak Jelas" {{ old('status_kepemilikan') == 'Tidak Jelas' ? 'selected' : '' }}>Tidak Jelas</option> </select>
-                    @error('status_kepemilikan')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Hasil Verifikasi Kondisi Ekonomi</label>
-                    <div class="mt-2 space-y-2">
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="verifikasi_ekonomi" value="Sesuai" class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" {{ old('verifikasi_ekonomi') == 'Sesuai' ? 'checked' : '' }}>
-                            <span class="ml-2 text-sm">Sesuai (Layak dibantu)</span>
-                        </label><br>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="verifikasi_ekonomi" value="Tidak Sesuai" class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" {{ old('verifikasi_ekonomi') == 'Tidak Sesuai' ? 'checked' : '' }}>
-                            <span class="ml-2 text-sm">Tidak Sesuai (Layak dibantu)</span>
-                        </label>
-                    </div>
-                    @error('verifikasi_ekonomi')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Detail Verifikasi Dokumen</label>
-                    <div class="mt-2 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm text-gray-800">KTP & KK</span>
-                            <select name="detail_verifikasi_dokumen[KTP_KK]" class="rounded-md border-gray-300 shadow-sm text-sm py-1 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                <option value="Valid" {{ old('detail_verifikasi_dokumen.KTP_KK') == 'Valid' ? 'selected' : '' }}>Valid</option>
-                                <option value="Tidak Valid" {{ old('detail_verifikasi_dokumen.KTP_KK') == 'Tidak Valid' ? 'selected' : '' }}>Tidak Valid</option>
+                        <div>
+                            <label for="status_kepemilikan" class="block text-sm font-semibold text-gray-700">Status Kepemilikan</label>
+                            <select id="status_kepemilikan" name="status_kepemilikan" required
+                                class="mt-1 block w-full bg-gray-50 rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200">
+                                <option disabled selected hidden>Pilih Status</option>
+                                <option value="Milik Sendiri">Milik Sendiri</option>
+                                <option value="Sewa">Sewa</option>
+                                <option value="Menumpang">Menumpang</option>
+                                <option value="Tidak Jelas">Tidak Jelas</option>
                             </select>
                         </div>
-                        @error('detail_verifikasi_dokumen.KTP_KK')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
 
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm text-gray-800">SKTM</span>
-                            <select name="detail_verifikasi_dokumen[SKTM]" class="rounded-md border-gray-300 shadow-sm text-sm py-1 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                <option value="Valid" {{ old('detail_verifikasi_dokumen.SKTM') == 'Valid' ? 'selected' : '' }}>Valid</option>
-                                <option value="Tidak Valid" {{ old('detail_verifikasi_dokumen.SKTM') == 'Tidak Valid' ? 'selected' : '' }}>Tidak Valid</option>
-                            </select>
-                        </div>
-                        @error('detail_verifikasi_dokumen.SKTM')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
-
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm text-gray-800">Dokumen Kepemilikan Rumah</span>
-                            <select name="detail_verifikasi_dokumen[KEPEMILIKAN]" class="rounded-md border-gray-300 shadow-sm text-sm py-1 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                <option value="Valid" {{ old('detail_verifikasi_dokumen.KEPEMILIKAN') == 'Valid' ? 'selected' : '' }}>Valid</option>
-                                <option value="Tidak Valid" {{ old('detail_verifikasi_dokumen.KEPEMILIKAN') == 'Tidak Valid' ? 'selected' : '' }}>Tidak Valid</option>
-                            </select>
-                        </div>
-                        @error('detail_verifikasi_dokumen.KEPEMILIKAN')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-
-                <div>
-                    <label for="catatan_survei" class="block text-sm font-semibold text-gray-700">Catatan Survei</label>
-                    <textarea id="catatan_survei" name="catatan_survei" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm" placeholder="Tulis temuan atau observasi di lapangan...">{{ old('catatan_survei') }}</textarea>
-                    @error('catatan_survei')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Upload Bukti Foto Survei (Wajib)</label>
-                    <div class="mt-1 px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-white">
-                        <div class="space-y-1 text-center">
-                            <img class="mx-auto h-12 w-12" src="{{ asset('images/img-icon.png') }}" alt="Upload Ikon">
-                            <div class="flex text-sm text-gray-600 justify-center">
-                                <label for="bukti_survei" class="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500">
-                                    <span>Klik atau seret file ke sini</span>
-                                    <input id="bukti_survei" name="bukti_survei[]" type="file" accept="image/*" class="sr-only" multiple onchange="displayFileName(this, 'fileNameSpan')">
+                        <div class="sm:col-span-2">
+                            <label class="block text-sm font-semibold text-gray-700">Verifikasi Ekonomi</label>
+                            <div class="mt-2 space-y-2">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="verifikasi_ekonomi" value="Sesuai" required
+                                        class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                                    <span class="ml-2 text-sm">Sesuai (Layak dibantu)</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="verifikasi_ekonomi" value="Tidak Sesuai"
+                                        class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                                    <span class="ml-2 text-sm">Tidak Sesuai (Mampu)</span>
                                 </label>
                             </div>
-                            <span id="fileNameSpan" class="text-xs text-gray-500 block mt-1"></span>
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Detail Verifikasi Dokumen</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                @php
+                                    $dokumen = ['KTP_KK' => 'KTP & KK', 'SKTM' => 'SKTM', 'KEPEMILIKAN' => 'Kepemilikan Rumah'];
+                                @endphp
+                                @foreach ($dokumen as $key => $label)
+                                    <div>
+                                        <label class="block text-sm text-gray-700 mb-1">{{ $label }}</label>
+                                        <select name="detail_verifikasi_dokumen[{{ $key }}]"
+                                            class="w-full rounded-md border-gray-300 bg-gray-50 shadow-sm text-sm py-1 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                            <option value="Valid">Valid</option>
+                                            <option value="Tidak Valid">Tidak Valid</option>
+                                        </select>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
-                    @error('bukti_survei')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                    @error('bukti_survei.*')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <hr class="my-4">
-
-                <fieldset>
-                    <legend class="block text-sm font-semibold text-gray-700">Rekomendasi Akhir</legend>
-                    <div class="mt-2 space-y-2">
-                        <label class="inline-flex items-center">
-                            <input type="radio" id="status_layak" name="status_rekomendasi" value="Layak" class="h-4 w-4 text-indigo-600 border-gray-300" {{ old('status_rekomendasi') == 'Layak' ? 'checked' : '' }}>
-                            <span class="ml-2 text-sm">Layak Mendapatkan Bantuan</span>
-                        </label><br>
-                        <label class="inline-flex items-center">
-                            <input type="radio" id="status_tidak_layak" name="status_rekomendasi" value="Tidak Layak" class="h-4 w-4 text-indigo-600 border-gray-300" {{ old('status_rekomendasi') == 'Tidak Layak' ? 'checked' : '' }}>
-                            <span class="ml-2 text-sm">Tidak Layak</span>
-                        </label>
-                    </div>
-                    @error('status_rekomendasi')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
                 </fieldset>
 
-                <div id="alasan_penolakan_div" class="hidden">
-                    <label for="alasan_penolakan" class="block text-sm font-semibold text-gray-700">Alasan Penolakan <span class="text-red-500">*</span></label>
-                    <textarea name="alasan_penolakan" id="alasan_penolakan" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-1 focus:ring-red-500 sm:text-sm" placeholder="Contoh: Status rumah sewa, penghasilan di atas UMR...">{{ old('alasan_penolakan') }}</textarea>
-                    @error('alasan_penolakan')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+                {{-- Bagian 2 --}}
+                <fieldset>
+                    <legend class="text-xl font-semibold text-gray-800 border-b pb-3 mb-6">2. Kondisi Fisik & Kesehatan Rumah</legend>
+                    <div class="grid gap-6 sm:grid-cols-2">
+                        @php
+                            $kondisi = [
+                                'kondisi_atap_aktual' => 'Kondisi Atap Aktual',
+                                'kondisi_dinding_aktual' => 'Kondisi Dinding Aktual',
+                                'kondisi_lantai_aktual' => 'Kondisi Lantai Aktual',
+                                'ventilasi_pencahayaan_aktual' => 'Ventilasi & Pencahayaan',
+                                'sanitasi_airbersih_aktual' => 'Sanitasi & Air Bersih'
+                            ];
+                            $options = [
+                                'kondisi_atap_aktual' => [
+                                    'baik' => 'Baik / Kokoh',
+                                    'daun_atau_plastik' => 'Daun / Plastik',
+                                    'rangka_lapuk' => 'Rangka Lapuk',
+                                    'sebagian_roboh' => 'Sebagian Roboh'
+                                ],
+                                'kondisi_dinding_aktual' => [
+                                    'baik' => 'Tembok / Kokoh',
+                                    'bilik_bambu' => 'Bilik Bambu',
+                                    'tidak_kokoh' => 'Tidak Kokoh'
+                                ],
+                                'kondisi_lantai_aktual' => [
+                                    'keramik_semen' => 'Keramik / Semen',
+                                    'tanah' => 'Tanah',
+                                    'kayu_lapuk' => 'Kayu Lapuk'
+                                ],
+                                'ventilasi_pencahayaan_aktual' => [
+                                    'cukup' => 'Cukup',
+                                    'tidak_ada_ventilasi' => 'Tidak Ada Ventilasi',
+                                    'pencahayaan_kurang' => 'Pencahayaan Kurang'
+                                ],
+                                'sanitasi_airbersih_aktual' => [
+                                    'layak' => 'Layak',
+                                    'tidak_ada_kloset' => 'Tidak Ada WC',
+                                    'air_tidak_layak' => 'Air Tidak Layak'
+                                ]
+                            ];
+                        @endphp
+                        @foreach ($kondisi as $name => $label)
+                            <div>
+                                <label for="{{ $name }}" class="block text-sm font-semibold text-gray-700">{{ $label }}</label>
+                                <select name="{{ $name }}" id="{{ $name }}" required
+                                    class="mt-1 block w-full bg-gray-50 rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200">
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($options[$name] as $val => $text)
+                                        <option value="{{ $val }}">{{ $text }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endforeach
+                    </div>
+                </fieldset>
 
-                <div class="pt-5 flex justify-end">
-                    <button type="submit" class="w-full sm:w-auto flex justify-center py-2 px-8 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                {{-- Bagian 3 --}}
+                <fieldset>
+                    <legend class="text-xl font-semibold text-gray-800 border-b pb-3 mb-6">3. Catatan & Bukti</legend>
+                    <div class="space-y-6">
+                        <div>
+                            <label for="catatan_survei" class="block text-sm font-semibold text-gray-700">Catatan Survei</label>
+                            <textarea name="catatan_survei" id="catatan_survei" rows="4"
+                                class="mt-1 w-full bg-gray-50 rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition"
+                                placeholder="Tulis temuan di lapangan..."></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Upload Bukti Foto</label>
+                            <div class="px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg bg-white text-center">
+                                <img class="mx-auto h-12 w-12" src="/images/img-icon.png" alt="Upload Icon">
+                                <div class="flex justify-center text-sm text-gray-600 mt-2">
+                                    <label for="bukti_survei" class="cursor-pointer text-indigo-600 hover:text-indigo-500">
+                                        <span>Klik atau seret file ke sini</span>
+                                        <input id="bukti_survei" name="bukti_survei[]" type="file" accept="image/*" class="sr-only" multiple onchange="displayFileName(this, 'fileNameSpan')">
+                                    </label>
+                                </div>
+                                <span id="fileNameSpan" class="text-xs text-gray-500 block mt-2"></span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                {{-- Bagian 4 --}}
+                <fieldset>
+                    <legend class="text-xl font-semibold text-gray-800 border-b pb-3 mb-6">4. Rekomendasi Akhir</legend>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700">Status Rekomendasi</label>
+                            <div class="mt-2 space-y-2">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="status_rekomendasi" value="Layak" required
+                                        class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
+                                    <span class="ml-2 font-medium text-green-700">Layak</span>
+                                </label><br>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="status_rekomendasi" value="Tidak Layak"
+                                        class="h-4 w-4 text-red-600 border-gray-300 focus:ring-red-500">
+                                    <span class="ml-2 font-medium text-red-700">Tidak Layak</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="alasan_penolakan_div" class="hidden">
+                            <label for="alasan_penolakan" class="block text-sm font-semibold text-gray-700">Alasan Penolakan <span class="text-red-600">*</span></label>
+                            <textarea name="alasan_penolakan" id="alasan_penolakan" rows="3"
+                                class="mt-1 block w-full bg-gray-50 rounded-md border-gray-300 shadow-sm focus:ring-red-500 focus:border-red-500 transition"
+                                placeholder="Contoh: Status rumah sewa, penghasilan tinggi..."></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+
+                {{-- Tombol --}}
+                <div class="pt-6">
+                    <button type="submit"
+                        class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200">
                         Simpan Hasil Verifikasi
                     </button>
                 </div>
@@ -301,35 +341,27 @@
     </div>
 
     <script>
-        const statusLayak = document.getElementById('status_layak');
-        const statusTidakLayak = document.getElementById('status_tidak_layak');
-        const alasanDiv = document.getElementById('alasan_penolakan_div');
-        const alasanInput = document.getElementById('alasan_penolakan');
-
-        const toggleAlasan = () => {
-            if (statusTidakLayak.checked) {
-                alasanDiv.classList.remove('hidden');
-                alasanInput.required = true;
-            } else {
-                alasanDiv.classList.add('hidden');
-                alasanInput.required = false;
-            }
-        };
-
-        statusLayak.addEventListener('change', toggleAlasan);
-        statusTidakLayak.addEventListener('change', toggleAlasan);
-    
-    //Untuk Dokumen
-    function displayFileName(input, spanId) {
-        const span = document.getElementById(spanId);
-        if (input.files.length > 1) {
-            span.innerText = `${input.files.length} file dipilih`;
-        } else if (input.files.length === 1) {
-            span.innerText = input.files[0].name;
-        } else {
-            span.innerText = '';
+        function displayFileName(input, targetId) {
+            const target = document.getElementById(targetId);
+            const files = Array.from(input.files).map(f => f.name);
+            target.textContent = files.join(', ') || 'Tidak ada file dipilih.';
         }
-    }
+
+        // Untuk tampilkan textarea alasan_penolakan saat Tidak Layak dipilih
+        document.addEventListener('DOMContentLoaded', () => {
+            const radios = document.querySelectorAll('input[name="status_rekomendasi"]');
+            const alasanDiv = document.getElementById('alasan_penolakan_div');
+
+            radios.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    if (this.value === 'Tidak Layak') {
+                        alasanDiv.classList.remove('hidden');
+                    } else {
+                        alasanDiv.classList.add('hidden');
+                    }
+                });
+            });
+        });
     </script>
 
 </body>

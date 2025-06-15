@@ -11,39 +11,28 @@ class HasilSurvey extends Model
 {
     use HasFactory;
 
-    /**
-     * Nama tabel database yang terhubung dengan model ini.
-     *
-     * @var string
-     */
     protected $table = 'hasil_survey';
 
-    /**
-     * Daftar kolom yang boleh diisi secara massal.
-     * Pastikan semua kolom dari form verifikasi ada di sini.
-     *
-     * @var array
-     */
     protected $fillable = [
         'pengajuan_id',
         'petugas_nip',
         'tgl_survey',
+        'kondisi_atap_aktual',
+        'kondisi_dinding_aktual',
+        'kondisi_lantai_aktual',
+        'ventilasi_pencahayaan_aktual',
+        'sanitasi_airbersih_aktual',
         'status_kepemilikan',
         'verifikasi_ekonomi',
-        'detail_verifikasi_dokumen', // Disimpan sebagai TEXT dipisah koma
+        'detail_verifikasi_dokumen',
         'catatan_survei',
-        'bukti_survei',             // Disimpan sebagai TEXT dipisah koma
+        'bukti_survei',
         'status_rekomendasi',
         'alasan_penolakan',
     ];
 
-    /**
-     * Casting tipe data atribut.
-     *
-     * @var array
-     */
     protected $casts = [
-        'tgl_survey' => 'date', // Otomatis mengubah tgl_survey menjadi objek Carbon
+        'tgl_survey' => 'date',
     ];
 
     /**
@@ -62,12 +51,7 @@ class HasilSurvey extends Model
         return $this->belongsTo(Petugas::class, 'petugas_nip', 'nip');
     }
 
-    /**
-     * ACCESSOR: Mengubah string 'detail_verifikasi_dokumen' menjadi array
-     * saat dipanggil.
-     *
-     * Ini memungkinkan Anda menggunakan @foreach($hasil->detail_verifikasi_dokumen) di view.
-     */
+
     protected function detailVerifikasiDokumen(): Attribute
     {
         return Attribute::make(
@@ -75,13 +59,57 @@ class HasilSurvey extends Model
         );
     }
 
-    /**
-     * ACCESSOR: Mengubah string 'bukti_survei' menjadi array
-     * saat dipanggil.
-     *
-     * Ini memungkinkan Anda menggunakan @foreach($hasil->bukti_survei) di view.
-     */
     protected function buktiSurvei(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? explode(',', $value) : [],
+        );
+    }
+
+    /**
+     * ACCESSOR untuk kondisi_atap_aktual.
+     */
+    protected function kondisiAtapAktual(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? explode(',', $value) : [],
+        );
+    }
+
+    /**
+     * ACCESSOR untuk kondisi_dinding_aktual. (TAMBAHAN)
+     */
+    protected function kondisiDindingAktual(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? explode(',', $value) : [],
+        );
+    }
+
+    /**
+     * ACCESSOR untuk kondisi_lantai_aktual. (TAMBAHAN)
+     */
+    protected function kondisiLantaiAktual(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? explode(',', $value) : [],
+        );
+    }
+
+    /**
+     * ACCESSOR untuk ventilasi_pencahayaan_aktual. (TAMBAHAN)
+     */
+    protected function ventilasiPencahayaanAktual(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? explode(',', $value) : [],
+        );
+    }
+
+    /**
+     * ACCESSOR untuk sanitasi_airbersih_aktual. (TAMBAHAN)
+     */
+    protected function sanitasiAirbersihAktual(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => $value ? explode(',', $value) : [],
