@@ -83,5 +83,5 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
 Route::prefix('petugas')->middleware(['auth:petugas'])->group(function () {
    Route::get('/dashboard', [PetugasDashboardController::class, 'showDashboard'])->name('petugas.dashboard');
    Route::get('/daftar-tugas', [TugasController::class, 'showTugas'])->name('petugas.tugas');
-   Route::get('/verifikasi-tugas', [VerifikasiTugasController::class, 'showVerifikasiTugasform'])->name('petugas.verifikasi');
+   Route::get('/verifikasi-tugas/{id}', [VerifikasiTugasController::class, 'showVerifikasiTugasform'])->name('petugas.verifikasi');
 });

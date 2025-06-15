@@ -40,42 +40,72 @@
         </div>
 
         <!-- KARTU 1: DATA PENGAJUAN WARGA (READ-ONLY) -->
-        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
-            <h2 class="text-lg font-semibold border-b border-gray-200 pb-3 mb-4 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 12.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" /></svg>
-                Data Pengajuan Warga
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
-                <div>
-                    <label class="block text-gray-500">Alamat Diajukan</label>
-                    <p class="font-medium text-gray-800">JL. Kosgoro No.10 Kel Baruga, Kec. Baruga, Kota Kendari, Sulawesi Tenggara</p>
-                </div>
-                <div>
-                    <label class="block text-gray-500">Pekerjaan</label>
-                    <p class="font-medium text-gray-800">Nelayan</p>
-                </div>
-                <div>
-                    <label class="block text-gray-500">Penghasilan/Bulan</label>
-                    <p class="font-medium text-gray-800">Rp 1.200.000</p>
-                </div>
-                 <div>
-                    <label class="block text-gray-500">Luas Rumah</label>
-                    <p class="font-medium text-gray-800">45 m²</p>
-                </div>
-                 <div>
-                    <label class="block text-gray-500">Jumlah Penghuni</label>
-                    <p class="font-medium text-gray-800">6 Orang</p>
-                </div>
-                 <div class="md:col-span-2">
-                    <label class="block text-gray-500">Kerusakan Dilaporkan Warga</label>
-                    <ul class="list-disc list-inside mt-1 font-medium text-gray-800">
-                        <li>Atap: Rangka lapuk</li>
-                        <li>Dinding: Terbuat dari bilik bambu</li>
-                        <li>Lantai: Tanah</li>
-                    </ul>
+            <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+                <h2 class="text-lg font-semibold border-b border-gray-200 pb-3 mb-4 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 12.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                    </svg>
+                    Data Pengajuan Warga
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                    <!-- Kolom Kiri -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-500">Nama Lengkap</label>
+                            <p class="font-medium text-gray-800">{{ $pengajuan->warga->user->nama }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-gray-500">NIK</label>
+                            <p class="font-medium text-gray-800">{{ $pengajuan->warga_nik }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-gray-500">No. Kartu Keluarga</label>
+                            <p class="font-medium text-gray-800">{{ $pengajuan->warga->no_kk }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-gray-500">Alamat Pengaju</label>
+                            <p class="font-medium text-gray-800">
+                                {{ $pengajuan->alamat_lengkap }}, Kelurahan {{ $pengajuan->kelurahan->nama_kelurahan }}, Kecamatan {{ $pengajuan->kelurahan->kecamatan->nama_kecamatan }}
+                            </p>
+                        </div>
+                        <div>
+                            <label class="block text-gray-500">Tanggal Pengajuan</label>
+                            <p class="font-medium text-gray-800">{{ $pengajuan->tgl_pengajuan->format('d F Y') }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Kolom Kanan -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-500">Pekerjaan</label>
+                            <p class="font-medium text-gray-800">{{ Str::ucfirst(str_replace('_', ' ', $pengajuan->pekerjaan ?? '')) }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-gray-500">Penghasilan/Bulan</label>
+                            <p class="font-medium text-gray-800">Rp {{ number_format($pengajuan->penghasilan, 0, ',', '.') }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-gray-500">Luas Rumah</label>
+                            <p class="font-medium text-gray-800">{{ $pengajuan->luas_rumah }} m²</p>
+                        </div>
+                        <div>
+                            <label class="block text-gray-500">Jumlah Penghuni</label>
+                            <p class="font-medium text-gray-800">{{ $pengajuan->jumlah_penghuni }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-gray-500">Kerusakan Dilaporkan Warga</label>
+                            <ul class="list-disc list-inside mt-1 font-medium text-gray-800">
+                                @foreach($pengajuan->jenis_kerusakan as $kerusakan)
+                                    <li>{{ Str::ucfirst(str_replace('_', ' ', $kerusakan)) }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+
+
 
         <!-- KARTU 2: DOKUMEN YANG DIAJUKAN WARGA -->
         <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
@@ -84,42 +114,19 @@
                 Dokumen yang Diajukan Warga
             </h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <!-- Contoh Dokumen -->
-                <div class="border rounded-lg p-3 text-center bg-gray-50">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4z"></path></svg>
-                    <p class="mt-2 text-sm font-medium">Kartu Tanda Penduduk</p>
-                    <a href="#" class="text-xs text-indigo-600 hover:underline font-semibold">Lihat Detail</a>
-                </div>
-                 <div class="border rounded-lg p-3 text-center bg-gray-50">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4z"></path></svg>
-                    <p class="mt-2 text-sm font-medium">Kartu Keluarga</p>
-                    <a href="#" class="text-xs text-indigo-600 hover:underline font-semibold">Lihat Detail</a>
-                </div>
-                <div class="border rounded-lg p-3 text-center bg-gray-50">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4z"></path></svg>
-                    <p class="mt-2 text-sm font-medium">Surat Ket. Tidak Mampu</p>
-                    <a href="#" class="text-xs text-indigo-600 hover:underline font-semibold">Lihat Detail</a>
-                </div>
-                <div class="border rounded-lg p-3 text-center bg-gray-50">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4z"></path></svg>
-                    <p class="mt-2 text-sm font-medium">Bukti Kepemilikan Rumah</p>
-                    <a href="#" class="text-xs text-indigo-600 hover:underline font-semibold">Lihat Detail</a>
-                </div>
-                <div class="border rounded-lg p-3 text-center bg-gray-50">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4z"></path></svg>
-                    <p class="mt-2 text-sm font-medium">Foto Rumah (Tampak Depan)</p>
-                    <a href="#" class="text-xs text-indigo-600 hover:underline font-semibold">Lihat Detail</a>
-                </div>
-                 <div class="border rounded-lg p-3 text-center bg-gray-50">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4z"></path></svg>
-                    <p class="mt-2 text-sm font-medium">Foto Rumah (Tampak Belakang)</p>
-                    <a href="#" class="text-xs text-indigo-600 hover:underline font-semibold">Lihat Detail</a>
-                </div>
-                 <div class="border rounded-lg p-3 text-center bg-gray-50">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4z"></path></svg>
-                    <p class="mt-2 text-sm font-medium">Foto Bagian Rumah yang Rusak</p>
-                    <a href="#" class="text-xs text-indigo-600 hover:underline font-semibold">Lihat Detail</a>
-                </div>
+                @foreach($pengajuan->dokumen as $doc)
+                    <a href="{{ $doc->url }}" target="_blank" class="block group border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
+                        <div class="relative">
+                            <img src="{{ $doc->url }}" alt="{{ $doc->nama }}" class="w-full h-32 object-cover">
+                            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                Lihat Detail
+                            </div>
+                        </div>
+                        <div class="p-2 text-center text-sm font-medium text-gray-700">
+                            {{ $doc->nama }}
+                        </div>
+                    </a>
+                @endforeach
             </div>
         </div>
 
@@ -190,20 +197,38 @@
                 </div>
 
                  <!-- Upload Bukti Foto -->
-                 <div>
+                   <div>
                     <label class="block text-sm font-semibold text-gray-700">Upload Bukti Foto Survei (Wajib)</label>
-                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"><div class="space-y-1 text-center"><svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg><div class="flex text-sm text-gray-600"><label for="bukti_survei" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500"><span>Klik atau seret file ke sini</span><input id="bukti_survei" name="bukti_survei[]" type="file" class="sr-only" multiple></label></div></div></div>
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                        <div class="space-y-1 text-center">
+                            <!-- PERUBAHAN DI SINI: Mengganti SVG dengan IMG -->
+                            <img class="mx-auto h-12 w-12 text-gray-400" src="{{ asset('images/img-icon.png') }}" alt="Upload Ikon">
+                            <div class="flex text-sm text-gray-600">
+                                <label for="bukti_survei" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500">
+                                    <span>Klik atau seret file ke sini</span>
+                                    <input id="bukti_survei" name="bukti_survei[]" type="file" class="sr-only" multiple>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <hr class="my-4">
                 
                 <!-- Rekomendasi Akhir -->
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700">Rekomendasi Akhir</label>
+                <fieldset>
+                    <legend class="block text-sm font-semibold text-gray-700">Rekomendasi Akhir</legend>
                      <div class="mt-2 space-y-2">
                         <label class="inline-flex items-center"><input type="radio" id="status_layak" name="status_rekomendasi" value="Layak" class="h-4 w-4 text-indigo-600 border-gray-300"> <span class="ml-2 text-sm">Layak Mendapatkan Bantuan</span></label><br>
                         <label class="inline-flex items-center"><input type="radio" id="status_tidak_layak" name="status_rekomendasi" value="Tidak Layak" class="h-4 w-4 text-indigo-600 border-gray-300"> <span class="ml-2 text-sm">Tidak Layak</span></label>
                      </div>
+                </fieldset>
+
+                <!-- Alasan Penolakan -->
+                <div id="alasan_penolakan_div" class="hidden">
+                    <label for="alasan_penolakan" class="block text-sm font-semibold text-gray-700">Alasan Penolakan <span class="text-red-500">*</span></label>
+                    <!-- PERUBAHAN DI SINI: Mengganti input dengan textarea -->
+                    <textarea name="alasan_penolakan" id="alasan_penolakan" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-1 focus:ring-red-500 sm:text-sm" placeholder="Contoh: Status rumah sewa, penghasilan di atas UMR..."></textarea>
                 </div>
                 
                 <div class="pt-5 flex justify-end">
@@ -214,5 +239,26 @@
             </form>
         </div>
     </div>
+
+    <script>
+        const statusLayak = document.getElementById('status_layak');
+        const statusTidakLayak = document.getElementById('status_tidak_layak');
+        const alasanDiv = document.getElementById('alasan_penolakan_div');
+        const alasanInput = document.getElementById('alasan_penolakan');
+
+        const toggleAlasan = () => {
+            if (statusTidakLayak.checked) {
+                alasanDiv.classList.remove('hidden');
+                alasanInput.required = true;
+            } else {
+                alasanDiv.classList.add('hidden');
+                alasanInput.required = false;
+            }
+        };
+
+        statusLayak.addEventListener('change', toggleAlasan);
+        statusTidakLayak.addEventListener('change', toggleAlasan);
+    </script>
+
 </body>
 </html>
