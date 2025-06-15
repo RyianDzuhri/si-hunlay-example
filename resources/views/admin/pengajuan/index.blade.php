@@ -35,9 +35,9 @@
                 <select name="status" onchange="this.form.submit()" class="appearance-none w-full md:w-40 p-2 border border-gray-300 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 pr-8">
                     <option value="">Semua Status</option>
                     <option value="DIAJUKAN" {{ request('status') == 'DIAJUKAN' ? 'selected' : '' }}>Menunggu</option>
-                    <option value="DOKUMEN_LENGKAP" {{ request('status') == 'DOKUMEN_LENGKAP' ? 'selected' : '' }}>Diverifikasi</option>
-                    <option value="PROSES_SURVEY" {{ request('status') == 'PROSES_SURVEY' ? 'selected' : '' }}>Survey</option>
-                    <option value="EVALUASI_AKHIR" {{ request('status') == 'EVALUASI_AKHIR' ? 'selected' : '' }}>Evaluasi</option>
+                    <option value="DOKUMEN_LENGKAP" {{ request('status') == 'DOKUMEN_LENGKAP' ? 'selected' : '' }}>Dokumen Lengkap</option>
+                    <option value="PROSES_SURVEY" {{ request('status') == 'PROSES_SURVEY' ? 'selected' : '' }}>Proses Survey</option>
+                    <option value="EVALUASI_AKHIR" {{ request('status') == 'EVALUASI_AKHIR' ? 'selected' : '' }}>Evaluasi Akhir</option>
                     <option value="DISETUJUI" {{ request('status') == 'DISETUJUI' ? 'selected' : '' }}>Disetujui</option>
                     <option value="DITOLAK" {{ request('status') == 'DITOLAK' ? 'selected' : '' }}>Ditolak</option>
                 </select>
@@ -92,22 +92,50 @@
                         <td class="px-4 py-3 whitespace-nowrap">{{ \Carbon\Carbon::parse($item['tanggal_pengajuan'])->translatedFormat('D, d F Y') }}</td>
                         <td class="px-4 py-3 whitespace-nowrap">
                             @php
-                                $badge = match($item['status']) {
-                                    'DIAJUKAN' => ['text' => 'Menunggu', 'color' => 'bg-yellow-100 text-yellow-700'],
-                                    'DOKUMEN_LENGKAP' => ['text' => 'Diverifikasi', 'color' => 'bg-blue-100 text-blue-700'],
-                                    'PROSES_SURVEY' => ['text' => 'Survey', 'color' => 'bg-purple-100 text-purple-700'], // Contoh warna lain
-                                    'EVALUASI_AKHIR' => ['text' => 'Evaluasi', 'color' => 'bg-indigo-100 text-indigo-700'], // Contoh warna lain
-                                    'DISETUJUI' => ['text' => 'Disetujui', 'color' => 'bg-green-100 text-green-700'],
-                                    'DITOLAK' => ['text' => 'Ditolak', 'color' => 'bg-red-100 text-red-700'],
-                                    default => ['text' => $item['status'], 'color' => 'bg-gray-100 text-gray-700']
-                                };
+                                $badgeColor = '';
+                                // Menggunakan 'raw_status' untuk logika status
+                                switch ($item['raw_status']) {
+                                    case 'DIAJUKAN':
+                                        $badgeColor = 'bg-yellow-100 text-yellow-700';
+                                        break;
+                                    case 'DOKUMEN_LENGKAP':
+                                    case 'PROSES_SURVEY':
+                                    case 'EVALUASI_AKHIR':
+                                        $badgeColor = 'bg-blue-100 text-blue-700';
+                                        break;
+                                    case 'DISETUJUI':
+                                        $badgeColor = 'bg-green-100 text-green-700';
+                                        break;
+                                    case 'DITOLAK':
+                                        $badgeColor = 'bg-red-100 text-red-700';
+                                        break;
+                                    default:
+                                        $badgeColor = 'bg-gray-100 text-gray-700';
+                                        break;
+                                }
                             @endphp
-                            <span class="text-xs font-medium px-3 py-1 rounded-full {{ $badge['color'] }}">{{ $badge['text'] }}</span>
+                            {{-- Menggunakan 'display_status' untuk teks yang ditampilkan --}}
+                            <span class="text-xs font-medium px-3 py-1 rounded-full {{ $badgeColor }}">{{ $item['display_status'] }}</span>
                         </td>
                         <td class="px-4 py-3 whitespace-nowrap">
-                            <a href="{{ route('admin.pengajuan.verifikasi', $item['id']) }}" class="bg-blue-600 text-white text-xs font-medium px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                                Verifikasi
-                            </a>
+                            {{-- Menggunakan 'raw_status' untuk kondisi tombol Aksi --}}
+                            @if ($item['raw_status'] == 'DIAJUKAN')
+                                <a href="{{ route('admin.pengajuan.verifikasi', $item['id']) }}" class="bg-blue-600 text-white text-xs font-medium px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                                    Verifikasi
+                                </a>
+                            @elseif ($item['raw_status'] == 'DITOLAK')
+                                <span class="text-red-600 font-medium text-sm">Pengajuan Ditolak</span>
+                            @elseif ($item['raw_status'] == 'DOKUMEN_LENGKAP')
+                                <span class="text-blue-600 font-medium text-sm">Dokumen Lengkap</span>
+                            @elseif ($item['raw_status'] == 'PROSES_SURVEY')
+                                <span class="text-purple-600 font-medium text-sm">Proses Survey</span>
+                            @elseif ($item['raw_status'] == 'EVALUASI_AKHIR')
+                                <span class="text-indigo-600 font-medium text-sm">Evaluasi Akhir</span>
+                            @elseif ($item['raw_status'] == 'DISETUJUI')
+                                <span class="text-green-600 font-medium text-sm">Pengajuan Disetujui</span>
+                            @else
+                                <span class="text-gray-500 text-sm">-</span>
+                            @endif
                         </td>
                     </tr>
                 @empty

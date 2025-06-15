@@ -20,6 +20,18 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-gray-700 mb-6">
             <div>
+                <p class="text-gray-500 text-sm mb-0.5">ID Pengajuan</p>
+                <p class="font-medium">{{ $hasil->pengajuan->kode_pengajuan ?? '-' }}</p>
+            </div>
+            <div>
+                <p class="text-gray-500 text-sm mb-0.5">Nama Pemohon</p>
+                <p class="font-medium">{{ $hasil->pengajuan->warga->user->nama ?? '-' }}</p>
+            </div>
+            <div>
+                <p class="text-gray-500 text-sm mb-0.5">Petugas Survei</p>
+                <p class="font-medium">{{ $hasil->petugas->user->nama ?? '-' }}</p>
+            </div>
+            <div>
                 <p class="text-gray-500 text-sm mb-0.5">Tanggal Survei</p>
                 <p class="font-medium">{{ optional($hasil->tgl_survey)->translatedFormat('j F Y') ?? '-' }}</p>
             </div>
@@ -28,7 +40,7 @@
                 <p class="font-medium">{{ $hasil->status_kepemilikan ?? '-' }}</p>
             </div>
             <div>
-                <p class="text-gray-500 text-sm mb-0.5">Kondisi Ekonomi</p>
+                <p class="text-gray-500 text-sm mb-0.5">Verifikasi Kondisi Ekonomi</p>
                 <p class="font-medium">{{ $hasil->verifikasi_ekonomi ?? '-' }}</p>
             </div>
             <div>
@@ -60,6 +72,49 @@
             </div>
         </div>
 
+        <h3 class="text-lg font-semibold text-gray-800 mb-3 border-t pt-4">Kondisi Fisik Rumah (Aktual)</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-gray-700 mb-6">
+            <div>
+                <p class="text-gray-500 text-sm mb-0.5">Kondisi Atap</p>
+                <p class="font-medium">
+                    {{ !empty($hasil->kondisi_atap_aktual) ? implode(', ', array_map('ucwords', array_map(function($item){ return str_replace('_', ' ', $item); }, $hasil->kondisi_atap_aktual))) : '-' }}
+                </p>
+            </div>
+            <div>
+                <p class="text-gray-500 text-sm mb-0.5">Kondisi Dinding</p>
+                <p class="font-medium">
+                    {{ !empty($hasil->kondisi_dinding_aktual) ? implode(', ', array_map('ucwords', array_map(function($item){ return str_replace('_', ' ', $item); }, $hasil->kondisi_dinding_aktual))) : '-' }}
+                </p>
+            </div>
+            <div>
+                <p class="text-gray-500 text-sm mb-0.5">Kondisi Lantai</p>
+                <p class="font-medium">
+                    {{ !empty($hasil->kondisi_lantai_aktual) ? implode(', ', array_map('ucwords', array_map(function($item){ return str_replace('_', ' ', $item); }, $hasil->kondisi_lantai_aktual))) : '-' }}
+                </p>
+            </div>
+            <div>
+                <p class="text-gray-500 text-sm mb-0.5">Ventilasi & Pencahayaan</p>
+                <p class="font-medium">
+                    {{ !empty($hasil->ventilasi_pencahayaan_aktual) ? implode(', ', array_map('ucwords', array_map(function($item){ return str_replace('_', ' ', $item); }, $hasil->ventilasi_pencahayaan_aktual))) : '-' }}
+                </p>
+            </div>
+            <div>
+                <p class="text-gray-500 text-sm mb-0.5">Sanitasi & Air Bersih</p>
+                <p class="font-medium">
+                    {{ !empty($hasil->sanitasi_airbersih_aktual) ? implode(', ', array_map('ucwords', array_map(function($item){ return str_replace('_', ' ', $item); }, $hasil->sanitasi_airbersih_aktual))) : '-' }}
+                </p>
+            </div>
+            {{-- Tambahkan field lain dari kondisi fisik rumah jika ada, contoh: luas_rumah, jumlah_penghuni --}}
+            <div>
+                <p class="text-gray-500 text-sm mb-0.5">Luas Rumah</p>
+                <p class="font-medium">{{ $hasil->pengajuan->luas_rumah ?? '-' }} m²</p>
+            </div>
+            <div>
+                <p class="text-gray-500 text-sm mb-0.5">Jumlah Penghuni</p>
+                <p class="font-medium">{{ $hasil->pengajuan->jumlah_penghuni ?? '-' }}</p>
+            </div>
+        </div>
+
         <h3 class="text-lg font-semibold text-gray-800 mb-3 border-t pt-4">Dokumen yang Diverifikasi</h3>
         <ul class="list-none space-y-2 text-gray-700">
             @forelse ($hasil->detail_verifikasi_dokumen as $dok)
@@ -67,7 +122,7 @@
                     <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span>{{ $dok }}</span>
+                    <span>{{ ucwords(str_replace('_', ' ', $dok)) }}</span> {{-- Tambahkan format untuk dokumen --}}
                 </li>
             @empty
                 <li class="text-gray-500 italic">Tidak ada dokumen yang diverifikasi.</li>
