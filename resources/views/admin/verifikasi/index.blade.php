@@ -3,80 +3,145 @@
 @section('title', 'Review Hasil Verifikasi Lapangan')
 
 @section('content')
-<div class="container mx-auto px-4 py-6">
-    <h1 class="text-2xl font-bold mb-1">Review Hasil Verifikasi Lapangan</h1>
-    <p class="text-gray-600 mb-4">Kelola dan tinjau hasil verifikasi RTLH oleh petugas lapangan</p>
+<div class="p-0.5"> {{-- Mengurangi padding keseluruhan agar lebih mirip gambar --}}
+    <h1 class="text-2xl font-bold mb-2 text-gray-900">Review Hasil Verifikasi Lapangan</h1>
+    <p class="text-gray-600 mb-6">Kelola dan tinjau hasil verifikasi RTLH oleh petugas lapangan</p>
 
     {{-- Filter dan Search --}}
-    <form method="GET" class="flex flex-col md:flex-row gap-4 mb-6">
-        <input type="text" name="search" placeholder="Cari nama pemohon" value="{{ request('search') }}"
-            class="w-full md:w-1/3 px-4 py-2 border rounded shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    <form method="GET" action="{{ route('admin.verifikasi.index') }}" class="bg-white p-6 rounded-lg shadow-md mb-6 flex flex-col md:flex-row gap-4 items-center">
+        {{-- Search Input --}}
+        <div class="relative flex-1 w-full md:w-auto">
+            <input
+                type="text"
+                name="search"
+                placeholder="Cari nama pemohon"
+                value="{{ request('search') }}"
+                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                onkeydown="if(event.key === 'Enter') this.form.submit()"
+            />
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+        </div>
 
-        <select name="status" onchange="this.form.submit()" class="px-4 py-2 border rounded shadow focus:ring-2 focus:ring-blue-500">
-            <option value="">Semua Status</option>
-            @foreach ($statusList as $status)
-                <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : '' }}>
-                    {{ $status }}
-                </option>
-            @endforeach
-        </select>
+        {{-- Status Filter --}}
+        <div class="relative w-full md:w-auto">
+            <select name="status" onchange="this.form.submit()" class="appearance-none w-full md:w-40 p-2 border border-gray-300 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 pr-8">
+                <option value="">Semua Status</option>
+                {{-- Sesuaikan opsi status dengan nilai aktual dari backend Anda --}}
+                <option value="DIVERIFIKASI" {{ request('status') == 'DIVERIFIKASI' ? 'selected' : '' }}>Di Review</option>
+                <option value="DISETUJUI" {{ request('status') == 'DISETUJUI' ? 'selected' : '' }}>Disetujui</option>
+                <option value="DITOLAK" {{ request('status') == 'DITOLAK' ? 'selected' : '' }}>Ditolak</option>
+                <option value="KOSONG" {{ request('status') == 'KOSONG' ? 'selected' : '' }}>Belum Diverifikasi</option>
+                {{-- @foreach ($statusList as $status)
+                    <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : '' }}>
+                        {{ ucwords(str_replace('_', ' ', $status)) }}
+                    </option>
+                @endforeach --}}
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </div>
+        </div>
 
-        <select name="petugas" onchange="this.form.submit()" class="px-4 py-2 border rounded shadow focus:ring-2 focus:ring-blue-500">
-            <option value="">Semua Petugas</option>
-            @foreach ($petugasList as $petugas)
-                <option value="{{ $petugas->nip }}" {{ request('petugas') == $petugas->nip ? 'selected' : '' }}>
-                    {{ $petugas->user->nama }}
-                </option>
-            @endforeach
-        </select>
+        {{-- Petugas Filter --}}
+        <div class="relative w-full md:w-auto">
+            <select name="petugas" onchange="this.form.submit()" class="appearance-none w-full md:w-40 p-2 border border-gray-300 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 pr-8">
+                <option value="">Semua Petugas</option>
+                @foreach ($petugasList as $petugas)
+                    <option value="{{ $petugas->nip }}" {{ request('petugas') == $petugas->nip ? 'selected' : '' }}>
+                        {{ $petugas->user->nama }}
+                    </option>
+                @endforeach
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </div>
+        </div>
     </form>
 
     {{-- Table --}}
-    <div class="bg-white rounded shadow overflow-x-auto">
-        <table class="min-w-full table-auto text-sm text-left text-gray-700">
-            <thead class="bg-gray-100 text-gray-600 uppercase text-sm">
+    <div class="bg-white p-6 rounded-lg shadow-md overflow-x-auto">
+        <table class="min-w-full text-sm text-left">
+            <thead class="bg-white border-b border-gray-200 text-gray-500 uppercase tracking-wider">
                 <tr>
-                    <th class="px-6 py-3">No</th>
-                    <th class="px-6 py-3">Nama Pemohon</th>
-                    <th class="px-6 py-3">Alamat</th>
-                    <th class="px-6 py-3">Nama Petugas</th>
-                    <th class="px-6 py-3">Tanggal Verifikasi</th>
-                    <th class="px-6 py-3">Status Verifikasi</th>
-                    <th class="px-6 py-3">Aksi</th>
+                    <th class="px-4 py-3 font-semibold text-xs">No</th>
+                    <th class="px-4 py-3 font-semibold text-xs">Nama Pemohon</th>
+                    <th class="px-4 py-3 font-semibold text-xs">Alamat</th>
+                    <th class="px-4 py-3 font-semibold text-xs">Nama Petugas</th>
+                    <th class="px-4 py-3 font-semibold text-xs">Tanggal Verifikasi</th>
+                    <th class="px-4 py-3 font-semibold text-xs">Status Verifikasi</th>
+                    <th class="px-4 py-3 font-semibold text-xs">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-gray-100 text-gray-700">
                 @forelse ($verifikasiList as $key => $data)
-                <tr class="border-t">
-                    <td class="px-6 py-4">{{ $verifikasiList->firstItem() + $key }}</td>
-                    <td class="px-6 py-4">
-                        {{ strtoupper(optional($data->pengajuan->warga->user)->nama ?? '-') }}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3 whitespace-nowrap">{{ $verifikasiList->firstItem() + $key }}</td>
+                    <td class="px-4 py-3 whitespace-nowrap">
+                        {{ optional($data->pengajuan->warga->user)->nama ?? '-' }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-3">
                         {{ $data->pengajuan->alamat_lengkap ?? '-' }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-3 whitespace-nowrap">
                         {{ $data->petugas->user->nama ?? '-' }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-3 whitespace-nowrap">
                         {{ optional($data->tgl_survey)->translatedFormat('j F Y') }}
                     </td>
-                    <td class="px-6 py-4">
-                        <span class="px-3 py-1 rounded-full text-xs font-semibold
-                            {{ $data->status_rekomendasi === 'Di Review' ? 'bg-yellow-100 text-yellow-700' : ($data->status_rekomendasi === 'Diterima' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700') }}">
-                            {{ $data->status_rekomendasi }}
+                    <td class="px-4 py-3 whitespace-nowrap">
+                        @php
+                            $badgeColor = 'bg-gray-100 text-gray-700'; // Default
+                            $statusText = 'Tidak Diketahui';
+
+                            // Map status dari database ke tampilan UI
+                            switch ($data->status_rekomendasi) {
+                                case 'DIVERIFIKASI': // Ini mungkin status yang setara dengan "Di Review"
+                                    $badgeColor = 'bg-yellow-100 text-yellow-700';
+                                    $statusText = 'Di Review';
+                                    break;
+                                case 'DISETUJUI':
+                                    $badgeColor = 'bg-green-100 text-green-700';
+                                    $statusText = 'Disetujui';
+                                    break;
+                                case 'DITOLAK':
+                                    $badgeColor = 'bg-red-100 text-red-700';
+                                    $statusText = 'Ditolak';
+                                    break;
+                                case 'KOSONG': // Misalnya untuk data yang belum diverifikasi
+                                    $badgeColor = 'bg-gray-100 text-gray-700';
+                                    $statusText = 'Belum Diverifikasi';
+                                    break;
+                                default:
+                                    $statusText = $data->status_rekomendasi; // Fallback jika ada status lain
+                                    break;
+                            }
+                        @endphp
+                        <span class="text-xs font-medium px-3 py-1 rounded-full {{ $badgeColor }}">
+                            {{ $statusText }}
                         </span>
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-3 whitespace-nowrap">
                         <a href="{{ route('admin.verifikasi.show', $data->id) }}"
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm inline-flex items-center">
-                             <i class="fas fa-eye mr-2"></i> Lihat Detail
-                         </a>                         
+                            class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                            Lihat Detail
+                        </a>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" class="text-center py-4 text-gray-500">Tidak ada data verifikasi ditemukan.</td>
+                    <td colspan="7" class="text-center py-6 text-gray-500">Tidak ada data verifikasi ditemukan.</td>
                 </tr>
                 @endforelse
             </tbody>
@@ -84,8 +149,8 @@
     </div>
 
     {{-- Pagination --}}
-    <div class="mt-4">
-        {{ $verifikasiList->links() }}
+    <div class="mt-6 flex justify-end">
+        {{ $verifikasiList->onEachSide(1)->links('vendor.pagination.tailwind') }}
     </div>
 </div>
 @endsection

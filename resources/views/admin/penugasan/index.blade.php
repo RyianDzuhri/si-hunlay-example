@@ -3,78 +3,148 @@
 @section('title', 'Distribusi Tugas Verifikasi Lapangan')
 
 @section('content')
-<div class="p-6">
-    <h1 class="text-2xl font-bold mb-2">Distribusi Tugas Verifikasi Lapangan</h1>
+<div class="p-0.5"> {{-- Mengurangi padding keseluruhan agar lebih mirip gambar --}}
+    <h1 class="text-2xl font-bold mb-2 text-gray-900">Distribusi Tugas Verifikasi Lapangan</h1>
     <p class="text-gray-600 mb-6">Kelola dan distribusikan tugas verifikasi lapangan kepada petugas</p>
 
     {{-- Filter --}}
-    <form method="GET" action="{{ route('admin.penugasan.index') }}" class="bg-white p-4 rounded-lg shadow-sm flex flex-wrap gap-4 mb-6">
-        <div class="flex-1 min-w-[200px]">
-            <label class="block text-gray-700 mb-1">Kecamatan</label>
-            <select name="kecamatan_id" class="w-full border rounded px-3 py-2">
-                <option value="">Semua Wilayah</option>
-                @foreach ($kecamatans as $kecamatan)
-                    <option value="{{ $kecamatan->id }}" {{ request('kecamatan_id') == $kecamatan->id ? 'selected' : '' }}>
-                        {{ $kecamatan->nama_kecamatan }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        <div class="flex flex-col">
-            <label class="text-gray-700 mb-1">Tanggal Pengajuan</label>
-            <div class="flex gap-2">
-                <input type="date" class="border rounded px-3 py-2" name="tanggal_awal" value="{{ request('tanggal_awal') }}">
-                <span class="py-2">s/d</span>
-                <input type="date" class="border rounded px-3 py-2" name="tanggal_akhir" value="{{ request('tanggal_akhir') }}">
+    <form method="GET" action="{{ route('admin.penugasan.index') }}" class="bg-white p-6 rounded-lg shadow-md mb-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+        {{-- Kecamatan/Kelurahan Filter --}}
+        <div>
+            <label for="kecamatan_id" class="block text-gray-700 text-sm font-medium mb-1">Kecamatan/Kelurahan</label>
+            <div class="relative">
+                <select name="kecamatan_id" id="kecamatan_id" onchange="this.form.submit()" class="appearance-none w-full p-2 border border-gray-300 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 pr-8">
+                    <option value="">Semua Wilayah</option>
+                    @foreach ($kecamatans as $kecamatan)
+                        <option value="{{ $kecamatan->id }}" {{ request('kecamatan_id') == $kecamatan->id ? 'selected' : '' }}>
+                            {{ $kecamatan->nama_kecamatan }}
+                        </option>
+                    @endforeach
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
             </div>
         </div>
-        <div class="flex-1 min-w-[200px]">
-            <label class="block text-gray-700 mb-1">Status Verifikasi</label>
-            <select name="status" class="w-full border rounded px-3 py-2">
-                <option value="">Semua Status</option>
-                <option value="MENUNGGU" {{ request('status') == 'MENUNGGU' ? 'selected' : '' }}>Menunggu</option>
-                <option value="PROSES_SURVEY" {{ request('status') == 'PROSES_SURVEY' ? 'selected' : '' }}>Proses Survey</option>
-                <option value="SELESAI" {{ request('status') == 'SELESAI' ? 'selected' : '' }}>Selesai</option>
-            </select>
+
+        {{-- Tanggal Pengajuan Filter --}}
+        <div>
+            <label for="tanggal_awal" class="block text-gray-700 text-sm font-medium mb-1">Tanggal Pengajuan</label>
+            <div class="flex items-center gap-2">
+                <div class="relative flex-1">
+                    <input type="date" id="tanggal_awal" name="tanggal_awal" value="{{ request('tanggal_awal') }}"
+                           onchange="this.form.submit()"
+                           class="w-full p-2 border border-gray-300 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 pr-8">
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h.01M12 11h.01M15 11h.01M17 16h.01M7 16h.01M12 16h.01M4 20h16a2 2 0 002-2V6a2 2 0 00-2-2H4a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <span class="text-gray-500">s/d</span>
+                <div class="relative flex-1">
+                    <input type="date" id="tanggal_akhir" name="tanggal_akhir" value="{{ request('tanggal_akhir') }}"
+                           onchange="this.form.submit()"
+                           class="w-full p-2 border border-gray-300 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 pr-8">
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h.01M12 11h.01M15 11h.01M17 16h.01M7 16h.01M12 16h.01M4 20h16a2 2 0 002-2V6a2 2 0 00-2-2H4a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="flex items-end">
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Terapkan Filter</button>
+
+        {{-- Status Verifikasi Filter --}}
+        <div>
+            <label for="status" class="block text-gray-700 text-sm font-medium mb-1">Status Verifikasi</label>
+            <div class="relative">
+                <select name="status" id="status" onchange="this.form.submit()" class="appearance-none w-full p-2 border border-gray-300 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 pr-8">
+                    <option value="">Semua Status</option>
+                    <option value="DIAJUKAN" {{ request('status') == 'DIAJUKAN' ? 'selected' : '' }}>Menunggu Verifikasi</option>
+                    <option value="DOKUMEN_LENGKAP" {{ request('status') == 'DOKUMEN_LENGKAP' ? 'selected' : '' }}>Dokumen Lengkap</option>
+                    <option value="PROSES_SURVEY" {{ request('status') == 'PROSES_SURVEY' ? 'selected' : '' }}>Proses Survey</option>
+                    <option value="DISETUJUI" {{ request('status') == 'DISETUJUI' ? 'selected' : '' }}>Disetujui</option>
+                    <option value="DITOLAK" {{ request('status') == 'DITOLAK' ? 'selected' : '' }}>Ditolak</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
         </div>
+        {{-- Hapus tombol "Terapkan Filter" karena onchange="this.form.submit()" sudah aktif --}}
     </form>
 
     {{-- Table --}}
-    <div class="bg-white p-4 rounded-lg shadow overflow-auto">
-        <table class="min-w-full text-sm text-left table-auto">
-            <thead class="bg-gray-100 text-gray-700 font-semibold">
+    <div class="bg-white p-6 rounded-lg shadow-md overflow-x-auto">
+        <table class="min-w-full text-sm text-left">
+            <thead class="bg-white border-b border-gray-200 text-gray-500 uppercase tracking-wider">
                 <tr>
-                    <th class="px-3 py-2">NO</th>
-                    <th class="px-3 py-2">ID PENGAJUAN</th>
-                    <th class="px-3 py-2">NAMA PENGAJU</th>
-                    <th class="px-3 py-2">ALAMAT LENGKAP</th>
-                    <th class="px-3 py-2">TANGGAL PENGAJUAN</th>
-                    <th class="px-3 py-2">STATUS VERIFIKASI</th>
-                    <th class="px-3 py-2">AKSI</th>
+                    <th class="px-4 py-3 font-semibold text-xs">NO</th>
+                    <th class="px-4 py-3 font-semibold text-xs">ID PENGAJUAN</th>
+                    <th class="px-4 py-3 font-semibold text-xs">NAMA PENGAJU</th>
+                    <th class="px-4 py-3 font-semibold text-xs">ALAMAT LENGKAP</th>
+                    <th class="px-4 py-3 font-semibold text-xs">TANGGAL PENGAJUAN</th>
+                    <th class="px-4 py-3 font-semibold text-xs">STATUS VERIFIKASI</th>
+                    <th class="px-4 py-3 font-semibold text-xs">AKSI</th>
                 </tr>
             </thead>
-            <tbody class="divide-y text-gray-700">
+            <tbody class="divide-y divide-gray-100 text-gray-700">
                 @forelse ($pengajuans as $index => $pengajuan)
-                    <tr>
-                        <td class="px-3 py-2">{{ $index + $pengajuans->firstItem() }}</td>
-                        <td class="px-3 py-2">{{ $pengajuan->kode_pengajuan }}</td>
-                        <td class="px-3 py-2">{{ $pengajuan->warga->user->nama ?? '-' }}</td>
-                        <td class="px-3 py-2">{{ $pengajuan->alamat_lengkap }}</td>
-                        <td class="px-3 py-2">
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-4 py-3 whitespace-nowrap">{{ $index + $pengajuans->firstItem() }}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">{{ $pengajuan->kode_pengajuan }}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">{{ $pengajuan->warga->user->nama ?? '-' }}</td>
+                        <td class="px-4 py-3">{{ $pengajuan->alamat_lengkap }}</td> {{-- Biarkan wrapping --}}
+                        <td class="px-4 py-3 whitespace-nowrap">
                             {{ \Carbon\Carbon::parse($pengajuan->tgl_pengajuan)->translatedFormat('j F Y') }}
                         </td>
-                        <td class="px-3 py-2">
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold
-                                {{ $pengajuan->status === 'PROSES_SURVEY' ? 'bg-blue-200 text-blue-800' : 'bg-yellow-200 text-yellow-800' }}">
-                                {{ $pengajuan->status === 'PROSES_SURVEY' ? 'PROSES SURVEY' : 'Disetujui' }}
-                            </span>
+                        <td class="px-4 py-3 whitespace-nowrap">
+                            @php
+                                $badgeColor = '';
+                                $badgeText = '';
+
+                                switch ($pengajuan->status) {
+                                    case 'DIAJUKAN':
+                                        $badgeColor = 'bg-yellow-100 text-yellow-700';
+                                        $badgeText = 'Menunggu';
+                                        break;
+                                    case 'DOKUMEN_LENGKAP':
+                                        $badgeColor = 'bg-blue-100 text-blue-700';
+                                        $badgeText = 'Diverifikasi'; // Atau Dokumen Lengkap
+                                        break;
+                                    case 'PROSES_SURVEY':
+                                        $badgeColor = 'bg-blue-100 text-blue-700'; // Sesuai gambar, biru
+                                        $badgeText = 'Menunggu'; // Teks juga Menunggu di gambar
+                                        break;
+                                    case 'DISETUJUI':
+                                        $badgeColor = 'bg-green-100 text-green-700';
+                                        $badgeText = 'Disetujui';
+                                        break;
+                                    case 'DITOLAK':
+                                        $badgeColor = 'bg-red-100 text-red-700';
+                                        $badgeText = 'Ditolak';
+                                        break;
+                                    default:
+                                        $badgeColor = 'bg-gray-100 text-gray-700';
+                                        $badgeText = $pengajuan->status;
+                                        break;
+                                }
+                            @endphp
+                            <span class="text-xs font-medium px-3 py-1 rounded-full {{ $badgeColor }}">{{ $badgeText }}</span>
                         </td>
-                        <td class="px-3 py-2">
+                        <td class="px-4 py-3 whitespace-nowrap">
                             @if ($pengajuan->status === 'PROSES_SURVEY' && $pengajuan->petugas)
-                                Ditugaskan ke: {{ $pengajuan->petugas->user->nama ?? '-' }}
+                                <div class="flex items-center text-gray-700">
+                                    <svg class="w-4 h-4 mr-1 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2v11a2 2 0 002 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20h2a2 2 0 002-2V7a2 2 0 00-2-2H9a2 2 0 00-2 2v11a2 2 0 002 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 20h2"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20h2"></path>
+                                    </svg>
+                                    {{ $pengajuan->petugas->user->nama ?? 'Petugas Tidak Ditemukan' }}
+                                </div>
                             @else
                                 @php
                                     $kecamatanId = $pengajuan->kelurahan->kecamatan_id ?? null;
@@ -85,29 +155,37 @@
 
                                 <form action="{{ route('admin.penugasan.tugaskan', $pengajuan->id) }}" method="POST">
                                     @csrf
-                                    <select name="petugas_nip" onchange="this.form.submit()" class="border px-2 py-1 rounded">
-                                        <option value="">-- Pilih Petugas --</option>
-                                        @foreach ($petugasFiltered as $petugasItem)
-                                            <option value="{{ $petugasItem->nip }}">
-                                                {{ $petugasItem->user->nama ?? '-' }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <div class="relative inline-block">
+                                        <select name="petugas_nip" onchange="this.form.submit()"
+                                                class="appearance-none border border-gray-300 rounded-lg px-3 py-1.5 text-blue-600 bg-white pr-8 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                            <option value="">Pilih Petugas</option>
+                                            @foreach ($petugasFiltered as $petugasItem)
+                                                <option value="{{ $petugasItem->nip }}">
+                                                    {{ $petugasItem->user->nama ?? '-' }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-blue-600">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
                                 </form>
                             @endif
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center px-3 py-2">Belum ada pengajuan yang disetujui.</td>
+                        <td colspan="7" class="text-center px-3 py-6 text-gray-500">Belum ada pengajuan yang dapat ditugaskan.</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
 
         {{-- Pagination --}}
-        <div class="mt-4">
-            {{ $pengajuans->withQueryString()->links() }}
+        <div class="mt-6 flex justify-end">
+            {{ $pengajuans->onEachSide(1)->links('vendor.pagination.tailwind') }}
         </div>
     </div>
 </div>
