@@ -9,9 +9,5 @@ use Illuminate\View\View;
 
 class LayoutController extends Controller
 {
-    public function toLayout(): View
-    {
-        $user = Auth::user();
-        return view('warga.layout.master');
-    }
+
 }

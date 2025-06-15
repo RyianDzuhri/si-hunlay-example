@@ -108,10 +108,14 @@
                 <span class="text-xl font-semibold text-gray-800 hidden md:block">SI-Hunlay - Petugas Panel</span>
             </div>
             <div class="flex items-center space-x-2 cursor-pointer">
-                <div class="bg-blue-500 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold text-sm">
-                    KR
+                @php
+                    use Illuminate\Support\Str;
+                    $user = Auth::user();
+                @endphp
+                <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-semibold">
+                    {{ strtoupper(Str::substr($user->nama, 0, 1)) }}
                 </div>
-                <span class="text-gray-800 font-medium">Krisnaaaaa</span>
+                <span class="text-gray-700 font-semibold text-sm md:text-base">{{ $user->nama }}</span>
                 <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M19 9l-7 7-7-7"/>
