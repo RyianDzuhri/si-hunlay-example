@@ -11,12 +11,20 @@ use App\Models\Petugas;
 class PenugasanController extends Controller
 {
     public function index()
-    {
-        $pengajuans = Pengajuan::with(['warga.user', 'kelurahan.kecamatan'])->paginate(10);
-        $petugas = Petugas::with('user')->get();
+{
+    $pengajuans = Pengajuan::with(['warga.user', 'kelurahan.kecamatan'])->paginate(10);
+
+    // Petugas dikelompokkan berdasarkan wilayah tugas (nama kecamatan)
+    $petugas = Petugas::with('user')->get()->groupBy(function ($item) {
+        return strtolower(str_replace('Kecamatan ', '', $item->wilayahTugas));
+    });
     
-        return view('admin.penugasan.index', compact('pengajuans', 'petugas'));
-    }
+    
+
+    return view('admin.penugasan.index', compact('pengajuans', 'petugas'));
+}
+    
+
     
     
 

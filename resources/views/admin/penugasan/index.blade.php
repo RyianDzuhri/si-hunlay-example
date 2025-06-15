@@ -13,7 +13,7 @@
             <label class="block text-gray-700 mb-1">Kecamatan/Kelurahan</label>
             <select name="kecamatan" class="w-full border rounded px-3 py-2">
                 <option>Semua Wilayah</option>
-                {{-- Loop dari controller --}}
+                {{-- Tambahkan list kecamatan jika perlu --}}
             </select>
         </div>
         <div class="flex flex-col">
@@ -65,21 +65,25 @@
                             </span>
                         </td>
                         <td class="px-3 py-2">
+                            {{-- Dropdown Pilih Petugas --}}
+                            @php
+                            $namaKecamatan = strtolower(optional(optional($pengajuan->kelurahan)->kecamatan)->nama_kecamatan);
+                            $petugasTerkait = $petugas->get($namaKecamatan, collect()); // default collect() kalau tidak ada
+                        @endphp
+                        
+
                             <form action="{{ route('admin.penugasan.tugaskan', $pengajuan->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-
                                 <select name="petugas_nip" class="border px-2 py-1 rounded text-sm" required>
                                     <option value="">-- Pilih Petugas --</option>
-                                    @foreach (collect($petugas)->where('wilayahTugas', $pengajuan->kelurahan->kecamatan->nama_kecamatan) as $petugasTerkait)
-                                        <option value="{{ $petugasTerkait->nip }}">
-                                            {{ $petugasTerkait->user->name }}
+                                    @foreach ($petugasTerkait as $petugasItem)
+                                        <option value="{{ $petugasItem->nip }}">
+                                            {{ $petugasItem->user->nama ?? 'Tanpa Nama' }}
                                         </option>
                                     @endforeach
                                 </select>
-                                
-
-                                <button type="submit" class="ml-2 px-2 py-1 bg-blue-500 text-white rounded text-sm">
+                                <button type="submit" class="ml-2 px-2 py-1 bg-blue-500 text-white rounded text-xs">
                                     Tugaskan
                                 </button>
                             </form>
