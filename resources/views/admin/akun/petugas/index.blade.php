@@ -10,13 +10,15 @@
         <form method="GET" action="{{ route('admin.akun.petugas.index') }}" class="flex gap-4 w-full md:w-auto">
             <input type="text" name="search" placeholder="Cari nama atau NIP" value="{{ request('search') }}"
                 class="px-4 py-2 border rounded-lg w-full md:w-64 focus:ring-2 focus:ring-blue-500 outline-none shadow" />
-            <select name="wilayah" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 shadow">
+            <select name="wilayah" onchange="this.form.submit()" class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 shadow">
                 <option value="">Semua wilayah</option>
-                {{-- Tambahkan opsi dinamis jika ada --}}
+                @foreach ($wilayahList as $wilayah)
+                    <option value="{{ $wilayah }}" {{ request('wilayah') == $wilayah ? 'selected' : '' }}>{{ $wilayah }}</option>
+                @endforeach
             </select>
             <button type="submit" class="hidden">Cari</button>
         </form>
-
+        
         <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow flex items-center">
             <i class="fas fa-plus mr-2"></i> Tambah petugas
         </a>
@@ -35,16 +37,16 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($petugas as $key => $item)
+                @forelse ($petugas as $key => $user)
                 <tr class="border-t">
                     <td class="px-6 py-4">
                         {{ $petugas->firstItem() + $key }}
                     </td>
-                    <td class="px-6 py-4">{{ strtoupper($item->nama) }}</td>
-                    <td class="px-6 py-4">{{ $item->nip ?? '-' }}</td>
-                    <td class="px-6 py-4">{{ $item->wilayah ?? '-' }}</td>
+                    <td class="px-6 py-4">{{ strtoupper($user->nama) }}</td>
+                    <td class="px-6 py-4">{{ $user->petugas->nip ?? '-' }}</td>
+                    <td class="px-6 py-4">{{ $user->petugas->kecamatan->nama_kecamatan ?? '-' }}</td>
                     <td class="px-6 py-4 text-center">
-                        <form action="{{ route('admin.akun.petugas.destroy', $item->id) }}" method="POST"
+                        <form action="{{ route('admin.akun.petugas.destroy', $user->id) }}" method="POST"
                             onsubmit="return confirm('Yakin ingin menghapus petugas ini?')">
                             @csrf
                             @method('DELETE')

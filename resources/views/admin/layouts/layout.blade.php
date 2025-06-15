@@ -62,12 +62,14 @@
                             Akun Pengguna
                         </a>
                     </li>
-                    {{-- <li>
-                        <a href="{{ route('admin.akun.petugas') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('akun-petugas') ? 'bg-blue-100 font-semibold' : '' }}">
+                    <li>
+                        <a href="{{ route('admin.akun.petugas.index') }}" 
+                           class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('akun/petugas') ? 'bg-blue-100 font-semibold' : '' }}">
                             <img src="{{ asset('images/group3.png') }}" alt="Akun Petugas Icon" class="w-4 h-4">
                             Akun Petugas
                         </a>
-                    </li> --}}
+                    </li>
+                    
                 </ul>
 
                 <p class="text-xs text-gray-400 uppercase font-semibold mt-6 mb-2">Lainnya</p>

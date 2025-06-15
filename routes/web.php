@@ -14,7 +14,7 @@ use App\Http\Controllers\Petugas\TugasController;
 use App\Http\Controllers\Petugas\VerifikasiTugasController;
 use App\Http\Controllers\Admin\PenugasanController;
 use App\Http\Controllers\Admin\UserController;
-
+use App\Http\Controllers\Admin\PetugasController;
 
 
 Route::get('/', function () {
