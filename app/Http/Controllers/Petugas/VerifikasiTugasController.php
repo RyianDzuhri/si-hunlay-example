@@ -85,7 +85,7 @@ class VerifikasiTugasController extends Controller
 
             // ✅ 5. Update status pengajuan
             $statusSebelumnya = $pengajuan->status;
-            $statusSesudah = ($validatedData['status_rekomendasi'] === 'Layak') ? 'EVALUASI_AKHIR' : 'DITOLAK';
+            $statusSesudah = 'EVALUASI_AKHIR';
             $pengajuan->update(['status' => $statusSesudah]);
 
             // ✅ 6. Catat histori perubahan
