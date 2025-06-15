@@ -19,9 +19,9 @@
             <button type="submit" class="hidden">Cari</button>
         </form>
         
-        <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow flex items-center">
+        <a href="{{ route('admin.akun.petugas.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow flex items-center">
             <i class="fas fa-plus mr-2"></i> Tambah petugas
-        </a>
+        </a>        
     </div>
 
     {{-- Tabel Petugas --}}

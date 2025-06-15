@@ -79,6 +79,8 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
 
     // Petugas
     Route::get('/akun/petugas', [PetugasController::class, 'index'])->name('admin.akun.petugas.index');
+    Route::get('/akun/petugas/create', [PetugasController::class, 'create'])->name('admin.akun.petugas.create');
+    Route::post('/akun/petugas', [PetugasController::class, 'store'])->name('admin.akun.petugas.store');
     Route::delete('/akun/petugas/{id}', [PetugasController::class, 'destroy'])->name('admin.akun.petugas.destroy');
 });
 
