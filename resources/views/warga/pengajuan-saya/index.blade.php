@@ -2,10 +2,6 @@
 
 @section('title', 'Warga - Riwayat Pengajuan')
 
-@section('title', 'Riwayat Pengajuan')
-
-@section('title', 'Riwayat Pengajuan')
-
 @section('content')
 <div class="max-w-5xl mx-auto px-4 py-6">
     <h1 class="text-2xl font-bold mb-1">Riwayat Pengajuan Bantuan RTLH</h1>

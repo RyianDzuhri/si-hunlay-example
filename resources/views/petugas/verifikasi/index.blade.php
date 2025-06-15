@@ -22,7 +22,16 @@
     </style>
 </head>
 <body class="bg-gray-50">
-
+    @if ($errors->any())
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-lg" role="alert">
+                    <p class="font-bold mb-2">Terjadi Kesalahan, mohon periksa kembali isian Anda:</p>
+                    <ul class="list-disc list-inside text-sm">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>  
+    @endif   
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="mb-6">
             <nav class="text-sm text-gray-500 mb-1" aria-label="Breadcrumb">
@@ -133,14 +142,23 @@
         <!-- KARTU 3: FORMULIR VERIFIKASI PETUGAS (DESAIN BARU) -->
         <div class="bg-white shadow-lg rounded-lg p-6">
             <h2 class="text-lg font-semibold text-gray-800">Verifikasi Lapangan</h2>
-            <form action="#" method="POST" class="mt-6 space-y-6">
+            <form action="{{ route('petugas.verifikasi.store', $pengajuan->id) }}" method="POST" class="mt-6 space-y-6" enctype="multipart/form-data">
+                @csrf
                 <!-- Tanggal Survei -->
                 <div>
                     <label for="tgl_survey" class="block text-sm font-semibold text-gray-700">Tanggal Survei</label>
                     <div class="relative mt-1">
-                        <input type="date" name="tgl_survey" id="tgl_survey" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm pl-3 pr-10 py-2">
+                        <input type="date" name="tgl_survey" id="tgl_survey"
+                            value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                            readonly
+                            class="block w-full rounded-md border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:ring-0 focus:border-gray-300 sm:text-sm pl-3 pr-10 py-2 cursor-not-allowed">
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                           <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" /></svg>
+                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                    clip-rule="evenodd" />
+                            </svg>
                         </div>
                     </div>
                 </div>
@@ -196,22 +214,24 @@
                     <textarea id="catatan_survei" name="catatan_survei" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm" placeholder="Tulis temuan atau observasi di lapangan..."></textarea>
                 </div>
 
-                 <!-- Upload Bukti Foto -->
-                   <div>
+                <!-- Upload Bukti Foto -->
+                <div>
                     <label class="block text-sm font-semibold text-gray-700">Upload Bukti Foto Survei (Wajib)</label>
-                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                    <div class="mt-1 px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-white">
                         <div class="space-y-1 text-center">
-                            <!-- PERUBAHAN DI SINI: Mengganti SVG dengan IMG -->
-                            <img class="mx-auto h-12 w-12 text-gray-400" src="{{ asset('images/img-icon.png') }}" alt="Upload Ikon">
-                            <div class="flex text-sm text-gray-600">
-                                <label for="bukti_survei" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500">
+                            <img class="mx-auto h-12 w-12" src="{{ asset('images/img-icon.png') }}" alt="Upload Ikon">
+                            <div class="flex text-sm text-gray-600 justify-center">
+                                <label for="bukti_survei" class="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500">
                                     <span>Klik atau seret file ke sini</span>
-                                    <input id="bukti_survei" name="bukti_survei[]" type="file" class="sr-only" multiple>
+                                    <input id="bukti_survei" name="bukti_survei[]" type="file" accept="image/*" class="sr-only" multiple onchange="displayFileName(this, 'fileNameSpan')">
                                 </label>
                             </div>
+                            <!-- Menampilkan nama file -->
+                            <span id="fileNameSpan" class="text-xs text-gray-500 block mt-1"></span>
                         </div>
                     </div>
                 </div>
+
                 
                 <hr class="my-4">
                 
@@ -258,6 +278,18 @@
 
         statusLayak.addEventListener('change', toggleAlasan);
         statusTidakLayak.addEventListener('change', toggleAlasan);
+    
+    //Untuk Dokumen
+    function displayFileName(input, spanId) {
+        const span = document.getElementById(spanId);
+        if (input.files.length > 1) {
+            span.innerText = `${input.files.length} file dipilih`;
+        } else if (input.files.length === 1) {
+            span.innerText = input.files[0].name;
+        } else {
+            span.innerText = '';
+        }
+    }
     </script>
 
 </body>

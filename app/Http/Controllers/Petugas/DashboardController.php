@@ -3,32 +3,45 @@
 namespace App\Http\Controllers\Petugas;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\HasilSurvey;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public function showDashboard (): View
+    public function showDashboard(): View
     {
-        $user = Auth::user();
+        $petugasNip = Auth::user()->petugas->nip;
 
-        // Data dummy untuk ringkasan tugas
-        $ringkasanTugas = (object) [
-            'total' => 10,
-            'berlangsung' => 3,
-            'selesai' => 5,
-        ];
+        // Ambil semua hasil survey petugas, dengan relasi pengajuan, warga, kelurahan
+        $hasilSurvey = HasilSurvey::with(['pengajuan.warga.user', 'pengajuan.kelurahan'])
+            ->where('petugas_nip', $petugasNip)
+            ->get();
 
-        // Data dummy untuk tugas terbaru
-        $tugasTerbaru = [
-            (object)['nama_warga' => 'Gusti Krisna Pranata', 'kode_pengajuan' => 'RTLH-2025-0597', 'lokasi' => 'Jl. Kosgoro No.10 Kel Baruga', 'status' => 'Selesai', 'tanggal' => '8 Juni 2025'],
-            (object)['nama_warga' => 'Gusti Krisna Pranata', 'kode_pengajuan' => 'RTLH-2025-0597', 'lokasi' => 'Jl. Kosgoro No.10 Kel Baruga', 'status' => 'Selesai', 'tanggal' => '8 Juni 2025'],
-            (object)['nama_warga' => 'Gusti Krisna Pranata', 'kode_pengajuan' => 'RTLH-2025-0597', 'lokasi' => 'Jl. Kosgoro No.10 Kel Baruga', 'status' => 'Selesai', 'tanggal' => '8 Juni 2025'],
-            (object)['nama_warga' => 'Gusti Krisna Pranata', 'kode_pengajuan' => 'RTLH-2025-0597', 'lokasi' => 'Jl. Kosgoro No.10 Kel Baruga', 'status' => 'Selesai', 'tanggal' => '8 Juni 2025'],
-            (object)['nama_warga' => 'Gusti Krisna Pranata', 'kode_pengajuan' => 'RTLH-2025-0597', 'lokasi' => 'Jl. Kosgoro No.10 Kel Baruga', 'status' => 'Selesai', 'tanggal' => '8 Juni 2025'],
-        ];
+        // Hitung total semua tugas survey
+        $petugas = Auth::user()->petugas;
 
-        return view('petugas.dashboard.dashboard', compact('user', 'ringkasanTugas', 'tugasTerbaru'));
+        $total = \App\Models\Pengajuan::where('petugas_nip', $petugas->nip)->count();
+
+        // Hitung tugas yang sudah selesai (status EVALUASI_AKHIR atau DITOLAK)
+        $selesai = $hasilSurvey->filter(function ($survey) {
+            return in_array($survey->pengajuan->status ?? null, ['PROSES_SURVEY', 'EVALUASI_AKHIR']);
+        })->count();
+
+        $belumSelesai = $total - $selesai;
+
+        // Ambil 5 tugas terbaru
+        $tugasTerbaru = $hasilSurvey->sortByDesc('created_at')->take(5);
+
+        return view('petugas.dashboard.dashboard', [
+            'user' => Auth::user(),
+            'ringkasanTugas' => (object)[
+                'total' => $total,
+                'berlangsung' => '-', // belum dihitung
+                'selesai' => $selesai,
+                'belumSelesai' => $belumSelesai,
+            ],
+            'tugasTerbaru' => $tugasTerbaru,
+        ]);
     }
 }

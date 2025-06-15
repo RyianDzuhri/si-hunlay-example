@@ -22,10 +22,8 @@
                         <label for="status_verifikasi" class="block text-sm font-medium text-gray-700 mb-1">Status Verifikasi</label>
                         <select id="status_verifikasi" name="status_verifikasi" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm">
                             <option value="">Semua Status</option>
-                            <option value="PROSES_SURVEY">Proses Survei</option>
-                            <option value="EVALUASI_AKHIR">Evaluasi Akhir</option>
-                            <option value="DISETUJUI">Disetujui</option>
-                            <option value="DITOLAK">Ditolak</option>
+                            <option value="PROSES_SURVEY">Belum Diverifikasi</option>
+                            <option value="EVALUASI_AKHIR">Diverifikasi</option>
                         </select>
                     </div>
 
@@ -40,7 +38,7 @@
                         <label for="lokasi" class="block text-sm font-medium text-gray-700 mb-1">Lokasi</label>
                         <select id="lokasi" name="lokasi" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm">
                             <option>Semua Lokasi</option>
-                            {{-- Opsi lokasi (kecamatan/kelurahan) bisa di-loop di sini --}}
+                            
                         </select>
                     </div>
                     
@@ -90,8 +88,7 @@
                                             {{ $initials }}
                                         </div>
                                         <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">{{ $tugas->warga->user->nama_ }}</div>
-                                            <div class="text-xs text-gray-500">RTLH-{{ str_pad($tugas->id, 6, '0', STR_PAD_LEFT) }}</div>
+                                            <div class="text-sm font-medium text-gray-900">{{ $tugas->warga->user->nama }}</div>
                                         </div>
                                     </div>
                                 </td>
@@ -104,23 +101,12 @@
                                         switch ($tugas->status) {
                                             case 'PROSES_SURVEY':
                                                 $statusClass = 'bg-yellow-100 text-yellow-800';
-                                                $statusText = 'Proses Survei';
+                                                $statusText = 'Belum Diverifikasi';
                                                 break;
                                             case 'EVALUASI_AKHIR':
                                                 $statusClass = 'bg-blue-100 text-blue-800';
-                                                $statusText = 'Evaluasi';
+                                                $statusText = 'Diverifikasi';
                                                 break;
-                                            case 'DISETUJUI':
-                                                $statusClass = 'bg-green-100 text-green-800';
-                                                $statusText = 'Selesai';
-                                                break;
-                                            case 'DITOLAK':
-                                                $statusClass = 'bg-red-100 text-red-800';
-                                                $statusText = 'Selesai';
-                                                break;
-                                            default:
-                                                $statusClass = 'bg-gray-100 text-gray-800';
-                                                $statusText = 'Lainnya';
                                         }
                                     @endphp
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusClass }}">

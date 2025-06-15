@@ -72,4 +72,7 @@ Route::prefix('petugas')->middleware(['auth:petugas'])->group(function () {
    Route::get('/dashboard', [PetugasDashboardController::class, 'showDashboard'])->name('petugas.dashboard');
    Route::get('/daftar-tugas', [TugasController::class, 'showTugas'])->name('petugas.tugas');
    Route::get('/verifikasi-tugas/{id}', [VerifikasiTugasController::class, 'showVerifikasiTugasform'])->name('petugas.verifikasi');
+   Route::post('/verifikasi-tugas/{pengajuan}', [VerifikasiTugasController::class, 'store'])->name('petugas.verifikasi.store');
+
+
 });

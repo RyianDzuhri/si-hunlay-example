@@ -1,4 +1,3 @@
-
 @extends('petugas.layout.master')
 
 @section('title', 'Petugas - Dashboard')
@@ -13,45 +12,41 @@
         {{-- Total Tugas Hari Ini --}}
         <div class="bg-white shadow rounded-lg p-6 flex items-start space-x-4">
             <div class="bg-blue-100 rounded-full p-3">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 2H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 12h6m-6 4h6m2 2H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
             </div>
             <div>
-                <p class="text-sm text-gray-500">Total Tugas Hari Ini</p>
+                <p class="text-sm text-gray-500">Total Tugas Anda</p>
                 <p class="text-2xl font-bold text-gray-800">{{ $ringkasanTugas->total }}</p>
-                <p class="text-sm text-green-500 flex items-center">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
-                    50% dari bulan lalu
-                </p>
-            </div>
-        </div>
-
-        {{-- Tugas Berlangsung --}}
-        <div class="bg-white shadow rounded-lg p-6 flex items-start space-x-4">
-            <div class="bg-blue-100 rounded-full p-3">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 2H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-            </div>
-            <div>
-                <p class="text-sm text-gray-500">Tugas Berlangsung</p>
-                <p class="text-2xl font-bold text-gray-800">{{ $ringkasanTugas->berlangsung }}</p>
-                <p class="text-sm text-green-500 flex items-center">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
-                    50% dari bulan lalu
-                </p>
             </div>
         </div>
 
         {{-- Tugas Selesai --}}
         <div class="bg-white shadow rounded-lg p-6 flex items-start space-x-4">
             <div class="bg-blue-100 rounded-full p-3">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 2H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 12h6m-6 4h6m2 2H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
             </div>
             <div>
                 <p class="text-sm text-gray-500">Tugas Selesai</p>
                 <p class="text-2xl font-bold text-gray-800">{{ $ringkasanTugas->selesai }}</p>
-                <p class="text-sm text-green-500 flex items-center">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
-                    50% dari bulan lalu
-                </p>
+            </div>
+        </div>
+        {{-- Tugas Belum Selesai --}}
+        <div class="bg-white shadow rounded-lg p-6 flex items-start space-x-4">
+            <div class="bg-blue-100 rounded-full p-3">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 2H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500">Tugas Belum Selesai</p>
+                <p class="text-2xl font-bold text-gray-800">{{ $ringkasanTugas->belumSelesai }}</p>
             </div>
         </div>
     </div>
@@ -59,66 +54,67 @@
     {{-- Tugas Terbaru --}}
     <div class="bg-white shadow rounded-lg p-6">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold text-gray-800">Tugas Terbaru</h2>
-            <a href="#" class="text-blue-600 hover:text-blue-800 text-sm">Lihat Semua</a>
+            <h2 class="text-lg font-semibold text-gray-800">Tugas Terbaru Diverifikasi</h2>
         </div>
 
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Warga</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lokasi</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Warga</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lokasi</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($tugasTerbaru as $tugas)
+                        @php
+                            $nama = $tugas->pengajuan->warga->user->nama ?? '-';
+                            $lokasi = $tugas->pengajuan->alamat_lengkap . ', Kelurahan ' . ($tugas->pengajuan->kelurahan->nama_kelurahan ?? '-');
+                            $status = $tugas->pengajuan->status ?? '-';
+                            $tanggal = \Carbon\Carbon::parse($tugas->tgl_survey)->format('d M Y');
+                            $inisial = strtoupper(substr($nama, 0, 2));
+                        @endphp
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                                        {{ substr($tugas->nama_warga, 0, 2) }} {{-- Inisial --}}
+                                        {{ $inisial }}
                                     </div>
                                     <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">{{ $tugas->nama_warga }}</div>
-                                        <div class="text-sm text-gray-500">{{ $tugas->kode_pengajuan }}</div>
+                                        <div class="text-sm font-medium text-gray-900">{{ $nama }}</div>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ $tugas->lokasi }}</div>
+                                <div class="text-sm text-gray-900">{{ $lokasi }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $tugas->status == 'Selesai' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                                    {{ $tugas->status }}
+                                @php
+                                    $labelStatus = match ($status) {
+                                        'PROSES_SURVEY' => 'Belum Diverifikasi',
+                                        'EVALUASI_AKHIR' => 'Sudah Diverifikasi',
+                                        default => 'Menunggu',
+                                    };
+                                @endphp
+
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    {{ $status == 'PROSES_SURVEY' ? 'bg-red-100 text-red-800' : 
+                                    ($status == 'EVALUASI_AKHIR' ? 'bg-green-100 text-green-800' : 
+                                    'bg-yellow-100 text-yellow-800') }}">
+                                    {{ $labelStatus }}
                                 </span>
                             </td>
+
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $tugas->tanggal }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <a href="#" class="text-blue-600 hover:text-blue-900">Lihat Detail</a>
+                                {{ $tanggal }}
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-
-        {{-- Pagination (contoh sederhana) --}}
-        <nav class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-            <div class="flex-1 flex justify-between sm:justify-end">
-                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                    Previous
-                </a>
-                <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                    Next
-                </a>
-            </div>
-        </nav>
     </div>
 </div>
 @endsection
