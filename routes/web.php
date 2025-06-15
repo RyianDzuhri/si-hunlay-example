@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\AdminPengajuanController as AdminPengajuanControl
 use App\Http\Controllers\Petugas\TugasController;
 use App\Http\Controllers\Petugas\VerifikasiTugasController;
 use App\Http\Controllers\Admin\PenugasanController;
+use App\Http\Controllers\Admin\UserController;
+
 
 
 Route::get('/', function () {
@@ -52,11 +54,8 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     Route::get('/pengajuan', [AdminPengajuanController::class, 'index'])->name('admin.pengajuan.index');
     Route::get('/pengajuan/export', [AdminPengajuanController::class, 'export'])->name('admin.pengajuan.export');
     Route::get('/pengajuan/{id}/verifikasi', [AdminPengajuanController::class, 'verifikasi'])->name('admin.pengajuan.verifikasi');
-    // Route::post('/pengajuan/{id}/setujui', [AdminPengajuanController::class, 'setujui'])->name('admin.pengajuan.setujui');
-    // Route::post('/pengajuan/{id}/tolak', [AdminPengajuanController::class, 'tolak'])->name('admin.pengajuan.tolak');
     Route::put('/pengajuan/{id}/setujui', [AdminPengajuanController::class, 'setujui'])->name('admin.pengajuan.setujui');
     Route::put('/pengajuan/{id}/tolak', [AdminPengajuanController::class, 'tolak'])->name('admin.pengajuan.tolak');
-
 
 
     //Penugasan
@@ -64,9 +63,6 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     Route::put('/penugasan/{id}/tugaskan', [PenugasanController::class, 'tugaskan'])->name('admin.penugasan.tugaskan');
     Route::post('/penugasan/{pengajuan}/tugaskan', [\App\Http\Controllers\Admin\PenugasanController::class, 'tugaskan'])->name('penugasan.tugaskan');
     Route::post('/admin/penugasan/{pengajuan}/tugaskan', [PenugasanController::class, 'tugaskan'])->name('penugasan.tugaskan');
-
-   
-   
 
     // Hasil Verifikasi
     Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi');
@@ -78,9 +74,15 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     Route::get('/profile', [VerifikasiController::class, 'index'])->name('admin.profile');
 
     // Manajemen Akun Pengguna dan Petugas
-    Route::get('/akun/pengguna', [UserController::class, 'index'])->name('admin.akun.pengguna');
-    Route::get('/akun/petugas', [UserController::class, 'index'])->name('admin.akun.petugas');
+    Route::get('/akun/pengguna', [UserController::class, 'index'])->name('admin.pengguna.index');
+    Route::delete('/akun/pengguna/{id}', [UserController::class, 'destroy'])->name('admin.pengguna.destroy');
+
+    // Petugas
+    Route::get('/akun/petugas', [PetugasController::class, 'index'])->name('admin.akun.petugas.index');
+    Route::delete('/akun/petugas/{id}', [PetugasController::class, 'destroy'])->name('admin.akun.petugas.destroy');
 });
+
+
 
 
 //Petugas
