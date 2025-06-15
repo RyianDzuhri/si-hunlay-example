@@ -68,9 +68,10 @@
                         </span>
                     </td>
                     <td class="px-6 py-4">
-                        <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm inline-flex items-center">
-                            <i class="fas fa-eye mr-2"></i> Lihat Detail
-                        </a>
+                        <a href="{{ route('admin.verifikasi.show', $data->id) }}"
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm inline-flex items-center">
+                             <i class="fas fa-eye mr-2"></i> Lihat Detail
+                         </a>                         
                     </td>
                 </tr>
                 @empty

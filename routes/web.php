@@ -67,7 +67,13 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     Route::post('/admin/penugasan/{pengajuan}/tugaskan', [PenugasanController::class, 'tugaskan'])->name('penugasan.tugaskan');
 
     // Hasil Verifikasi
+    Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi.index');
+    Route::get('/verifikasi/{id}', [VerifikasiController::class, 'show'])->name('admin.verifikasi.show');
+    Route::post('/verifikasi/{id}/setujui', [VerifikasiController::class, 'setujui'])->name('admin.verifikasi.setujui');
+    Route::post('/verifikasi/{id}/tolak', [VerifikasiController::class, 'tolak'])->name('admin.verifikasi.tolak');
     Route::get('/admin/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi.index');
+    Route::get('/admin/verifikasi/{id}', [VerifikasiController::class, 'show'])->name('admin.verifikasi.show');
+
 
 
     // Bantuan
@@ -85,6 +91,7 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
     Route::get('/akun/petugas/create', [PetugasController::class, 'create'])->name('admin.akun.petugas.create');
     Route::post('/akun/petugas', [PetugasController::class, 'store'])->name('admin.akun.petugas.store');
     Route::delete('/akun/petugas/{id}', [PetugasController::class, 'destroy'])->name('admin.akun.petugas.destroy');
+
 });
 
 //Petugas
@@ -93,6 +100,5 @@ Route::prefix('petugas')->middleware(['auth:petugas'])->group(function () {
    Route::get('/daftar-tugas', [TugasController::class, 'showTugas'])->name('petugas.tugas');
    Route::get('/verifikasi-tugas/{id}', [VerifikasiTugasController::class, 'showVerifikasiTugasform'])->name('petugas.verifikasi');
    Route::post('/verifikasi-tugas/{pengajuan}', [VerifikasiTugasController::class, 'store'])->name('petugas.verifikasi.store');
-
 
 });

@@ -19,9 +19,8 @@
     </script>
 </head>
 <body class="bg-gray-100 font-poppins">
-    <!-- Container -->
-    <div class="flex h-screen overflow-hidden">
-        <!-- Sidebar -->
+    {{-- Tambahkan min-h-screen di sini atau di div container utama --}}
+    <div class="flex min-h-screen">
         <aside class="w-64 bg-white shadow-md fixed inset-y-0 left-0 z-10">
             <div class="p-4 border-b border-gray-200">
                 <div class="flex items-center gap-2">
@@ -33,56 +32,77 @@
                 <p class="text-xs text-gray-400 uppercase font-semibold mb-2">Menu Utama</p>
                 <ul class="space-y-2">
                     <li>
-                        <a href="{{ route('warga.dashboard') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('warga/dashboard') ? 'bg-blue-100 font-semibold' : '' }}">
+                        {{-- Dashboard --}}
+                        <a href="{{ route('warga.dashboard') }}"
+                           class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg
+                                  {{ request()->is('warga/dashboard') ? 'bg-blue-100 font-semibold text-blue-700' : '' }}">
                             <img src="{{ asset('images/Dashboard.png') }}" alt="Dashboard Icon" class="w-5 h-5">
                             Dashboard
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.pengajuan.index') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('pengajuan-bantuan') ? 'bg-blue-100 font-semibold' : '' }}">
+                        {{-- Pengajuan Bantuan --}}
+                        <a href="{{ route('admin.pengajuan.index') }}"
+                           class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg
+                                  {{ request()->is('admin/pengajuan-bantuan') || request()->is('admin/pengajuan-bantuan/*') ? 'bg-blue-100 font-semibold text-blue-700' : '' }}">
                             <img src="{{ asset('images/Detail.png') }}" alt="Pengajuan Bantuan Icon" class="w-5 h-5">
                             Pengajuan Bantuan
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.penugasan.index') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('penugasan') ? 'bg-blue-100 font-semibold' : '' }}">
+                        {{-- Penugasan --}}
+                        <a href="{{ route('admin.penugasan.index') }}"
+                           class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg
+                                  {{ request()->is('admin/penugasan') || request()->is('admin/penugasan/*') ? 'bg-blue-100 font-semibold text-blue-700' : '' }}">
                             <img src="{{ asset('images/penugasan.png') }}" alt="Penugasan Icon" class="w-4 h-4">
                             Penugasan
                         </a>
                     </li>
                     <li>
+                        {{-- Hasil Verifikasi --}}
                         <a href="{{ route('admin.verifikasi.index') }}"
-                           class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('admin/verifikasi') ? 'bg-blue-100 font-semibold' : '' }}">
+                           class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg
+                                  {{ request()->is('admin/verifikasi') || request()->is('admin/verifikasi/*') ? 'bg-blue-100 font-semibold text-blue-700' : '' }}">
                             <img src="{{ asset('images/Detail.png') }}" alt="Hasil Verifikasi Icon" class="w-5 h-5">
                             Hasil Verifikasi
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.pengguna.index') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('akun/pengguna') ? 'bg-blue-100 font-semibold' : '' }}">
+                        {{-- Akun Pengguna --}}
+                        <a href="{{ route('admin.pengguna.index') }}"
+                           class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg
+                                  {{ request()->is('admin/akun/pengguna') || request()->is('admin/akun/pengguna/*') ? 'bg-blue-100 font-semibold text-blue-700' : '' }}">
                             <img src="{{ asset('images/group2.png') }}" alt="Akun Pengguna Icon" class="w-4 h-4">
                             Akun Pengguna
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.akun.petugas.index') }}" 
-                           class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('akun/petugas') ? 'bg-blue-100 font-semibold' : '' }}">
+                        {{-- Akun Petugas --}}
+                        <a href="{{ route('admin.akun.petugas.index') }}"
+                           class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg
+                                  {{ request()->is('admin/akun/petugas') || request()->is('admin/akun/petugas/*') ? 'bg-blue-100 font-semibold text-blue-700' : '' }}">
                             <img src="{{ asset('images/group3.png') }}" alt="Akun Petugas Icon" class="w-4 h-4">
                             Akun Petugas
                         </a>
                     </li>
-                    
                 </ul>
 
                 <p class="text-xs text-gray-400 uppercase font-semibold mt-6 mb-2">Lainnya</p>
                 <ul class="space-y-2">
                     <li>
-                        <a href="{{ route('admin.bantuan') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg">
+                        {{-- Bantuan --}}
+                        <a href="{{ route('admin.bantuan') }}"
+                           class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg
+                                  {{ request()->is('admin/bantuan') ? 'bg-blue-100 font-semibold text-blue-700' : '' }}">
                             <img src="{{ asset('images/Bantuan.png') }}" alt="Bantuan Icon" class="w-5 h-5">
                             Bantuan
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.profile') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg">
+                        {{-- Profile --}}
+                        <a href="{{ route('admin.profile') }}"
+                           class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg
+                                  {{ request()->is('admin/profile') ? 'bg-blue-100 font-semibold text-blue-700' : '' }}">
                             <img src="{{ asset('images/Group.png') }}" alt="Profile Icon" class="w-4 h-4">
                             Profile
                         </a>
@@ -100,9 +120,8 @@
             </nav>
         </aside>
 
-        <!-- Main Content -->
-        <div class="flex-1 ml-64 flex flex-col h-screen">
-            <!-- Header -->
+        {{-- Ubah h-screen menjadi min-h-screen --}}
+        <div class="flex-1 ml-64 flex flex-col min-h-screen">
             <header class="bg-white shadow-sm px-6 py-4 flex justify-between items-center sticky top-0 z-10">
                 <h1 class="text-2xl font-semibold text-gray-800">@yield('header-title', 'SI-Hunlay - Admin Panel')</h1>
                 <div class="flex items-center gap-4">
@@ -116,12 +135,11 @@
                 </div>
             </header>
 
-            <!-- Page Content -->
             <main class="p-6 overflow-y-auto flex-1">
                 @yield('content')
             </main>
 
-            <!-- Footer -->
+            {{-- Footer tidak perlu fixed, biarkan dia di bawah main --}}
             <footer class="bg-white shadow-sm px-6 py-4 text-center text-sm text-gray-500">
                 &copy; {{ date('Y') }} SI-Hunlay. Seluruh hak cipta dilindungi.
             </footer>
