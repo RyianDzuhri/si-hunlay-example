@@ -24,23 +24,20 @@
                     
                     {{-- INI TAMBAHANNYA --}}
                     <p class="mt-2"><span class="text-gray-600">Pekerjaan</span><br>{{ Str::ucfirst(str_replace('_', ' ', $pengajuan->pekerjaan ?? '')) }}</p>
-
+                    <p class="mt-2"><span class="text-gray-600">Nomor Kartu Keluarga</span><br>{{ $warga->no_kk }}</p>
                 </div>
                 
                 {{-- Kolom Kanan --}}
                 <div>
-                    <p><span class="text-gray-600">NIK</span><br>{{ $warga->nik ?? 'N/A' }}</p>
+                    <p><span class="text-gray-600">Nomor Induk Keluarga</span><br>{{ $warga->nik ?? 'N/A' }}</p>
                     <p class="mt-2"><span class="text-gray-600">Email</span><br>{{ $user->email ?? 'N/A' }}</p>
                     
                     {{-- INI TAMBAHANNYA --}}
                     <p class="mt-2"><span class="text-gray-600">Penghasilan Per Bulan</span><br>Rp {{ number_format($pengajuan->penghasilan ?? 0, 0, ',', '.') }}</p>
-
-                </div>
-                
-                {{-- Kolom Alamat --}}
-                <div class="md:col-span-2 mt-2">
                     <p><span class="text-gray-600">Alamat Rumah yang Diajukan</span><br>{{ $pengajuan->alamat_lengkap ?? 'N/A' }}</p>
                 </div>
+                
+
             </div>
         </div>
 
