@@ -25,4 +25,5 @@ class Kelurahan extends Model
     {
         return $this->hasMany(Pengajuan::class, 'kelurahan_id', 'id');
     }
+    
 }

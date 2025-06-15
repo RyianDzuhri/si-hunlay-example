@@ -87,7 +87,7 @@ public function verifikasi($id)
 public function setujui($id)
 {
     $pengajuan = Pengajuan::findOrFail($id);
-    $pengajuan->status = 'DISETUJUI';
+    $pengajuan->status = 'DOKUMEN_LENGKAP';
     $pengajuan->save();
 
     return redirect()->route('admin.pengajuan.index')->with('success', 'Pengajuan telah disetujui.');

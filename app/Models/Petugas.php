@@ -28,4 +28,5 @@ class Petugas extends Model
         // Parameter: Model tujuan, foreign key di tabel tujuan, local key di tabel ini
         return $this->hasMany(HasilSurvey::class, 'petugas_nip', 'nip');
     }
+
 }

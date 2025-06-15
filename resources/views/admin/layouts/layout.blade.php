@@ -45,7 +45,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.penugasan') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('penugasan') ? 'bg-blue-100 font-semibold' : '' }}">
+                        <a href="{{ route('admin.penugasan.index') }}" class="flex items-center gap-2 text-gray-700 hover:bg-blue-100 px-3 py-2 rounded-lg {{ request()->is('penugasan') ? 'bg-blue-100 font-semibold' : '' }}">
                             <img src="{{ asset('images/penugasan.png') }}" alt="Penugasan Icon" class="w-4 h-4">
                             Penugasan
                         </a>

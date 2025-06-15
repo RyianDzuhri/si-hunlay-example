@@ -12,6 +12,8 @@ use App\Http\Controllers\Warga\ProgressController;
 use App\Http\Controllers\Admin\AdminPengajuanController as AdminPengajuanController;
 use App\Http\Controllers\Petugas\TugasController;
 use App\Http\Controllers\Petugas\VerifikasiTugasController;
+use App\Http\Controllers\Admin\PenugasanController;
+
 
 Route::get('/', function () {
     return view('landing.welcome');
@@ -58,7 +60,10 @@ Route::prefix('admin')->middleware(['auth:admin_dinas'])->group(function () {
 
 
     // Penugasan
-    Route::get('/penugasan', [PenugasanController::class, 'index'])->name('admin.penugasan');
+    Route::get('/penugasan', [PenugasanController::class, 'index'])->name('admin.penugasan.index');
+    Route::put('/penugasan/{id}/tugaskan', [PenugasanController::class, 'tugaskan'])->name('admin.penugasan.tugaskan');
+
+
 
     // Hasil Verifikasi
     Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('admin.verifikasi');
