@@ -32,7 +32,7 @@ class VerifikasiTugasController extends Controller
     {
         // 🔒 Blok akses jika status pengajuan sudah bukan VERIFIKASI_LAPANGAN
         if ($pengajuan->status !== 'VERIFIKASI_LAPANGAN') {
-            return redirect()->route('petugas.dashboard')
+            return redirect()->route('petugas.tugas')
                 ->with('error', 'Pengajuan ini sudah tidak dapat diverifikasi karena statusnya telah berubah.');
         }
 
@@ -99,7 +99,7 @@ class VerifikasiTugasController extends Controller
 
             DB::commit();
 
-            return redirect()->route('petugas.dashboard')
+            return redirect()->route('petugas.tugas')
                 ->with('success', 'Hasil verifikasi berhasil disimpan.');
         } catch (\Exception $e) {
             DB::rollBack();

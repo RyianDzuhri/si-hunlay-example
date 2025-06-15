@@ -142,9 +142,9 @@
         <!-- KARTU 3: FORMULIR VERIFIKASI PETUGAS (DESAIN BARU) -->
         <div class="bg-white shadow-lg rounded-lg p-6">
             <h2 class="text-lg font-semibold text-gray-800">Verifikasi Lapangan</h2>
-            <form action="{{ route('petugas.verifikasi.store', $pengajuan->id) }}" method="POST" class="mt-6 space-y-6" enctype="multipart/form-data">
+           <form action="{{ route('petugas.verifikasi.store', $pengajuan->id) }}" method="POST" class="mt-6 space-y-6" enctype="multipart/form-data">
                 @csrf
-                <!-- Tanggal Survei -->
+
                 <div>
                     <label for="tgl_survey" class="block text-sm font-semibold text-gray-700">Tanggal Survei</label>
                     <div class="relative mt-1">
@@ -156,65 +156,92 @@
                             <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd"
-                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
                                     clip-rule="evenodd" />
                             </svg>
                         </div>
                     </div>
+                    @error('tgl_survey')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <!-- Hasil Verifikasi Status Kepemilikan -->
                 <div>
-                    <label for="status_kepemilikan" class="block text-sm font-semibold text-gray-700">Hasil Verifikasi Status Kepemilikan</p>
+                    <label for="status_kepemilikan" class="block text-sm font-semibold text-gray-700">Hasil Verifikasi Status Kepemilikan</label>
                     <select id="status_kepemilikan" name="status_kepemilikan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-                        <option>Pilih Status</option>
-                        <option value="Milik Sendiri">Milik Sendiri</option>
-                        <option value="Sewa">Sewa</option>
-                        <option value="Menumpang">Menumpang</option>
-                    </select>
+                        <option value="" selected disabled hidden>Pilih Status</option>
+                        <option value="Milik Sendiri" {{ old('status_kepemilikan') == 'Milik Sendiri' ? 'selected' : '' }}>Milik Sendiri</option>
+                        <option value="Sewa" {{ old('status_kepemilikan') == 'Sewa' ? 'selected' : '' }}>Sewa</option>
+                        <option value="Menumpang" {{ old('status_kepemilikan') == 'Menumpang' ? 'selected' : '' }}>Menumpang</option>
+                        <option value="Tidak Jelas" {{ old('status_kepemilikan') == 'Tidak Jelas' ? 'selected' : '' }}>Tidak Jelas</option> </select>
+                    @error('status_kepemilikan')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <!-- Hasil Verifikasi Kondisi Ekonomi -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700">Hasil Verifikasi Kondisi Ekonomi</label>
                     <div class="mt-2 space-y-2">
-                        <label class="inline-flex items-center"><input type="radio" name="verifikasi_ekonomi" value="Sesuai" class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"> <span class="ml-2 text-sm">Sesuai (Layak dibantu)</span></label><br>
-                        <label class="inline-flex items-center"><input type="radio" name="verifikasi_ekonomi" value="Tidak Sesuai" class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"> <span class="ml-2 text-sm">Tidak Sesuai (Layak dibantu)</span></label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="verifikasi_ekonomi" value="Sesuai" class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" {{ old('verifikasi_ekonomi') == 'Sesuai' ? 'checked' : '' }}>
+                            <span class="ml-2 text-sm">Sesuai (Layak dibantu)</span>
+                        </label><br>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="verifikasi_ekonomi" value="Tidak Sesuai" class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" {{ old('verifikasi_ekonomi') == 'Tidak Sesuai' ? 'checked' : '' }}>
+                            <span class="ml-2 text-sm">Tidak Sesuai (Layak dibantu)</span>
+                        </label>
                     </div>
+                    @error('verifikasi_ekonomi')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <!-- Detail Verifikasi Dokumen -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700">Detail Verifikasi Dokumen</label>
                     <div class="mt-2 space-y-3">
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-800">KTP & KK</span>
                             <select name="detail_verifikasi_dokumen[KTP_KK]" class="rounded-md border-gray-300 shadow-sm text-sm py-1 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                <option>Valid</option><option>Tidak Valid</option>
+                                <option value="Valid" {{ old('detail_verifikasi_dokumen.KTP_KK') == 'Valid' ? 'selected' : '' }}>Valid</option>
+                                <option value="Tidak Valid" {{ old('detail_verifikasi_dokumen.KTP_KK') == 'Tidak Valid' ? 'selected' : '' }}>Tidak Valid</option>
                             </select>
                         </div>
+                        @error('detail_verifikasi_dokumen.KTP_KK')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+
                         <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-800">SKTM</span>
                             <select name="detail_verifikasi_dokumen[SKTM]" class="rounded-md border-gray-300 shadow-sm text-sm py-1 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                <option>Valid</option><option>Tidak Valid</option>
+                                <option value="Valid" {{ old('detail_verifikasi_dokumen.SKTM') == 'Valid' ? 'selected' : '' }}>Valid</option>
+                                <option value="Tidak Valid" {{ old('detail_verifikasi_dokumen.SKTM') == 'Tidak Valid' ? 'selected' : '' }}>Tidak Valid</option>
                             </select>
                         </div>
-                         <div class="flex items-center justify-between">
+                        @error('detail_verifikasi_dokumen.SKTM')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+
+                        <div class="flex items-center justify-between">
                             <span class="text-sm text-gray-800">Dokumen Kepemilikan Rumah</span>
                             <select name="detail_verifikasi_dokumen[KEPEMILIKAN]" class="rounded-md border-gray-300 shadow-sm text-sm py-1 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                <option>Valid</option><option>Tidak Valid</option>
+                                <option value="Valid" {{ old('detail_verifikasi_dokumen.KEPEMILIKAN') == 'Valid' ? 'selected' : '' }}>Valid</option>
+                                <option value="Tidak Valid" {{ old('detail_verifikasi_dokumen.KEPEMILIKAN') == 'Tidak Valid' ? 'selected' : '' }}>Tidak Valid</option>
                             </select>
                         </div>
+                        @error('detail_verifikasi_dokumen.KEPEMILIKAN')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
-                
-                <!-- Catatan Survei -->
+
                 <div>
                     <label for="catatan_survei" class="block text-sm font-semibold text-gray-700">Catatan Survei</label>
-                    <textarea id="catatan_survei" name="catatan_survei" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm" placeholder="Tulis temuan atau observasi di lapangan..."></textarea>
+                    <textarea id="catatan_survei" name="catatan_survei" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 sm:text-sm" placeholder="Tulis temuan atau observasi di lapangan...">{{ old('catatan_survei') }}</textarea>
+                    @error('catatan_survei')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <!-- Upload Bukti Foto -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700">Upload Bukti Foto Survei (Wajib)</label>
                     <div class="mt-1 px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-white">
@@ -226,31 +253,44 @@
                                     <input id="bukti_survei" name="bukti_survei[]" type="file" accept="image/*" class="sr-only" multiple onchange="displayFileName(this, 'fileNameSpan')">
                                 </label>
                             </div>
-                            <!-- Menampilkan nama file -->
                             <span id="fileNameSpan" class="text-xs text-gray-500 block mt-1"></span>
                         </div>
                     </div>
+                    @error('bukti_survei')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                    @error('bukti_survei.*')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                
                 <hr class="my-4">
-                
-                <!-- Rekomendasi Akhir -->
+
                 <fieldset>
                     <legend class="block text-sm font-semibold text-gray-700">Rekomendasi Akhir</legend>
-                     <div class="mt-2 space-y-2">
-                        <label class="inline-flex items-center"><input type="radio" id="status_layak" name="status_rekomendasi" value="Layak" class="h-4 w-4 text-indigo-600 border-gray-300"> <span class="ml-2 text-sm">Layak Mendapatkan Bantuan</span></label><br>
-                        <label class="inline-flex items-center"><input type="radio" id="status_tidak_layak" name="status_rekomendasi" value="Tidak Layak" class="h-4 w-4 text-indigo-600 border-gray-300"> <span class="ml-2 text-sm">Tidak Layak</span></label>
-                     </div>
+                    <div class="mt-2 space-y-2">
+                        <label class="inline-flex items-center">
+                            <input type="radio" id="status_layak" name="status_rekomendasi" value="Layak" class="h-4 w-4 text-indigo-600 border-gray-300" {{ old('status_rekomendasi') == 'Layak' ? 'checked' : '' }}>
+                            <span class="ml-2 text-sm">Layak Mendapatkan Bantuan</span>
+                        </label><br>
+                        <label class="inline-flex items-center">
+                            <input type="radio" id="status_tidak_layak" name="status_rekomendasi" value="Tidak Layak" class="h-4 w-4 text-indigo-600 border-gray-300" {{ old('status_rekomendasi') == 'Tidak Layak' ? 'checked' : '' }}>
+                            <span class="ml-2 text-sm">Tidak Layak</span>
+                        </label>
+                    </div>
+                    @error('status_rekomendasi')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </fieldset>
 
-                <!-- Alasan Penolakan -->
                 <div id="alasan_penolakan_div" class="hidden">
                     <label for="alasan_penolakan" class="block text-sm font-semibold text-gray-700">Alasan Penolakan <span class="text-red-500">*</span></label>
-                    <!-- PERUBAHAN DI SINI: Mengganti input dengan textarea -->
-                    <textarea name="alasan_penolakan" id="alasan_penolakan" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-1 focus:ring-red-500 sm:text-sm" placeholder="Contoh: Status rumah sewa, penghasilan di atas UMR..."></textarea>
+                    <textarea name="alasan_penolakan" id="alasan_penolakan" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-1 focus:ring-red-500 sm:text-sm" placeholder="Contoh: Status rumah sewa, penghasilan di atas UMR...">{{ old('alasan_penolakan') }}</textarea>
+                    @error('alasan_penolakan')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
-                
+
                 <div class="pt-5 flex justify-end">
                     <button type="submit" class="w-full sm:w-auto flex justify-center py-2 px-8 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
                         Simpan Hasil Verifikasi
