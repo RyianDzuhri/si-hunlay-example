@@ -39,7 +39,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect()->intended('/admin/dashboard');
         } else {
-            return redirect(route('login'))->with('msg', 'email atau password salah');
+            return redirect(route('login'))->with('error', 'Email atau Password salah');
         }
 
         // dd($request->validated());

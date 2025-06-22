@@ -69,7 +69,7 @@
                     <div>
                         <label for="lokasi_kecamatan" class="block text-sm text-gray-700 mb-1">Kecamatan</label>
                         <select id="lokasi_kecamatan" name="kecamatan_id"
-                                class="w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring focus:ring-blue-400">
+                                class="w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring focus:ring-blue-400" required>
                             <option value="" class="text-gray-400">-- Pilih Kecamatan --</option>
                             @foreach($kecamatans as $kecamatan)
                                 <option value="{{ $kecamatan->id }}">{{ $kecamatan->nama_kecamatan }}</option>
@@ -81,7 +81,7 @@
                     <div>
                         <label for="lokasi_kelurahan" class="block text-sm text-gray-700 mb-1">Kelurahan</label>
                         <select id="lokasi_kelurahan" name="kelurahan_id"
-                                class="w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring focus:ring-blue-400"
+                                class="w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring focus:ring-blue-400" required
                                 disabled>
                             <option value="" class="text-gray-400">Pilih Kecamatan Terlebih Dahulu</option>
                         </select>
@@ -92,7 +92,7 @@
                         <label for="alamat_lengkap" class="block text-sm text-gray-700 mb-1">Alamat Lengkap</label>
                         <textarea id="alamat_lengkap" name="alamat_lengkap"
                                 rows="2"
-                                class="w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring focus:ring-blue-400"
+                                class="w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring focus:ring-blue-400" required
                                 placeholder="Contoh: Jl. Mawar No.10 RT 03 / RW 05"></textarea>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                     <div>
                         <label for="pekerjaan" class="block text-sm font-medium text-gray-700">Pekerjaan Utama</label>
                         <select name="pekerjaan" id="pekerjaan"
-                                class="w-full mt-1 border border-gray-300 rounded px-3 py-2 text-sm text-gray-700">
+                                class="w-full mt-1 border border-gray-300 rounded px-3 py-2 text-sm text-gray-700" required>
                             <option value="" class="text-gray-400">-- Pilih Pekerjaan --</option>
                             <option value="buruh_harian">Buruh Harian</option>
                             <option value="petani">Petani</option>
@@ -138,7 +138,7 @@
                     <div>
                         <label for="penghasilan" class="block text-sm font-medium text-gray-700">Penghasilan Perbulan</label>
                         <select name="penghasilan" id="penghasilan"
-                                class="w-full mt-1 border border-gray-300 rounded px-3 py-2 text-sm text-gray-700">
+                                class="w-full mt-1 border border-gray-300 rounded px-3 py-2 text-sm text-gray-700" required>
                             <option value="" class="text-gray-400">-- Pilih Nominal --</option>
                             <option value="1200000">&lt; 1,2 juta</option>
                             <option value="2000000">1,9 - 2,1 juta</option>
@@ -213,12 +213,12 @@
                     <div>
                         <label for="luas_rumah" class="block text-sm font-medium mb-1">Luas Rumah (m²)</label>
                         <input type="number" name="luas_rumah" id="luas_rumah"
-                            class="w-full border border-gray-300 rounded px-3 py-2 text-sm"
+                            class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required
                             placeholder="Contoh: 36">
 
                         <label for="jumlah_penghuni" class="block text-sm font-medium mt-4 mb-1">Jumlah Penghuni</label>
                         <input type="number" name="jumlah_penghuni" id="jumlah_penghuni"
-                            class="w-full border border-gray-300 rounded px-3 py-2 text-sm"
+                            class="w-full border border-gray-300 rounded px-3 py-2 text-sm" required
                             placeholder="Contoh: 4">
                     </div>
 

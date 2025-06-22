@@ -3,6 +3,14 @@
 @section('content')
 <div class="space-y-8">
     {{-- Greeting --}}
+    {{-- Flash Message --}}
+    @if (session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Sukses!</strong>
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    @endif
+
     <div>
         <h2 class="text-2xl font-bold text-black">Halo, {{ $user->nama }}</h2>
         <p class="text-gray-600">Selamat datang di dashboard Si-Hunlay</p>

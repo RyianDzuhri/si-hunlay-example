@@ -118,6 +118,12 @@
     </div>
     <div class="right-panel">
       <h1>Selamat Datang Di<br>Si-Hunlay</h1>
+      {{-- Flash error message --}}
+      @if (session('error'))
+        <div style="background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; padding: 10px; margin-bottom: 20px; border-radius: 5px;">
+          {{ session('error') }}
+        </div>
+      @endif
       <form action="{{ route('auth.verify') }}" method="POST">
         @csrf
         <div class="form-group">
